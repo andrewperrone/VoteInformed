@@ -10,4 +10,10 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+
+    <!-- Our Stuff -->
+    <string name="title_activity_homescreen">homescreen</string>
+    <string name="voice_your_concerns">Voice Your Concerns</string>
+    <string name="current_issues">Current Issues</string>
+    <string name="top_community_issues">Top Community Issues</string>
 </resources>
