@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient_bg">
+    android:background="@color/login_background_light">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/panelCard"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="2dp"
-        app:cardBackgroundColor="#00FFFFFF"
+        app:cardBackgroundColor="@android:color/white"
         app:cardCornerRadius="20dp"
         app:cardUseCompatPadding="true"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -31,7 +31,7 @@
                 android:layout_marginTop="56dp"
                 android:fontFamily="@font/urbanistmedium"
                 android:text="Welcome Back,"
-                android:textColor="@android:color/white"
+                android:textColor="@color/text_primary"
                 android:textSize="40sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -45,15 +45,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="48dp"
                 android:hint="Email"
-                app:boxBackgroundColor="#FFFFFF"
+                app:boxBackgroundColor="@android:color/white"
                 app:boxBackgroundMode="filled"
-
                 app:boxCornerRadiusBottomEnd="30dp"
                 app:boxCornerRadiusBottomStart="30dp"
                 app:boxCornerRadiusTopEnd="30dp"
                 app:boxCornerRadiusTopStart="30dp"
-                app:boxStrokeWidth="0dp"
-                app:boxStrokeWidthFocused="0dp"
+                app:boxStrokeColor="@color/text_field_stroke"
+                app:boxStrokeWidth="1dp"
+                app:boxStrokeWidthFocused="2dp"
+                app:hintTextColor="@color/text_secondary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/welcomeTitle">
@@ -66,8 +67,8 @@
                     android:inputType="textEmailAddress"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
-                    android:textColor="#3A4475"
-                    android:textColorHint="#A5B0DB" />
+                    android:textColor="@color/text_primary"
+                    android:textColorHint="@color/text_hint" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -77,16 +78,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:hint="Password"
-                app:boxBackgroundColor="#FFFFFF"
+                app:boxBackgroundColor="@android:color/white"
                 app:boxBackgroundMode="filled"
                 app:boxCornerRadiusBottomEnd="30dp"
                 app:boxCornerRadiusBottomStart="30dp"
                 app:boxCornerRadiusTopEnd="30dp"
                 app:boxCornerRadiusTopStart="30dp"
-                app:boxStrokeWidth="0dp"
-                app:boxStrokeWidthFocused="0dp"
+                app:boxStrokeColor="@color/text_field_stroke"
+                app:boxStrokeWidth="1dp"
+                app:boxStrokeWidthFocused="2dp"
                 app:endIconMode="password_toggle"
-                app:endIconTint="#8591C7"
+                app:endIconTint="@color/text_hint"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/emailLayout">
@@ -99,8 +101,8 @@
                     android:inputType="textPassword"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
-                    android:textColor="#3A4475"
-                    android:textColorHint="#A5B0DB" />
+                    android:textColor="@color/text_primary"
+                    android:textColorHint="@color/text_hint" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
@@ -110,7 +112,7 @@
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/urbanistmedium"
                 android:text="Forgot Password?"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/app_primary_blue"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/passwordLayout" />
@@ -124,10 +126,10 @@
                 android:fontFamily="@font/urbanistmedium"
                 android:text="Login"
                 android:textAllCaps="false"
-                android:textColor="#ffffff"
+                android:textColor="@android:color/white"
                 android:textSize="28sp"
                 android:textStyle="bold"
-                app:backgroundTint="#1E88E5"
+                app:backgroundTint="@color/app_primary_blue"
                 app:cornerRadius="30dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -150,7 +152,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/urbanistmedium"
                     android:text="Don’t have an account? "
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/text_secondary"
                     android:textSize="14sp" />
 
                 <TextView
@@ -159,7 +161,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/urbanistmedium"
                     android:text="Sign up here"
-                    android:textColor="#1D369E"
+                    android:textColor="@color/app_primary_blue"
                     android:textSize="14sp" />
             </LinearLayout>
 

@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/savedScroll"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/app_background"
+    android:fillViewport="true"
     android:padding="16dp">
 
     <LinearLayout
@@ -14,7 +16,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="12dp"
             android:background="@color/app_top_bar_background"
             android:gravity="center_vertical"
             android:orientation="horizontal"
@@ -45,111 +47,128 @@
                 android:src="@drawable/user" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:layout_marginBottom="8dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/top_community_issues"
-                android:textColor="@color/app_secondary_teal"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/btnVoiceConcerns"
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:background="@drawable/rounded_button"
-                android:text="Voice Your Concerns"
-                android:textColor="@android:color/white"
-                android:textSize="13sp"
-                android:textStyle="bold"
-                app:strokeColor="@color/app_secondary_teal" />
-        </LinearLayout>
-
-        <GridLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:alignmentMode="alignMargins"
-            android:columnCount="2"
-            android:columnOrderPreserved="false"
-            android:rowCount="2">
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="120dp"
-                android:layout_columnWeight="1"
-                android:layout_margin="8dp"
-                android:background="@drawable/rounded_box" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="120dp"
-                android:layout_columnWeight="1"
-                android:layout_margin="8dp"
-                android:background="@drawable/rounded_box" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="120dp"
-                android:layout_columnWeight="1"
-                android:layout_margin="8dp"
-                android:background="@drawable/rounded_box" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="120dp"
-                android:layout_columnWeight="1"
-                android:layout_margin="8dp"
-                android:background="@drawable/rounded_box" />
-        </GridLayout>
-
         <TextView
+            android:id="@+id/titleBookmarked"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:text="@string/current_issues"
+            android:fontFamily="@font/urbanistmedium"
+            android:text="Bookmarked Articles"
             android:textColor="@color/app_secondary_teal"
             android:textSize="20sp"
             android:textStyle="bold" />
 
         <GridLayout
+            android:id="@+id/gridBookmarked"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:alignmentMode="alignMargins"
+            android:columnCount="2"
+            android:columnOrderPreserved="false">
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="140dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"
+                android:background="@drawable/rounded_box">
+
+                <ImageView
+                    android:id="@+id/bookmark1"
+                    android:layout_width="20dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="top|end"
+                    android:layout_margin="8dp"
+                    android:src="@drawable/bookmark" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="140dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"
+                android:background="@drawable/rounded_box">
+
+                <ImageView
+                    android:id="@+id/bookmark2"
+                    android:layout_width="20dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="top|end"
+                    android:layout_margin="8dp"
+                    android:src="@drawable/bookmark" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="140dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"
+                android:background="@drawable/rounded_box">
+
+                <ImageView
+                    android:id="@+id/bookmark3"
+                    android:layout_width="20dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="top|end"
+                    android:layout_margin="8dp"
+                    android:src="@drawable/bookmark" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="140dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"
+                android:background="@drawable/rounded_box">
+
+                <ImageView
+                    android:id="@+id/bookmark4"
+                    android:layout_width="20dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="top|end"
+                    android:layout_margin="8dp"
+                    android:src="@drawable/bookmark" />
+            </FrameLayout>
+        </GridLayout>
+
+        <TextView
+            android:id="@+id/titleFollowing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/urbanistmedium"
+            android:text="Following"
+            android:textColor="@color/app_secondary_teal"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <GridLayout
+            android:id="@+id/gridFollowing"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:alignmentMode="alignMargins"
             android:columnCount="2"
-            android:columnOrderPreserved="false"
-            android:rowCount="2">
+            android:columnOrderPreserved="false">
 
-            <View
-                android:layout_width="363dp"
-                android:layout_height="120dp"
-                android:layout_columnSpan="2"
-                android:layout_margin="8dp"
-                android:background="@drawable/rounded_box" />
-
-            <View
+            <FrameLayout
                 android:layout_width="0dp"
-                android:layout_height="120dp"
+                android:layout_height="140dp"
                 android:layout_columnWeight="1"
                 android:layout_margin="8dp"
                 android:background="@drawable/rounded_box" />
 
-            <View
+            <FrameLayout
                 android:layout_width="0dp"
-                android:layout_height="120dp"
+                android:layout_height="140dp"
                 android:layout_columnWeight="1"
                 android:layout_margin="8dp"
                 android:background="@drawable/rounded_box" />
         </GridLayout>
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="32dp" />
+
     </LinearLayout>
-</ScrollView>
+</androidx.core.widget.NestedScrollView>

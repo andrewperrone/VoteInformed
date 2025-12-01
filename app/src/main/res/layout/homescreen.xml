@@ -2,8 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/gradient_bg" >
+    android:layout_height="match_parent">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/panelCard"
@@ -43,7 +42,7 @@
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/urbanistmedium"
                 android:text="Vote"
-                android:textColor="@android:color/white"
+                android:textColor="@android:color/darker_gray"
                 android:textSize="40sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@id/titleTextRight"
@@ -57,7 +56,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/urbanistmedium"
                 android:text="Informed"
-                android:textColor="#1E2A78"
+                android:textColor="#7986CB"
                 android:textSize="40sp"
                 android:textStyle="bold"
                 app:layout_constraintBaseline_toBaselineOf="@id/titleText"
@@ -77,7 +76,7 @@
                 android:textColor="#FFFFFF"
                 android:textSize="28sp"
                 android:textStyle="bold"
-                app:backgroundTint="#1E88E5"
+                app:backgroundTint="@color/app_primary_blue"
                 app:cornerRadius="30dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -93,15 +92,15 @@
                 android:fontFamily="@font/urbanistmedium"
                 android:text="Sign Up"
                 android:textAllCaps="false"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/app_primary_blue"
                 android:textSize="28sp"
                 android:textStyle="bold"
-                app:backgroundTint="#43A047"
+                app:backgroundTint="@android:color/transparent"
                 app:cornerRadius="30dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/btnLogin"
-                app:strokeColor="#8591C7"
+                app:strokeColor="@color/app_primary_blue"
                 app:strokeWidth="2dp" />
 
             <Space

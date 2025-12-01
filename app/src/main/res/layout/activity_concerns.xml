@@ -12,161 +12,165 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- Close Button -->
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@android:drawable/ic_menu_close_clear_cancel"
             android:layout_gravity="start"
+            android:src="@android:drawable/ic_menu_close_clear_cancel"
             app:tint="@color/black" />
 
-        <!-- Title -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/voice_your_concerns"
-            android:textSize="25sp"
-            android:textColor="@color/app_secondary_teal"
-            android:textStyle="bold"
+            android:layout_marginVertical="16dp"
             android:fontFamily="sans-serif-medium"
-            android:layout_marginVertical="16dp" />
+            android:text="@string/voice_your_concerns"
+            android:textColor="@color/app_secondary_teal"
+            android:textSize="25sp"
+            android:textStyle="bold" />
 
-        <!-- Issue Tags Grid -->
-        <LinearLayout
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipGroupIssues"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            app:chipSpacingHorizontal="6dp"
+            app:chipSpacingVertical="6dp"
+            app:singleLine="false"
+            app:singleSelection="false">
 
-            <!-- Example buttons -->
-            <Button
+            <com.google.android.material.chip.Chip
+                style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/app_primary_blue"
-                android:text="Civil Rights" />
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1"/>
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+                android:text="Civil Rights"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                app:chipBackgroundColor="@color/app_primary_blue" />
 
-
-            <Button
+            <com.google.android.material.chip.Chip
+                style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/app_primary_blue"
-                android:text="Healthcare" />
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1"/>
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+                android:text="Healthcare"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                app:chipBackgroundColor="@color/app_primary_blue" />
 
-            <Button
+            <com.google.android.material.chip.Chip
+                style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+                android:text="Infrastructure"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                app:chipBackgroundColor="@color/app_primary_blue" />
 
-                android:backgroundTint="@color/app_primary_blue"
-                android:text="Infrastructure" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <Button
+            <com.google.android.material.chip.Chip
+                style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/app_primary_blue"
-                android:text="Transportation" />
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+                android:text="Transportation"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                app:chipBackgroundColor="@color/app_primary_blue" />
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1"/>
-
-            <Button
+            <com.google.android.material.chip.Chip
+                style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/app_primary_blue"
-                android:text="Job" />
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+                android:text="Jobs"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                app:chipBackgroundColor="@color/app_primary_blue" />
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1"/>
-
-            <Button
+            <com.google.android.material.chip.Chip
+                style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/app_primary_blue"
-                android:text="Environment" />
-        </LinearLayout>
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+                android:text="Environment"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                app:chipBackgroundColor="@color/app_primary_blue" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <Button
+            <com.google.android.material.chip.Chip
+                style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/app_primary_blue"
-                android:text="Military" />
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1"/>
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+                android:text="Military"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                app:chipBackgroundColor="@color/app_primary_blue" />
 
-            <Button
+            <com.google.android.material.chip.Chip
+                style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/app_primary_blue"
-                android:text="Economy" />
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+                android:text="Economy"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                app:chipBackgroundColor="@color/app_primary_blue" />
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1"/>
-
-            <Button
+            <com.google.android.material.chip.Chip
+                style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/app_primary_blue"
-                android:text="Crime" />
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+                android:text="Crime"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                app:chipBackgroundColor="@color/app_primary_blue" />
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1"/>
-            <Button
+            <com.google.android.material.chip.Chip
+                style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/app_primary_blue"
-                android:text="Taxes" />
-        </LinearLayout>
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+                android:text="Taxes"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                app:chipBackgroundColor="@color/app_primary_blue" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <Button
+            <com.google.android.material.chip.Chip
+                style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/app_primary_blue"
-                android:text="Privacy" />
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+                android:text="Privacy"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                app:chipBackgroundColor="@color/app_primary_blue" />
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1"/>
-
-            <Button
+            <com.google.android.material.chip.Chip
+                style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/app_primary_blue"
-                android:text="Education" />
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+                android:text="Education"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                app:chipBackgroundColor="@color/app_primary_blue" />
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="20"/>
-        </LinearLayout>
+        </com.google.android.material.chip.ChipGroup>
 
-        </LinearLayout>
+    </LinearLayout>
 </ScrollView>

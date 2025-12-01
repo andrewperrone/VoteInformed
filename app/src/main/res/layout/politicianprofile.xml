@@ -16,23 +16,22 @@
             android:layout_width="160dp"
             android:layout_height="160dp"
             android:layout_marginTop="25dp"
+            android:elevation="10dp"
             android:scaleType="centerCrop"
             android:src="@drawable/obamapfp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:shapeAppearanceOverlay="@style/CircleImage"
-            android:elevation="10dp"
-            />
+            app:shapeAppearanceOverlay="@style/CircleImage" />
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/panel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
-            android:layout_marginBottom="0dp"
             android:layout_marginLeft="16dp"
+            android:layout_marginTop="100dp"
             android:layout_marginRight="16dp"
+            android:layout_marginBottom="0dp"
             app:cardBackgroundColor="#5A657281"
             app:cardCornerRadius="20dp"
             app:cardUseCompatPadding="true"
@@ -60,10 +59,9 @@
                     android:textColor="@android:color/white"
                     android:textSize="24sp"
                     android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintBottom_toTopOf="@+id/textParty"
-                    />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
 
 
                 <TextView
@@ -96,11 +94,11 @@
                         android:layout_height="match_parent"
                         android:layout_margin="4dp"
                         android:background="@drawable/rounded_bubble"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toStartOf= "@id/tabPolicy"
-                        app:layout_constraintTop_toTopOf="parent"
+                        android:translationX="0dp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        android:translationX="0dp"/>
+                        app:layout_constraintEnd_toStartOf="@id/tabPolicy"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/tabAbout"
