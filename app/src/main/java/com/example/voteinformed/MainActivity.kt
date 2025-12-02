@@ -11,7 +11,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
-import com.example.voteinformed.database.VoteInformed_Repository
+import com.example.voteinformed.data.repository.VoteInformed_Repository
 import com.example.voteinformed.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
