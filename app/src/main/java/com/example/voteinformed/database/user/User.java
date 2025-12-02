@@ -5,7 +5,6 @@ import androidx.room.PrimaryKey;
 @Entity
 public class User {
     @PrimaryKey(autoGenerate = true)
-
     @ColumnInfo(name = "user_id")
     private int userId;
     @ColumnInfo(name = "name")

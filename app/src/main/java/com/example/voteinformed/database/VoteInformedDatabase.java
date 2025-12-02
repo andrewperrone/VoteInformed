@@ -18,7 +18,7 @@ public abstract class VoteInformedDatabase extends RoomDatabase {
     // Connects the database to the DAO
     public abstract PoliticianDao politicianDao();
 
-    // Singleton pattern
+   /* // Singleton pattern
     private static volatile VoteInformedDatabase INSTANCE;
 
     // thread pool for running database operations
@@ -38,6 +38,6 @@ public abstract class VoteInformedDatabase extends RoomDatabase {
             }
         }
         return INSTANCE;
-    }
+    }*/
 }
 
