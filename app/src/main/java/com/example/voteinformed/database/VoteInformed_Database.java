@@ -29,7 +29,8 @@ import java.util.concurrent.Executors;
                         Issue.class,
                         Politician.class, Politician_Election.class, Politician_Issue.class,
                         User.class, User_Article.class, User_Issue.class, User_Politician.class},
-                        version = 1)
+                        version = 1,
+                        exportSchema = false)
 public abstract class VoteInformed_Database extends RoomDatabase {
 
     /*// Connects the database to the DAO
