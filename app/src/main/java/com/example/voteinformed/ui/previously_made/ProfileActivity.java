@@ -27,12 +27,14 @@ public class ProfileActivity extends AppCompatActivity {
         // Profile Settings Options
         // -------------------------
 
+    /*
         // Language settings
         LinearLayout btnLanguage = findViewById(R.id.btnLanguage);
         btnLanguage.setOnClickListener(v -> {
             Toast.makeText(this, "Language settings", Toast.LENGTH_SHORT).show();
             // TODO: Implement language settings screen
         });
+    */
 
         // Personal Information
         LinearLayout btnPersonalInfo = findViewById(R.id.btnPersonalInfo);

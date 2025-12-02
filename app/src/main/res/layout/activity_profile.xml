@@ -106,7 +106,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- Language -->
+            <!-- Language
             <LinearLayout
                 android:id="@+id/btnLanguage"
                 android:layout_width="match_parent"
@@ -142,6 +142,7 @@
                     android:src="@android:drawable/ic_media_play"
                     app:tint="@color/text_secondary" />
             </LinearLayout>
+            -->
 
             <!-- Personal Information -->
             <LinearLayout
