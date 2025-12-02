@@ -3,9 +3,9 @@ package com.example.voteinformed.ui.previously_made;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,57 +19,63 @@ import com.google.android.material.textfield.TextInputEditText;
 
 public class LoginActivity extends AppCompatActivity {
 
+    // Input fields for email and password
     private TextInputEditText inputEmail, inputPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        EdgeToEdge.enable(this);
-        View root = findViewById(android.R.id.content);
-        ViewCompat.setOnApplyWindowInsetsListener(root, (v, insets) -> {
-            Insets sys = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(sys.left, sys.top, sys.right, sys.bottom); // keep content visible
-            return insets;
-        });
-
         super.onCreate(savedInstanceState);
 
+        // Enable edge-to-edge layout for full-screen effect
         EdgeToEdge.enable(this);
+
+        // Set content layout
         setContentView(R.layout.login);
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(android.R.id.content), (v, insets) -> {
-            Insets sys = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(sys.left, sys.top, sys.right, sys.bottom);
+        // Adjust padding for system bars (status/navigation bars)
+        View root = findViewById(android.R.id.content);
+        ViewCompat.setOnApplyWindowInsetsListener(root, (v, insets) -> {
+            Insets sysInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(sysInsets.left, sysInsets.top, sysInsets.right, sysInsets.bottom);
             return insets;
         });
 
+        // Initialize input fields
         inputEmail = findViewById(R.id.inputEmail);
         inputPassword = findViewById(R.id.inputPassword);
 
+        // Initialize buttons
         MaterialButton btnLogin = findViewById(R.id.btnLogin);
         TextView signupLink = findViewById(R.id.signupLink);
 
+        // Signup link redirects to RegisterActivity
         signupLink.setOnClickListener(v ->
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class))
         );
 
+        // Login button click listener
+        btnLogin.setOnClickListener(v -> handleLogin());
+    }
 
-        btnLogin.setOnClickListener(v -> {
-            String email = inputEmail.getText() == null ? "" : inputEmail.getText().toString().trim();
-            String pass = inputPassword.getText() == null ? "" : inputPassword.getText().toString();
+    /**
+     * Handles login logic
+     * Currently performs basic validation and redirects to HomeActivity
+     */
+    private void handleLogin() {
+        String email = inputEmail.getText() != null ? inputEmail.getText().toString().trim() : "";
+        String password = inputPassword.getText() != null ? inputPassword.getText().toString() : "";
 
-            if (TextUtils.isEmpty(email) || TextUtils.isEmpty(pass)) {
-                Toast.makeText(this, "Enter email and password", Toast.LENGTH_SHORT).show();
-                return;
-            }
+        // Check if email or password is empty
+        if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
+            Toast.makeText(this, "Enter email and password", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-            getSharedPreferences("user_prefs", MODE_PRIVATE)
-                    .edit()
-                    .putBoolean("logged_in", true)
-                    .apply();
+        // TODO: Add real authentication logic here
 
-            Intent i = new Intent(LoginActivity.this, HomeActivity.class);
-            startActivity(i);
-            finish();
-        });
+        // Redirect to HomeActivity after "login"
+        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+        startActivity(intent);
+        finish(); // Finish LoginActivity so user can't go back with back button
     }
 }

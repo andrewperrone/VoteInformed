@@ -1,49 +1,52 @@
 package com.example.voteinformed.ui.previously_made;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.voteinformed.ui.previously_made.LoginActivity;
 import com.example.voteinformed.R;
 import com.google.android.material.button.MaterialButton;
-
-import android.content.Intent;
+import androidx.activity.EdgeToEdge;
 
 public class HomescreenActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // Enable edge-to-edge layout for modern Android styling
         EdgeToEdge.enable(this);
+
+        // Set the content view to the homescreen layout
+        setContentView(R.layout.homescreen);
+
+        // Adjust padding to account for system bars (status/navigation bars)
         View root = findViewById(android.R.id.content);
         ViewCompat.setOnApplyWindowInsetsListener(root, (v, insets) -> {
-            Insets sys = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(sys.left, sys.top, sys.right, sys.bottom); // keep content visible
+            Insets sysInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(sysInsets.left, sysInsets.top, sysInsets.right, sysInsets.bottom);
             return insets;
         });
 
-        super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.homescreen);
+        // Initialize buttons
+        MaterialButton loginButton = findViewById(R.id.btnLogin);
+        MaterialButton signupButton = findViewById(R.id.btnSignUp);
 
-
-        MaterialButton login = findViewById(R.id.btnLogin);
-        MaterialButton signup = findViewById(R.id.btnSignUp);
-
-        login.setOnClickListener(v -> {
-            Intent i = new Intent(HomescreenActivity.this, LoginActivity.class);
-            startActivity(i);
+        // Set click listener for Login button
+        loginButton.setOnClickListener(v -> {
+            Intent loginIntent = new Intent(HomescreenActivity.this, LoginActivity.class);
+            startActivity(loginIntent);
         });
 
-        signup.setOnClickListener(v -> {
-            Intent i = new Intent(HomescreenActivity.this, RegisterActivity.class);
-            startActivity(i);
+        // Set click listener for SignUp button
+        signupButton.setOnClickListener(v -> {
+            Intent signupIntent = new Intent(HomescreenActivity.this, RegisterActivity.class);
+            startActivity(signupIntent);
         });
     }
 }

@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/scroll"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E3F2FD"
+    android:fillViewport="true">
+
+    <!-- ============================= -->
+    <!-- MAIN CONTAINER -->
+    <!-- ============================= -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="32dp">
+
+        <!-- ============================= -->
+        <!-- BACK BUTTON (TOP LEFT) -->
+        <!-- ============================= -->
+        <ImageButton
+            android:id="@+id/btnBackPolitician"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="16dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Back"
+            android:src="@android:drawable/ic_menu_revert"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/text_primary" />
+
+        <!-- ============================= -->
+        <!-- AVATAR IMAGE -->
+        <!-- ============================= -->
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imageAvatar"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_marginTop="25dp"
+            android:elevation="10dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/obamapfp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/CircleImage"
+            app:strokeColor="@android:color/white"
+            app:strokeWidth="4dp" />
+
+        <!-- ============================= -->
+        <!-- PANEL CONTAINING DETAILS -->
+        <!-- ============================= -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/panel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="100dp"
+            android:layout_marginRight="16dp"
+            app:cardBackgroundColor="@android:color/white"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="8dp"
+            app:cardUseCompatPadding="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/panelContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="20dp"
+                android:paddingTop="100dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="24dp">
+
+                <!-- ============================= -->
+                <!-- NAME -->
+                <!-- ============================= -->
+                <TextView
+                    android:id="@+id/textName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/urbanistmedium"
+                    android:text="Barack Obama"
+                    android:textColor="@color/text_primary"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <!-- ============================= -->
+                <!-- PARTY -->
+                <!-- ============================= -->
+                <TextView
+                    android:id="@+id/textParty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/urbanistmedium"
+                    android:text="Democratic Party"
+                    android:textColor="@color/app_primary_blue"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textName" />
+
+                <!-- ============================= -->
+                <!-- TABS (ABOUT / POLICY / CONTACT) -->
+                <!-- ============================= -->
+                <com.google.android.material.button.MaterialButtonToggleGroup
+                    android:id="@+id/tabs"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textParty"
+                    app:selectionRequired="true"
+                    app:singleSelection="true">
+
+                    <!-- About Tab -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/tabAbout"
+                        style="@style/Widget.MaterialComponents.Button"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="About"
+                        android:textAllCaps="false"
+                        android:textColor="@android:color/white"
+                        app:backgroundTint="@color/app_primary_blue"
+                        app:cornerRadius="8dp" />
+
+                    <!-- Policy Tab -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/tabPolicy"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="Policy"
+                        android:textAllCaps="false"
+                        android:textColor="@color/text_primary"
+                        app:backgroundTint="#F5F5F5"
+                        app:strokeColor="@color/text_field_stroke"
+                        app:strokeWidth="1dp" />
+
+                    <!-- Contact Tab -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/tabContact"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="Contact"
+                        android:textAllCaps="false"
+                        android:textColor="@color/text_primary"
+                        app:backgroundTint="#F5F5F5"
+                        app:strokeColor="@color/text_field_stroke"
+                        app:strokeWidth="1dp" />
+                </com.google.android.material.button.MaterialButtonToggleGroup>
+
+                <!-- ============================= -->
+                <!-- ABOUT SECTION -->
+                <!-- ============================= -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/sectionAbout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    app:cardBackgroundColor="#FAFAFA"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="0dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tabs">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:id="@+id/textBio"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/urbanistmedium"
+                            android:lineSpacingExtra="4dp"
+                            android:text="Barack Obama served as the 44th President of the United States from 2009 to 2017. Before the presidency, he represented Illinois as a U.S. Senator (2005-2008) and State Senator (1997-2004).\n\nObama is known for his background as a community organizer in Chicago, his focus on healthcare reform, economic recovery, and foreign diplomacy. Since leaving office, he has remained active through the Obama Foundation, focusing on civic engagement, leadership, and public service."
+                            android:textColor="@color/text_primary"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- ============================= -->
+                <!-- POLICY SECTION -->
+                <!-- ============================= -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/sectionPolicy"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:visibility="gone"
+                    app:cardBackgroundColor="#FAFAFA"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="0dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tabs">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:id="@+id/policyPlaceholder"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/urbanistmedium"
+                            android:lineSpacingExtra="4dp"
+                            android:text="Healthcare: Signed the Affordable Care Act to expand coverage.\n\nEconomy: Passed stimulus measures during the 2008 financial crisis.\n\nForeign Affairs: Ordered mission that killed Osama bin Laden and opened relations with Cuba.\n\nEnvironment: Supported renewable energy and signed the Paris Climate Agreement.\n\nSocial Issues: Advanced LGBTQ+ rights and protections for women's rights."
+                            android:textColor="@color/text_primary"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- ============================= -->
+                <!-- CONTACT SECTION -->
+                <!-- ============================= -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/sectionContact"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:visibility="gone"
+                    app:cardBackgroundColor="#FAFAFA"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="0dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tabs">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:id="@+id/contactPlaceholder"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/urbanistmedium"
+                            android:lineSpacingExtra="4dp"
+                            android:text="Official Website: barackobama.com\nObama Foundation: obama.org\nEmail: info@obama.org\n\nMailing Address:\nThe Obama Foundation\n5235 S. Harper Court, Suite 1140\nChicago, IL 60615\n\nTwitter: @BarackObama\nFacebook: facebook.com/barackobama\nInstagram: @barackobama"
+                            android:textColor="@color/text_primary"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

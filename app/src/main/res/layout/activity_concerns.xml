@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -12,13 +11,17 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <ImageView
+        <!-- Close button -->
+        <ImageButton
+            android:id="@+id/btnClose"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_gravity="start"
+            android:background="@android:color/transparent"
             android:src="@android:drawable/ic_menu_close_clear_cancel"
             app:tint="@color/black" />
 
+        <!-- Title -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -29,148 +32,15 @@
             android:textSize="25sp"
             android:textStyle="bold" />
 
+        <!-- Empty ChipGroup - chips added programmatically -->
         <com.google.android.material.chip.ChipGroup
-            android:id="@+id/chipGroupIssues"
+            android:id="@+id/chipGroupConcerns"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:chipSpacingHorizontal="6dp"
             app:chipSpacingVertical="6dp"
             app:singleLine="false"
-            app:singleSelection="false">
-
-            <com.google.android.material.chip.Chip
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="16dp"
-                android:paddingVertical="8dp"
-                android:text="Civil Rights"
-                android:textColor="@android:color/white"
-                android:textSize="16sp"
-                app:chipBackgroundColor="@color/app_primary_blue" />
-
-            <com.google.android.material.chip.Chip
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="16dp"
-                android:paddingVertical="8dp"
-                android:text="Healthcare"
-                android:textColor="@android:color/white"
-                android:textSize="16sp"
-                app:chipBackgroundColor="@color/app_primary_blue" />
-
-            <com.google.android.material.chip.Chip
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="16dp"
-                android:paddingVertical="8dp"
-                android:text="Infrastructure"
-                android:textColor="@android:color/white"
-                android:textSize="16sp"
-                app:chipBackgroundColor="@color/app_primary_blue" />
-
-            <com.google.android.material.chip.Chip
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="16dp"
-                android:paddingVertical="8dp"
-                android:text="Transportation"
-                android:textColor="@android:color/white"
-                android:textSize="16sp"
-                app:chipBackgroundColor="@color/app_primary_blue" />
-
-            <com.google.android.material.chip.Chip
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="16dp"
-                android:paddingVertical="8dp"
-                android:text="Jobs"
-                android:textColor="@android:color/white"
-                android:textSize="16sp"
-                app:chipBackgroundColor="@color/app_primary_blue" />
-
-            <com.google.android.material.chip.Chip
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="16dp"
-                android:paddingVertical="8dp"
-                android:text="Environment"
-                android:textColor="@android:color/white"
-                android:textSize="16sp"
-                app:chipBackgroundColor="@color/app_primary_blue" />
-
-            <com.google.android.material.chip.Chip
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="16dp"
-                android:paddingVertical="8dp"
-                android:text="Military"
-                android:textColor="@android:color/white"
-                android:textSize="16sp"
-                app:chipBackgroundColor="@color/app_primary_blue" />
-
-            <com.google.android.material.chip.Chip
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="16dp"
-                android:paddingVertical="8dp"
-                android:text="Economy"
-                android:textColor="@android:color/white"
-                android:textSize="16sp"
-                app:chipBackgroundColor="@color/app_primary_blue" />
-
-            <com.google.android.material.chip.Chip
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="16dp"
-                android:paddingVertical="8dp"
-                android:text="Crime"
-                android:textColor="@android:color/white"
-                android:textSize="16sp"
-                app:chipBackgroundColor="@color/app_primary_blue" />
-
-            <com.google.android.material.chip.Chip
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="16dp"
-                android:paddingVertical="8dp"
-                android:text="Taxes"
-                android:textColor="@android:color/white"
-                android:textSize="16sp"
-                app:chipBackgroundColor="@color/app_primary_blue" />
-
-            <com.google.android.material.chip.Chip
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="16dp"
-                android:paddingVertical="8dp"
-                android:text="Privacy"
-                android:textColor="@android:color/white"
-                android:textSize="16sp"
-                app:chipBackgroundColor="@color/app_primary_blue" />
-
-            <com.google.android.material.chip.Chip
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="16dp"
-                android:paddingVertical="8dp"
-                android:text="Education"
-                android:textColor="@android:color/white"
-                android:textSize="16sp"
-                app:chipBackgroundColor="@color/app_primary_blue" />
-
-        </com.google.android.material.chip.ChipGroup>
+            app:singleSelection="false" />
 
     </LinearLayout>
 </ScrollView>
