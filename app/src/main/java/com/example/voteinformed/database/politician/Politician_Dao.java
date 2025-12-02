@@ -22,6 +22,6 @@ public interface Politician_Dao
     @Delete
     void deletePolitician(Politician politician);
 
-    @Query("SELECT * FROM politician_table ORDER BY politician_name ASC")
+    @Query("SELECT * FROM politician ORDER BY politician_name ASC")
     LiveData<List<Politician>> getAllPoliticians();
 }

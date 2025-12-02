@@ -1,4 +1,5 @@
 package com.example.voteinformed.database.article;
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -19,7 +20,15 @@ public class Article {
         return article_id;
     }
 
-    /*public void setArticle_id(int article_id) {
+    public void setArticle_id(int article_id) {
         this.article_id = article_id;
-    }*/
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "Article{" +
+                "article_id=" + article_id +
+                '}';
+    }
 }
