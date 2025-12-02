@@ -17,13 +17,13 @@ import com.example.voteinformed.data.entity.Politician;
 import com.example.voteinformed.data.entity.Election;
 
 // relations table
-import com.example.voteinformed.data.relation.User_Article;
-import com.example.voteinformed.data.relation.User_Issue;
-import com.example.voteinformed.data.relation.User_Election;
-import com.example.voteinformed.data.relation.User_Politician;
-import com.example.voteinformed.data.relation.Article_Issue;
-import com.example.voteinformed.data.relation.Article_Election;
-import com.example.voteinformed.data.relation.Article_Politician;
+import com.example.voteinformed.data.entity.relation.User_Article;
+import com.example.voteinformed.data.entity.relation.User_Issue;
+import com.example.voteinformed.data.entity.relation.User_Election;
+import com.example.voteinformed.data.entity.relation.User_Politician;
+import com.example.voteinformed.data.entity.relation.Article_Issue;
+import com.example.voteinformed.data.entity.relation.Article_Election;
+import com.example.voteinformed.data.entity.relation.Article_Politician;
 
 
 @Database(

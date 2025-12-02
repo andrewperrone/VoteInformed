@@ -44,14 +44,12 @@ public class User {
         this.is_admin = is_admin;
     }
 
-    public int getUserId() {
+    public int getUser_id() {
         return user_id;
     }
 
-    public void setUserID(int user_id) {
+    public void setUser_id(int user_id) {
         this.user_id = user_id;
-    public void setUserId(int userId) {
-        this.userId = userId;
     }
 
     public String getName() {
@@ -90,7 +88,7 @@ public class User {
         return preferences;
     }
 
-    public void setPreferences(String Preferences) {
+    public void setPreferences(String preferences) {
         this.preferences = preferences;
     }
 

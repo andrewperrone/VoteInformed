@@ -22,6 +22,6 @@ public interface Election_Dao {
     @Query("SELECT * FROM Election")
     List<Election> getAllElection();
 
-    @Query("SELECT * FROM Election WHERE article_id = :id")
+    @Query("SELECT * FROM Election WHERE election_id = :id")
     Election getElectionById(int id);
 }
