@@ -6,24 +6,73 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "user")
 public class User {
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name="user_id")
-    private int user_id;
 
-    public User() {
+    @ColumnInfo(name = "user_id")
+    private int userId;
+    @ColumnInfo(name = "name")
+    private String name;
+    @ColumnInfo(name = "email")
+    private String email;
+    @ColumnInfo(name = "password")
+    private String password;
+    @ColumnInfo(name = "location")
+    private String location;
+    @ColumnInfo(name = "preference")
+    private String preferences;
+
+    public User(String name, String email, String password, String location, String preferences) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.location = location;
+        this.preferences = preferences;
     }
 
-    public int getUser_id() {
-        return user_id;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setUserID(int userId) {
+        this.userId = userId;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "user_id=" + user_id +
-                '}';
+    public String getName() {
+        return name;
+    }
+
+    public void setName() {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail() {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword() {
+        this.password = password;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation() {
+        this.location = location;
+    }
+
+    public String getPreferences() {
+        return preferences;
+    }
+
+    public void setPreferences() {
+        this.preferences = preferences;
     }
 }
