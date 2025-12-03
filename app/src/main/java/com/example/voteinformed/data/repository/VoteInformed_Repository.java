@@ -190,19 +190,16 @@ public class VoteInformed_Repository {
     }
 
     public interface LoginCallback{
-        void onResult(boolean success);
+        void onResult(User user);
     }
 
-    public void login(String email, String password, LoginCallback callback)
-    {
-        executor.execute(()->{
-           User user = userDao.login(email, password);
-           boolean success = (user != null);
-
-           // Return result to UI
-           new Handler(Looper.getMainLooper()).post(() -> {
-               callback.onResult(success);
-           });
+    public void login(String email, String password, LoginCallback callback) {
+        executor.execute(() -> {
+            User user = userDao.login(email, password);
+            // Pass the user object back
+            new Handler(Looper.getMainLooper()).post(() -> {
+                callback.onResult(user);
+            });
         });
     }
 

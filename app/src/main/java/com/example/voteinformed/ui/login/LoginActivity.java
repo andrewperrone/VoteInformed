@@ -70,15 +70,19 @@ public class LoginActivity extends AppCompatActivity {
         String email = inputEmail.getText() != null ? inputEmail.getText().toString().trim() : "";
         String password = inputPassword.getText() != null ? inputPassword.getText().toString() : "";
 
-        // Check if email or password is empty
         if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
             Toast.makeText(this, "Enter email and password", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        voteInformedRepository.login(email, password, success->{
-            if (success){
-                Toast.makeText(this,"Login Successful", Toast.LENGTH_SHORT).show();
+        voteInformedRepository.login(email, password, user -> {
+            if (user != null) {
+                // 1. SAVE THE USER ID TO SESSION
+                android.content.SharedPreferences prefs = getSharedPreferences("UserSession", MODE_PRIVATE);
+                prefs.edit().putInt("user_id", user.getUser_id()).apply();
+
+                // 2. Navigate to Home
+                Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                 finish();
             } else {

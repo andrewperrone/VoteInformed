@@ -90,9 +90,9 @@ public class PersonalInfoActivity extends AppCompatActivity {
                 this.currentUser = user; // This initializes the 'currentUser' variable!
 
                 // Pre-fill the text boxes
-                if (inputUsername.getText().toString().isEmpty()) inputUsername.setText(user.getName());
-                if (inputEmail.getText().toString().isEmpty()) inputEmail.setText(user.getEmail());
-                if (inputPollSite.getText().toString().isEmpty()) inputPollSite.setText(user.getLocation());
+                if (user.getName() != null) inputUsername.setText(user.getName());
+                if (user.getEmail() != null) inputEmail.setText(user.getEmail());
+                if (user.getLocation() != null) inputPollSite.setText(user.getLocation());
             }
         });
     }

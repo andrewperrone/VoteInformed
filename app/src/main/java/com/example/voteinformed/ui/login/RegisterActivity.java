@@ -1,17 +1,14 @@
 package com.example.voteinformed.ui.login;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.voteinformed.R;
 import com.example.voteinformed.data.repository.VoteInformed_Repository;
@@ -22,46 +19,31 @@ import com.google.android.material.textfield.TextInputEditText;
 public class RegisterActivity extends AppCompatActivity {
 
     private TextInputEditText inputEmail, inputPassword, inputConfirmPassword;
-    private VoteInformed_Repository voteInformedRepository;
+    private VoteInformed_Repository repository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        voteInformedRepository = new VoteInformed_Repository(getApplicationContext());
-
-        // Enable edge-to-edge layout
-        EdgeToEdge.enable(this);
         setContentView(R.layout.register);
 
-        // Adjust padding for system bars
-        View root = findViewById(android.R.id.content);
-        ViewCompat.setOnApplyWindowInsetsListener(root, (v, insets) -> {
-            Insets sys = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(sys.left, sys.top, sys.right, sys.bottom);
-            return insets;
-        });
+        repository = new VoteInformed_Repository(getApplicationContext());
 
-        // Initialize input fields
         inputEmail = findViewById(R.id.inputEmail);
         inputPassword = findViewById(R.id.inputPassword);
         inputConfirmPassword = findViewById(R.id.inputConfirmPassword);
 
-        // Buttons and links
         MaterialButton btnSignUp = findViewById(R.id.btnSignUpPrimary);
         TextView loginLink = findViewById(R.id.loginLink);
 
-        // Navigate to login screen if user clicks login link
         loginLink.setOnClickListener(v ->
                 startActivity(new Intent(RegisterActivity.this, LoginActivity.class))
         );
 
-        // Sign up button click handling
         btnSignUp.setOnClickListener(v -> {
-            String email = inputEmail.getText() == null ? "" : inputEmail.getText().toString().trim();
-            String pass = inputPassword.getText() == null ? "" : inputPassword.getText().toString();
-            String confirm = inputConfirmPassword.getText() == null ? "" : inputConfirmPassword.getText().toString();
+            String email = inputEmail.getText().toString().trim();
+            String pass = inputPassword.getText().toString();
+            String confirm = inputConfirmPassword.getText().toString();
 
-            // Validate input
             if (TextUtils.isEmpty(email) || TextUtils.isEmpty(pass) || TextUtils.isEmpty(confirm)) {
                 Toast.makeText(this, "Fill all fields", Toast.LENGTH_SHORT).show();
                 return;
@@ -72,18 +54,33 @@ public class RegisterActivity extends AppCompatActivity {
                 return;
             }
 
-            voteInformedRepository.register(email, pass, (success, emailTaken) -> {
-                if (emailTaken) {
-                    Toast.makeText(this, "Email already in use", Toast.LENGTH_SHORT).show();
+            // 1. Register the user
+            repository.register(email, pass, (success, emailExists) -> {
+                if (emailExists) {
+                    Toast.makeText(this, "Email already exists", Toast.LENGTH_SHORT).show();
                 } else if (success) {
-                    Toast.makeText(this, "Registration successful", Toast.LENGTH_SHORT).show();
-
-                    startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
-                    finish();
+                    // 2. IMMEDIATE AUTO-LOGIN to get the User ID
+                    performAutoLogin(email, pass);
                 } else {
                     Toast.makeText(this, "Registration failed", Toast.LENGTH_SHORT).show();
                 }
             });
+        });
+    }
+
+    private void performAutoLogin(String email, String password) {
+        repository.login(email, password, user -> {
+            if (user != null) {
+                // 3. CRITICAL: Save User ID to SharedPreferences
+                SharedPreferences prefs = getSharedPreferences("UserSession", MODE_PRIVATE);
+                prefs.edit().putInt("user_id", user.getUser_id()).apply();
+
+                Toast.makeText(this, "Account Created!", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
+                finish();
+            } else {
+                Toast.makeText(this, "Auto-login failed", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 }
