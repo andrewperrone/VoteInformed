@@ -1,4 +1,4 @@
-package com.example.voteinformed.ui.previously_made;
+package com.example.voteinformed.ui.home;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -29,9 +29,16 @@ import com.example.voteinformed.Article;
 import com.example.voteinformed.NewsRepository;
 import com.example.voteinformed.NewsResponse;
 import com.example.voteinformed.R;
+import com.example.voteinformed.data.entity.SavedArticle;
 import com.example.voteinformed.network.LegistarApiService;
 import com.example.voteinformed.network.LegislationMatter;
 import com.example.voteinformed.ui.concerns.ConcernsActivity;
+import com.example.voteinformed.ui.previously_made.HomeViewModel;
+import com.example.voteinformed.ui.previously_made.PoliticianComparisonActivity;
+import com.example.voteinformed.ui.saved.SavedActivity;
+import com.example.voteinformed.ui.saved.SavedArticleViewModel;
+import com.example.voteinformed.ui.search.SearchActivity;
+import com.example.voteinformed.ui.user.ProfileActivity;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.navigation.NavigationView;
 
@@ -44,11 +51,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class HomeActivity extends AppCompatActivity {
-
     private DrawerLayout drawerLayout;
     private RecyclerView recyclerLegislation;
     private ChipGroup chipGroupConcerns;
     private ImageButton btnLeftMenu, btnRightMenu;
+    private SavedArticleViewModel savedVM;
 
     // ViewModel for managing saved articles state - ✅ INTEGRATED
     private HomeViewModel viewModel;
@@ -66,6 +73,9 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        // Import Saved Article VIew Model!!!
+        savedVM = new ViewModelProvider(this).get(SavedArticleViewModel.class);
+
 
         // ViewModel INITIALIZED - MVVM pattern complete
         viewModel = new ViewModelProvider(this).get(HomeViewModel.class);
@@ -73,6 +83,7 @@ public class HomeActivity extends AppCompatActivity {
         // Drawer and nav
         drawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navView = findViewById(R.id.nav_view);
+
 
         // define the back press behavior
         OnBackPressedCallback callback = new OnBackPressedCallback(false) {
@@ -348,7 +359,49 @@ public class HomeActivity extends AppCompatActivity {
         // Update button appearance based on ViewModel state
         updateBookmarkAppearance(bookmarkBtn, isSaved);
 
-        // ✅ FIXED: Animate on TOGGLE
+
+        bookmarkBtn.setOnClickListener(v -> {
+            // 0. b4 Toggle
+            boolean wasSaved = viewModel.isArticleSaved(article);
+
+            // 1. ViewModel
+            viewModel.toggleSaved(article);
+
+            // 2. after toggle
+            boolean newState = viewModel.isArticleSaved(article);
+
+            // 3. DB
+            if (!wasSaved && newState) {
+                //  DB insert
+                if (article.url != null) {
+                    SavedArticle saved = new SavedArticle(
+                            article.url,                                   // articleId (고유 ID)
+                            article.title,
+                            article.description != null ? article.description : "",
+                            article.urlToImage != null ? article.urlToImage : "",
+                            System.currentTimeMillis()
+                    );
+                    savedVM.save(saved);
+                }
+            } else if (wasSaved && !newState) {
+                // DB delete
+                if (article.url != null) {
+                    savedVM.remove(article.url);
+                }
+            }
+
+            // 4. iconupdate
+            updateBookmarkAppearance(bookmarkBtn, newState);
+
+            // 5. animation
+            animateBookmark(bookmarkBtn, newState);
+
+            // 6. Toast
+            Toast.makeText(this, newState ? "Article saved!" : "Bookmark removed", Toast.LENGTH_SHORT).show();
+        });
+
+
+        /*// ✅ FIXED: Animate on TOGGLE
         bookmarkBtn.setOnClickListener(v -> {
             // 1. Toggle state FIRST
             viewModel.toggleSaved(article);
@@ -367,7 +420,7 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         // Initial animation (unchanged)
-        animateBookmark(bookmarkBtn, isSaved);
+        animateBookmark(bookmarkBtn, isSaved);*/
     }
 
 

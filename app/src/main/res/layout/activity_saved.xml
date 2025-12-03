@@ -66,7 +66,14 @@
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <GridLayout
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerSaved"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:clipToPadding="false" />
+
+            <!--<GridLayout
                 android:id="@+id/gridBookmarked"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -75,7 +82,7 @@
                 android:columnCount="2"
                 android:columnOrderPreserved="false">
 
-                <!-- Bookmark 1 -->
+                &lt;!&ndash;&lt;!&ndash; Bookmark 1 &ndash;&gt;
                 <FrameLayout
                     android:layout_width="0dp"
                     android:layout_height="140dp"
@@ -103,7 +110,7 @@
                         android:contentDescription="Saved article" />
                 </FrameLayout>
 
-                <!-- Bookmark 2 -->
+                &lt;!&ndash; Bookmark 2 &ndash;&gt;
                 <FrameLayout
                     android:layout_width="0dp"
                     android:layout_height="140dp"
@@ -131,7 +138,7 @@
                         android:contentDescription="Saved article" />
                 </FrameLayout>
 
-                <!-- Bookmark 3 -->
+                &lt;!&ndash; Bookmark 3 &ndash;&gt;
                 <FrameLayout
                     android:layout_width="0dp"
                     android:layout_height="140dp"
@@ -159,7 +166,7 @@
                         android:contentDescription="Saved article" />
                 </FrameLayout>
 
-                <!-- Bookmark 4 -->
+                &lt;!&ndash; Bookmark 4 &ndash;&gt;
                 <FrameLayout
                     android:layout_width="0dp"
                     android:layout_height="140dp"
@@ -185,8 +192,8 @@
                         android:elevation="2dp"
                         android:src="@drawable/ic_heart_filled"
                         android:contentDescription="Saved article" />
-                </FrameLayout>
-            </GridLayout>
+                </FrameLayout>&ndash;&gt;
+            </GridLayout>-->
 
             <Space
                 android:layout_width="match_parent"

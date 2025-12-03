@@ -10,16 +10,23 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.voteinformed.R;
 import com.example.voteinformed.ui.home.HomeActivity;
 import com.example.voteinformed.ui.home.HomescreenActivity;
+import com.example.voteinformed.ui.previously_made.PoliticianComparisonActivity;
 import com.example.voteinformed.ui.search.SearchActivity;
 import com.example.voteinformed.ui.user.ProfileActivity;
 import com.google.android.material.navigation.NavigationView;
 
 public class SavedActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
+    private SavedArticleViewModel savedVM;
+    private RecyclerView recyclerSaved;
+    private SavedArticleAdapter savedAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +36,23 @@ public class SavedActivity extends AppCompatActivity {
         // Initialize drawer
         drawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navView = findViewById(R.id.nav_view);
+
+        // 1) connect to ViewModel
+        savedVM = new ViewModelProvider(this).get(SavedArticleViewModel.class);
+
+// 2) RecyclerView find
+        recyclerSaved = findViewById(R.id.recyclerSaved);
+        recyclerSaved.setLayoutManager(new LinearLayoutManager(this));
+
+// 3) Adapter gerenate and conncet
+        savedAdapter = new SavedArticleAdapter();
+        recyclerSaved.setAdapter(savedAdapter);
+
+// 4) DB에서 LiveData observe atuo update
+        savedVM.savedArticles.observe(this, list -> {
+            savedAdapter.submitList(list);
+        });
+
 
         // Highlight current item and make it non-clickable
         navView.setCheckedItem(R.id.nav_saved);
