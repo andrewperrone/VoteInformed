@@ -51,7 +51,7 @@
             android:theme="@style/Theme.VoteInformed.NoActionBar" />
 
         <activity
-            android:name=".ui.previously_made.PersonalInfoActivity"
+            android:name=".ui.user.PersonalInfoActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize"
             android:theme="@style/Theme.VoteInformed.NoActionBar" />
@@ -77,7 +77,7 @@
             android:exported="false"
             android:theme="@style/Theme.VoteInformed.NoActionBar" />
         <activity
-            android:name=".ui.previously_made.PoliticianComparisonActivity"
+            android:name=".ui.politician.PoliticianComparisonActivity"
             android:exported="false"
             android:theme="@style/Theme.VoteInformed.NoActionBar" />
 

@@ -14,6 +14,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.voteinformed.R;
+import com.example.voteinformed.data.repository.VoteInformed_Repository;
 import com.example.voteinformed.ui.home.HomeActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
@@ -22,10 +23,13 @@ public class LoginActivity extends AppCompatActivity {
 
     // Input fields for email and password
     private TextInputEditText inputEmail, inputPassword;
+    private VoteInformed_Repository voteInformedRepository;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        voteInformedRepository = new VoteInformed_Repository(getApplicationContext());
 
         // Enable edge-to-edge layout for full-screen effect
         EdgeToEdge.enable(this);
@@ -66,17 +70,24 @@ public class LoginActivity extends AppCompatActivity {
         String email = inputEmail.getText() != null ? inputEmail.getText().toString().trim() : "";
         String password = inputPassword.getText() != null ? inputPassword.getText().toString() : "";
 
-        // Check if email or password is empty
         if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
             Toast.makeText(this, "Enter email and password", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // TODO: Add real authentication logic here
+        voteInformedRepository.login(email, password, user -> {
+            if (user != null) {
+                // 1. SAVE THE USER ID TO SESSION
+                android.content.SharedPreferences prefs = getSharedPreferences("UserSession", MODE_PRIVATE);
+                prefs.edit().putInt("user_id", user.getUser_id()).apply();
 
-        // Redirect to HomeActivity after "login"
-        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-        startActivity(intent);
-        finish(); // Finish LoginActivity so user can't go back with back button
+                // 2. Navigate to Home
+                Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                finish();
+            } else {
+                Toast.makeText(this, "Invalid email or password", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

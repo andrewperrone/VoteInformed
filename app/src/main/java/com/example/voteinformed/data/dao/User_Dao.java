@@ -33,4 +33,10 @@ public interface User_Dao {
 
     @Query("SELECT * FROM user")
     LiveData<List<User>> getAllUsers();
+
+    @Query("SELECT * FROM user WHERE email = :email AND password = :password LIMIT 1")
+    User login(String email, String password);
+
+    @Query("SELECT * FROM user WHERE email = :email LIMIT 1")
+    User getUserByEmail(String email);
 }

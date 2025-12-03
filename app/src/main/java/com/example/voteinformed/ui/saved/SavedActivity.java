@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.voteinformed.R;
 import com.example.voteinformed.ui.home.HomeActivity;
 import com.example.voteinformed.ui.home.HomescreenActivity;
-import com.example.voteinformed.ui.previously_made.PoliticianComparisonActivity;
+import com.example.voteinformed.ui.politician.PoliticianComparisonActivity;
 import com.example.voteinformed.ui.search.SearchActivity;
 import com.example.voteinformed.ui.user.ProfileActivity;
 import com.google.android.material.navigation.NavigationView;
