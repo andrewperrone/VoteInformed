@@ -33,13 +33,6 @@ public class ProfileActivity extends AppCompatActivity {
             startActivity(new Intent(ProfileActivity.this, SavedActivity.class));
         });
 
-        // Following
-        LinearLayout btnFollowing = findViewById(R.id.btnFollowing);
-        btnFollowing.setOnClickListener(v -> {
-            Toast.makeText(this, "Following", Toast.LENGTH_SHORT).show();
-            // TODO: Implement following screen
-        });
-
         // Log Out (Redirect to HomescreenActivity)
         LinearLayout btnLogOut = findViewById(R.id.btnLogOut);
         btnLogOut.setOnClickListener(v -> {

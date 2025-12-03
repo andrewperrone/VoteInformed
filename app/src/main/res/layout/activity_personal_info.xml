@@ -13,7 +13,7 @@
         android:orientation="vertical"
         android:padding="24dp">
 
-        <!-- Header with Back Button -->
+        <!-- Header -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -60,7 +60,7 @@
                 app:shapeAppearanceOverlay="@style/CircleImage"
                 app:strokeColor="@color/app_primary_blue"
                 app:strokeWidth="4dp"
-                app:tint="@color/app_primary_blue"/>
+                app:tint="@color/app_primary_blue" />
 
             <!-- Edit Icon -->
             <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -116,26 +116,6 @@
                 android:fontFamily="@font/urbanistmedium"
                 android:inputType="textEmailAddress"
                 android:text="realjohndoe@voteinformed.com"
-                android:textColor="@color/text_primary"
-                android:textSize="16sp"/>
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <!-- Phone Field -->
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:hint="Phone Number"
-            app:boxStrokeColor="@color/app_primary_blue"
-            app:hintTextColor="@color/app_primary_blue">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inputPhone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/urbanistmedium"
-                android:inputType="phone"
                 android:textColor="@color/text_primary"
                 android:textSize="16sp"/>
         </com.google.android.material.textfield.TextInputLayout>

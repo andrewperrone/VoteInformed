@@ -10,7 +10,7 @@ import com.google.android.material.textfield.TextInputEditText;
 
 public class PersonalInfoActivity extends AppCompatActivity {
 
-    private TextInputEditText inputUsername, inputEmail, inputPhone, inputPollSite;
+    private TextInputEditText inputUsername, inputEmail, inputPollSite;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,9 +23,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
         inputUsername = findViewById(R.id.inputUsername);
         inputEmail = findViewById(R.id.inputEmail);
-        inputPhone = findViewById(R.id.inputPhone);
         inputPollSite = findViewById(R.id.inputPollSite);
-
 
         // --- Back Button Logic ---
         btnBack.setOnClickListener(v -> finish());
@@ -34,9 +32,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
         btnSave.setOnClickListener(v -> {
             String name = inputUsername.getText().toString().trim();
             String email = inputEmail.getText().toString().trim();
-            String phone = inputPhone.getText().toString().trim();
             String pollSite = inputPollSite.getText().toString().trim();
-
 
             if (name.isEmpty() || email.isEmpty()) {
                 Toast.makeText(this, "Name and Email are required", Toast.LENGTH_SHORT).show();

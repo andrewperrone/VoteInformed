@@ -70,7 +70,7 @@
                 android:id="@+id/gridBookmarked"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="32dp"
                 android:alignmentMode="alignMargins"
                 android:columnCount="2"
                 android:columnOrderPreserved="false">
@@ -188,44 +188,6 @@
                 </FrameLayout>
             </GridLayout>
 
-            <!-- Following Section -->
-            <TextView
-                android:id="@+id/titleFollowing"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:fontFamily="@font/urbanistmedium"
-                android:text="Following"
-                android:textColor="@color/app_secondary_teal"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <GridLayout
-                android:id="@+id/gridFollowing"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:alignmentMode="alignMargins"
-                android:columnCount="2"
-                android:columnOrderPreserved="false">
-
-                <!-- Following 1 -->
-                <FrameLayout
-                    android:layout_width="0dp"
-                    android:layout_height="140dp"
-                    android:layout_columnWeight="1"
-                    android:layout_margin="8dp"
-                    android:background="@drawable/rounded_box" />
-
-                <!-- Following 2 -->
-                <FrameLayout
-                    android:layout_width="0dp"
-                    android:layout_height="140dp"
-                    android:layout_columnWeight="1"
-                    android:layout_margin="8dp"
-                    android:background="@drawable/rounded_box" />
-            </GridLayout>
-
-            <!-- Bottom Spacing -->
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="32dp" />

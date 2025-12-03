@@ -142,8 +142,9 @@
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/bookmark"
-                    app:tint="#78909C" />
+                    android:src="@drawable/ic_heart_unfilled"
+                    app:tint="#78909C"
+                    android:contentDescription="Bookmarks" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -152,45 +153,6 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/urbanistmedium"
                     android:text="Bookmarks"
-                    android:textColor="@color/text_primary"
-                    android:textSize="16sp" />
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:scaleX="-1"
-                    android:src="@android:drawable/ic_media_play"
-                    app:tint="@color/text_secondary" />
-            </LinearLayout>
-
-            <!-- Following -->
-            <LinearLayout
-                android:id="@+id/btnFollowing"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginBottom="8dp"
-                android:background="@drawable/rounded_box"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackground"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp">
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@android:drawable/ic_menu_myplaces"
-                    app:tint="#78909C" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/urbanistmedium"
-                    android:text="Following"
                     android:textColor="@color/text_primary"
                     android:textSize="16sp" />
 
