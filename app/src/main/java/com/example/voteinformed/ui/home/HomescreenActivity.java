@@ -1,7 +1,8 @@
-package com.example.voteinformed.ui.previously_made;
+package com.example.voteinformed.ui.home;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,10 +11,19 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.voteinformed.R;
+import com.example.voteinformed.ui.login.LoginActivity;
+import com.example.voteinformed.ui.login.RegisterActivity;
 import com.google.android.material.button.MaterialButton;
 import androidx.activity.EdgeToEdge;
 
+// Database bs
+import androidx.lifecycle.ViewModelProvider;
+import com.example.voteinformed.ui.home.HomescreenViewModel;
+
 public class HomescreenActivity extends AppCompatActivity {
+
+    // Database stuff
+    private HomescreenViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +57,11 @@ public class HomescreenActivity extends AppCompatActivity {
         signupButton.setOnClickListener(v -> {
             Intent signupIntent = new Intent(HomescreenActivity.this, RegisterActivity.class);
             startActivity(signupIntent);
+        });
+
+        viewModel = new ViewModelProvider(this).get(HomescreenViewModel.class);
+        viewModel.getAllArticles().observe(this, articles -> {
+            Log.d("DB", "Loaded articles: " + articles.size());
         });
     }
 }

@@ -1,4 +1,4 @@
-package com.example.voteinformed.ui.previously_made;
+package com.example.voteinformed.ui.politician;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;

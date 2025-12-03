@@ -1,4 +1,4 @@
-package com.example.voteinformed.ui.previously_made;
+package com.example.voteinformed.ui.search;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import android.widget.ImageButton;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.voteinformed.R;
+import com.example.voteinformed.ui.politician.PoliticianProfileActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -54,7 +55,7 @@ public class SearchActivity extends AppCompatActivity {
         String query = inputSearch.getText() == null ? "" : inputSearch.getText().toString().trim();
 
         if (query.equalsIgnoreCase("obama")) {
-            // Open politician profile if query matches "obama"
+            // Open politicians profile if query matches "obama"
             Intent intent = new Intent(SearchActivity.this, PoliticianProfileActivity.class);
             startActivity(intent);
         } else {

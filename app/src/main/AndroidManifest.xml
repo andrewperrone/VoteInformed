@@ -17,7 +17,7 @@
 
         <!-- HOMESCREEN ACTIVITY: Launcher -->
         <activity
-            android:name=".ui.previously_made.HomescreenActivity"
+            android:name=".ui.home.HomescreenActivity"
             android:exported="true"
             android:theme="@style/Theme.VoteInformed.NoActionBar">
             <intent-filter>
@@ -28,25 +28,25 @@
 
         <!-- LOGIN ACTIVITY -->
         <activity
-            android:name=".ui.previously_made.LoginActivity"
+            android:name=".ui.login.LoginActivity"
             android:exported="false"
             android:theme="@style/Theme.VoteInformed.NoActionBar" />
 
         <!-- REGISTER ACTIVITY -->
         <activity
-            android:name=".ui.previously_made.RegisterActivity"
+            android:name=".ui.login.RegisterActivity"
             android:exported="false"
             android:theme="@style/Theme.VoteInformed.NoActionBar" />
 
         <!-- HOME ACTIVITY (AFTER LOGIN) -->
         <activity
-            android:name=".ui.previously_made.HomeActivity"
+            android:name=".ui.home.HomeActivity"
             android:exported="false"
             android:theme="@style/Theme.VoteInformed.NoActionBar" />
 
         <!-- PROFILE + PERSONAL INFO -->
         <activity
-            android:name=".ui.previously_made.ProfileActivity"
+            android:name=".ui.user.ProfileActivity"
             android:exported="false"
             android:theme="@style/Theme.VoteInformed.NoActionBar" />
 
@@ -57,7 +57,7 @@
             android:theme="@style/Theme.VoteInformed.NoActionBar" />
 
         <activity
-            android:name=".ui.previously_made.PoliticianProfileActivity"
+            android:name=".ui.politician.PoliticianProfileActivity"
             android:exported="false"
             android:theme="@style/Theme.VoteInformed.NoActionBar" />
 
@@ -68,12 +68,12 @@
             android:theme="@style/Theme.VoteInformed.NoActionBar" />
 
         <activity
-            android:name=".ui.previously_made.SearchActivity"
+            android:name=".ui.search.SearchActivity"
             android:exported="false"
             android:theme="@style/Theme.VoteInformed.NoActionBar" />
 
         <activity
-            android:name=".ui.previously_made.SavedActivity"
+            android:name=".ui.saved.SavedActivity"
             android:exported="false"
             android:theme="@style/Theme.VoteInformed.NoActionBar" />
         <activity
