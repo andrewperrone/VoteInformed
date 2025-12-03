@@ -218,10 +218,4 @@ public class VoteInformed_Repository {
 
         });
     }
-
-    public void removeSaved(String articleId) {
-        executor.execute(() -> savedArticleDao.removeSaved(articleId));
-    }
-
-
 }
