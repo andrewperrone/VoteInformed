@@ -15,7 +15,7 @@ public class UserWithPoliticians {
     public User user;
 
     @Relation(
-            parentColumn = "userId",
+            parentColumn = "user_id",
             entityColumn = "politician_id",
             associateBy = @Junction(User_Politician.class)
     )
