@@ -53,6 +53,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import com.example.voteinformed.data.repository.VoteInformed_Repository;
+
 public class HomeActivity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
@@ -419,11 +423,28 @@ public class HomeActivity extends AppCompatActivity {
     private void setupNavHeader(NavigationView navView) {
         if (navView.getHeaderCount() > 0) {
             View headerView = navView.getHeaderView(0);
-            ImageView profileImage = headerView.findViewById(R.id.profile_image);
             TextView userName = headerView.findViewById(R.id.user_name);
             TextView userEmail = headerView.findViewById(R.id.user_email);
-            if (userName != null) userName.setText("John Doe");
-            if (userEmail != null) userEmail.setText("john.doe@example.com");
+            // ImageView profileImage = headerView.findViewById(R.id.profile_image); // If you add image logic later
+
+            // Get User ID from Session
+            SharedPreferences prefs = getSharedPreferences("UserSession", Context.MODE_PRIVATE);
+            int userId = prefs.getInt("user_id", -1);
+
+            if (userId != -1) {
+                //Fetch data from DB
+                VoteInformed_Repository repo = new VoteInformed_Repository(getApplicationContext());
+                repo.getUserById(userId).observe(this, user -> {
+                    if (user != null) {
+                        if (userName != null) userName.setText(user.getName());
+                        if (userEmail != null) userEmail.setText(user.getEmail());
+                    }
+                });
+            } else {
+                // Default if not logged in
+                if (userName != null) userName.setText("Guest");
+                if (userEmail != null) userEmail.setText("Please Log In");
+            }
         }
     }
 
