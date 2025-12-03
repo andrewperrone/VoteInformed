@@ -8,6 +8,8 @@ import androidx.room.Transaction;
 import androidx.room.Update;
 import androidx.room.Delete;
 import com.example.voteinformed.data.entity.Article;
+import com.example.voteinformed.data.entity.Politician;
+
 import java.util.List;
 
 @Dao
@@ -34,4 +36,7 @@ public interface Article_Dao {
     @Transaction
     @Query("SELECT * FROM article WHERE article_id = :articleId")
     LiveData<List<Article>> getArticleWithIssues(int articleId);
+
+    @Query("SELECT * FROM article WHERE (article_id LIKE '%' || :query || '%' " + "AND :filter IS NULL OR :filter = '')")
+    LiveData<List<Article>> searchArticles(String query,String filter);
 }

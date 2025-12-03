@@ -9,6 +9,8 @@ import androidx.room.Delete;
 
 import com.example.voteinformed.data.entity.Article;
 import com.example.voteinformed.data.entity.Issue;
+import com.example.voteinformed.data.entity.Politician;
+
 import java.util.List;
 
 @Dao
@@ -31,5 +33,8 @@ public interface Issue_Dao {
 
     @Query("SELECT * FROM issue")
     LiveData<List<Issue>> getAllIssues();
+
+    @Query("SELECT * FROM issue WHERE (issue_id LIKE '%' || :query || '%' " + "AND :filter IS NULL OR :filter = '')")
+    LiveData<List<Issue>> searchIssues(String query,String filter);
 }
 

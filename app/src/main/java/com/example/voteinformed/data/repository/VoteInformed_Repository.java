@@ -128,9 +128,16 @@ public class VoteInformed_Repository {
     }
 
 
-    //Search Politician
-    public LiveData<List<Politician>> searchPoliticians(String query) {
-        return politicianDao.searchPoliticians(query);
+    //Search
+    public LiveData<List<Politician>> searchPoliticians(String query, String filter) {
+        return politicianDao.searchPoliticians(query, filter);
+    }
+
+    public LiveData<List<Article>> searchArticles(String query, String filter) {
+        return articleDao.searchArticles(query, filter);
+    }
+    public LiveData<List<Issue>> searchIssues(String query, String filter) {
+        return issueDao.searchIssues(query, filter);
     }
 
     // Write opperators need to use executor
