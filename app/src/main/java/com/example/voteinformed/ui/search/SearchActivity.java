@@ -63,7 +63,7 @@ public class SearchActivity extends AppCompatActivity {
         MaterialButton btnApply = findViewById(R.id.btnApplySearch);
         btnApply.setOnClickListener(v -> performSearch());
 
-        // Affiliation 필터 (정당 필터)
+        // Affiliation 필터
         ChipGroup groupAffiliations = findViewById(R.id.groupAffiliations);
         groupAffiliations.setOnCheckedStateChangeListener((group, checkedIds) -> {
             String filter = "";
@@ -73,7 +73,7 @@ public class SearchActivity extends AppCompatActivity {
                 Chip chip = group.findViewById(chipId);
                 if (chip != null) {
                     String text = chip.getText().toString();
-                    // 여기서 DB의 politician_party 값과 맞춰줌
+
                     if (text.equalsIgnoreCase("Republican")) {
                         filter = "Republican";
                     } else if (text.equalsIgnoreCase("Democratic")) {
@@ -81,7 +81,7 @@ public class SearchActivity extends AppCompatActivity {
                     } else if (text.equalsIgnoreCase("Independent")) {
                         filter = "Independent";
                     } else {
-                        filter = ""; // Others = 전체
+                        filter = "";
                     }
                 }
             }
