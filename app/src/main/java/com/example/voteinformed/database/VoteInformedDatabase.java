@@ -8,11 +8,12 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 
-@Database(entities = {Politician.class}, version = 1)
+@Database(entities = {Politician.class, Users.class}, version = 2)
 public abstract class VoteInformedDatabase extends RoomDatabase {
 
     // Connects the database to the DAO
     public abstract PoliticianDao politicianDao();
+    public abstract UsersDAO usersDao();
 
     // Singleton pattern
     private static volatile VoteInformedDatabase INSTANCE;
@@ -29,6 +30,7 @@ public abstract class VoteInformedDatabase extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                                     VoteInformedDatabase.class, "vote_informed_database")
+                            .fallbackToDestructiveMigration()
                             .build();
                 }
             }
@@ -36,4 +38,3 @@ public abstract class VoteInformedDatabase extends RoomDatabase {
         return INSTANCE;
     }
 }
-

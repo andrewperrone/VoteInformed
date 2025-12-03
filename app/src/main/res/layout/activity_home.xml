@@ -38,12 +38,13 @@
                     android:src="@drawable/menus" />
 
                 <!-- Spacer -->
+
+                <!-- Right user/profile button -->
                 <View
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1" />
 
-                <!-- Right user/profile button -->
                 <ImageButton
                     android:id="@+id/btnRightMenu"
                     android:layout_width="32dp"
