@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     android:background="@color/app_background">
 
-    <!-- Top Bar -->
     <LinearLayout
         android:id="@+id/topBar"
         android:layout_width="match_parent"
@@ -19,8 +18,8 @@
 
         <ImageButton
             android:id="@+id/btnBack"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="Back"
             android:src="@android:drawable/ic_menu_close_clear_cancel"
@@ -32,7 +31,6 @@
             android:layout_weight="1" />
     </LinearLayout>
 
-    <!-- Title -->
     <TextView
         android:id="@+id/titleComparison"
         android:layout_width="wrap_content"
@@ -47,7 +45,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/topBar" />
 
-    <!-- Scroll content with two cards -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -63,7 +60,6 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <!-- LEFT CARD: flush to left -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardLeft"
                 android:layout_width="0dp"
@@ -81,7 +77,6 @@
                     android:orientation="vertical"
                     android:paddingBottom="24dp">
 
-                    <!-- Left image -->
                     <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/imageLeft"
                         android:layout_width="100dp"
@@ -94,7 +89,6 @@
                         app:strokeColor="@android:color/white"
                         app:strokeWidth="3dp" />
 
-                    <!-- Left name -->
                     <TextView
                         android:id="@+id/nameLeft"
                         android:layout_width="wrap_content"
@@ -107,7 +101,6 @@
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
-                    <!-- Left party -->
                     <TextView
                         android:id="@+id/partyLeft"
                         android:layout_width="wrap_content"
@@ -119,7 +112,6 @@
                         android:textColor="#E3F2FD"
                         android:textSize="12sp" />
 
-                    <!-- Left metrics -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -176,7 +168,6 @@
                             android:layout_height="wrap_content" />
                     </LinearLayout>
 
-                    <!-- Left actions -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -184,7 +175,6 @@
                         android:gravity="center"
                         android:orientation="horizontal">
 
-                        <!-- Swap -->
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -211,7 +201,6 @@
                                 android:textSize="10sp" />
                         </LinearLayout>
 
-                        <!-- Remove -->
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -238,43 +227,10 @@
                                 android:textSize="10sp" />
                         </LinearLayout>
 
-                        <!-- Save -->
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:orientation="vertical"
-                            android:paddingHorizontal="8dp">
-
-                            <LinearLayout
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
-                                android:background="?attr/selectableItemBackgroundBorderless"
-                                android:clickable="true"
-                                android:focusable="true"
-                                android:gravity="center">
-
-                                <ImageView
-                                    android:layout_width="24dp"
-                                    android:layout_height="24dp"
-                                    android:src="@drawable/bookmark"
-                                    app:tint="@android:color/white" />
-                            </LinearLayout>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
-                                android:fontFamily="@font/urbanistmedium"
-                                android:text="Save"
-                                android:textColor="@android:color/white"
-                                android:textSize="10sp" />
-                        </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- RIGHT CARD: flush to right -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardRight"
                 android:layout_width="0dp"
@@ -292,7 +248,6 @@
                     android:orientation="vertical"
                     android:paddingBottom="24dp">
 
-                    <!-- Right image -->
                     <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/imageRight"
                         android:layout_width="100dp"
@@ -305,7 +260,6 @@
                         app:strokeColor="@android:color/white"
                         app:strokeWidth="3dp" />
 
-                    <!-- Right name -->
                     <TextView
                         android:id="@+id/nameRight"
                         android:layout_width="wrap_content"
@@ -318,7 +272,6 @@
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
-                    <!-- Right party -->
                     <TextView
                         android:id="@+id/partyRight"
                         android:layout_width="wrap_content"
@@ -330,7 +283,6 @@
                         android:textColor="#FFCDD2"
                         android:textSize="12sp" />
 
-                    <!-- Right metrics -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -387,7 +339,6 @@
                             android:layout_height="wrap_content" />
                     </LinearLayout>
 
-                    <!-- Right actions -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -395,7 +346,6 @@
                         android:gravity="center"
                         android:orientation="horizontal">
 
-                        <!-- Swap -->
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -422,7 +372,6 @@
                                 android:textSize="10sp" />
                         </LinearLayout>
 
-                        <!-- Remove -->
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -449,38 +398,6 @@
                                 android:textSize="10sp" />
                         </LinearLayout>
 
-                        <!-- Save -->
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:orientation="vertical"
-                            android:paddingHorizontal="8dp">
-
-                            <LinearLayout
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
-                                android:background="?attr/selectableItemBackgroundBorderless"
-                                android:clickable="true"
-                                android:focusable="true"
-                                android:gravity="center">
-
-                                <ImageView
-                                    android:layout_width="24dp"
-                                    android:layout_height="24dp"
-                                    android:src="@drawable/bookmark"
-                                    app:tint="@android:color/white" />
-                            </LinearLayout>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
-                                android:fontFamily="@font/urbanistmedium"
-                                android:text="Save"
-                                android:textColor="@android:color/white"
-                                android:textSize="10sp" />
-                        </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
