@@ -14,6 +14,9 @@ public interface Article_Dao {
     @Insert
     void insert(Article article);
 
+    @Insert
+    void insertAll(List<Article> articles);
+
     @Update
     void update(Article article);
 

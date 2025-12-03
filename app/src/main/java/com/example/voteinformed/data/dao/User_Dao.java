@@ -5,6 +5,8 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 import androidx.room.Delete;
+
+import com.example.voteinformed.data.entity.Article;
 import com.example.voteinformed.data.entity.User;
 import java.util.List;
 
@@ -13,6 +15,9 @@ public interface User_Dao {
 
     @Insert
     void insert(User user);
+
+    @Insert
+    void insertAll(List<User> users);
 
     @Update
     void update(User user);
