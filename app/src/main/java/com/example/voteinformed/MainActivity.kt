@@ -14,6 +14,15 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.voteinformed.data.repository.VoteInformed_Repository
 import com.example.voteinformed.databinding.ActivityMainBinding
 
+import com.example.voteinformed.data.api.CommitteeApi
+import com.example.voteinformed.data.api.CommitteeDto
+import com.example.voteinformed.data.api.RetrofitClient
+import android.util.Log
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -21,6 +30,31 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // ------------------ API CALL EXAMPLE ---------------------
+        val api = RetrofitClient.getClient().create(CommitteeApi::class.java)
+        val filter = "(BodyTypeName eq 'Committee') and BodyActiveFlag eq 1"
+
+        val call = api.getCommittees("Uvxb0j9syjm3aI8h46DhQvnX5skN4aSUL0x_Ee3ty9M.ew0KICAiVmVyc2lvbiI6IDEsDQogICJOYW1lIjogIk5ZQyByZWFkIHRva2VuIDIwMTcxMDI2IiwNCiAgIkRhdGUiOiAiMjAxNy0xMC0yNlQxNjoyNjo1Mi42ODM0MDYtMDU6MDAiLA0KICAiV3JpdGUiOiBmYWxzZQ0KfQ", filter)
+        call.enqueue(object : Callback<List<CommitteeDto>> {
+            override fun onResponse(
+                call: Call<List<CommitteeDto>>,
+                response: Response<List<CommitteeDto>>
+            ) {
+                if (response.isSuccessful) {
+                    val committees = response.body()
+                    committees?.forEach {
+                        Log.d("API_TEST", "Committee: ${it.BodyName}")
+                    }
+                } else {
+                    Log.e("API_TEST", "Response code: ${response.code()}")
+                }
+            }
+
+            override fun onFailure(call: Call<List<CommitteeDto>>, t: Throwable) {
+                Log.e("API_TEST", "Error: ${t.message}")
+            }
+        })
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -49,6 +83,8 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -61,5 +97,7 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
+
+
 
 }
