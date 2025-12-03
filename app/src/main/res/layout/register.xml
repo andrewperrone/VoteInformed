@@ -77,7 +77,8 @@
                     app:boxCornerRadiusTopStart="30dp"
                     app:boxStrokeColor="@color/text_field_stroke"
                     app:boxStrokeWidth="1dp"
-                    app:boxStrokeWidthFocused="2dp">
+                    app:boxStrokeWidthFocused="2dp"
+                    app:hintTextColor="@color/text_secondary">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/inputEmail"
@@ -109,7 +110,8 @@
                     app:boxStrokeWidth="1dp"
                     app:boxStrokeWidthFocused="2dp"
                     app:endIconMode="password_toggle"
-                    app:endIconTint="@color/text_hint">
+                    app:endIconTint="@color/text_hint"
+                    app:hintTextColor="@color/text_secondary">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/inputPassword"
@@ -141,7 +143,8 @@
                     app:boxStrokeWidth="1dp"
                     app:boxStrokeWidthFocused="2dp"
                     app:endIconMode="password_toggle"
-                    app:endIconTint="@color/text_hint">
+                    app:endIconTint="@color/text_hint"
+                    app:hintTextColor="@color/text_secondary">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/inputConfirmPassword"

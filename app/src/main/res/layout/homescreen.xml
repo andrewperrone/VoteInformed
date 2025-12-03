@@ -3,16 +3,18 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/login_background_light">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/panelCard"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="2dp"
-        app:cardBackgroundColor="#00FFFFFF"
+        app:cardBackgroundColor="@android:color/transparent"
         app:cardCornerRadius="20dp"
-        app:cardUseCompatPadding="true"
+        app:cardElevation="0dp"
+        app:cardUseCompatPadding="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

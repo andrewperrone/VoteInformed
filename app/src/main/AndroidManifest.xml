@@ -76,6 +76,11 @@
             android:name=".ui.previously_made.SavedActivity"
             android:exported="false"
             android:theme="@style/Theme.VoteInformed.NoActionBar" />
+        <activity
+            android:name=".ui.previously_made.PoliticianComparisonActivity"
+            android:exported="false"
+            android:theme="@style/Theme.VoteInformed.NoActionBar" />
+
 
     </application>
 </manifest>

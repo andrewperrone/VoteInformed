@@ -21,7 +21,7 @@ import java.util.Set;
 public class ConcernsActivity extends AppCompatActivity {
 
     private ChipGroup chipGroup;
-    private List<ChipData> allChips = new ArrayList<>();
+    private final List<ChipData> allChips = new ArrayList<>();
     private SharedPreferences sharedPreferences;
     private static final String PREFS_NAME = "ConcernsPrefs";
     private static final String SELECTED_CHIPS_KEY = "SelectedChips";
@@ -44,7 +44,7 @@ public class ConcernsActivity extends AppCompatActivity {
 
         // Listener to handle check changes
         CompoundButton.OnCheckedChangeListener chipListener = (buttonView, isChecked) -> {
-            String chipText = ((Chip) buttonView).getText().toString();
+            String chipText = buttonView.getText().toString();
             updateChipStatus(chipText, isChecked);
             saveSelections();
             reorderChips();
@@ -149,7 +149,7 @@ public class ConcernsActivity extends AppCompatActivity {
         chipGroup.removeAllViews();
 
         CompoundButton.OnCheckedChangeListener chipListener = (buttonView, isChecked) -> {
-            String chipText = ((Chip) buttonView).getText().toString();
+            String chipText = buttonView.getText().toString();
             updateChipStatus(chipText, isChecked);
             saveSelections();
             reorderChips();
