@@ -45,26 +45,48 @@ public class VoteInformed_Repository {
 
     // Read opperators need to use LiveData
 
+    //getAll_
+    public LiveData<List<User>> getAllUsers() {
+        return userDao.getAllUsers();
+    }
     public LiveData<List<Article>> getAllArticles() {
         return articleDao.getAllArticles();
     }
-
     public LiveData<List<Election>> getAllElections() {
         return electionDao.getAllElections();
     }
-
     public LiveData<List<Issue>> getAllIssues() {
         return issueDao.getAllIssues();
     }
-
     public LiveData<List<Politician>> getAllPoliticians() {
         return politicianDao.getAllPoliticians();
     }
 
-    public LiveData<List<User>> getAllUsers() {
-        return userDao.getAllUsers();
+    //get_ById
+    public LiveData<User> getUserById(int id) {
+        return userDao.getUserById(id);
+    }
+    public LiveData<Article> getArticleById(int id) {
+        return articleDao.getArticleById(id);
+    }
+    public LiveData<Election> getElectionById(int id) {
+        return electionDao.getElectionById(id);
+    }
+    public LiveData<Issue> getIssueById(int id) {
+        return issueDao.getIssueById(id);
+    }
+    public LiveData<Politician> getPoliticianById(int id) {
+        return politicianDao.getPoliticianById(id);
     }
 
+    public LiveData<List<Article>> getArticleWithIssues(int issueId) {
+        return articleDao.getArticleWithIssues(issueId);
+    }
+
+    //Search Politician
+    public LiveData<List<Politician>> searchPoliticians(String query) {
+        return politicianDao.searchPoliticians(query);
+    }
 
     // Write opperators need to use executor
     //Article

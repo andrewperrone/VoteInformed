@@ -31,4 +31,7 @@ public interface Politician_Dao {
 
     @Query("SELECT * FROM politician")
     LiveData<List<Politician>> getAllPoliticians();
+
+    @Query("SELECT * FROM politician WHERE politician_name LIKE '%' || :query || '%' OR politician_party LIKE '%' || :query || '%'")
+    LiveData<List<Politician>> searchPoliticians(String query);
 }

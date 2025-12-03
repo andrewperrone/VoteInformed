@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Transaction;
 import androidx.room.Update;
 import androidx.room.Delete;
 import com.example.voteinformed.data.entity.Article;
@@ -29,4 +30,8 @@ public interface Article_Dao {
 
     @Query("SELECT * FROM article")
     LiveData<List<Article>> getAllArticles();
+
+    @Transaction
+    @Query("SELECT * FROM article WHERE article_id = :articleId")
+    LiveData<List<Article>> getArticleWithIssues(int articleId);
 }
