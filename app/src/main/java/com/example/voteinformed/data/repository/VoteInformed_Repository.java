@@ -13,7 +13,6 @@ import com.example.voteinformed.data.dao.Politician_Dao;
 import com.example.voteinformed.data.dao.User_Dao;
 import com.example.voteinformed.data.database.VoteInformed_Database;
 
-
 public class VoteInformed_Repository {
 
     private final String DB_NAME = "VoteInformed DB";
@@ -39,7 +38,6 @@ public class VoteInformed_Repository {
 
 
         Toast.makeText(context, "Database initialized...", Toast.LENGTH_LONG).show();
-
     }
 
     //--------------- Insert Task --------------------
