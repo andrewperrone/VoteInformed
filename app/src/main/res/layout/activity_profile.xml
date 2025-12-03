@@ -76,7 +76,8 @@
                     android:fontFamily="@font/urbanistmedium"
                     android:text="realjohndoe@voteinformed.com"
                     android:textColor="@color/text_secondary"
-                    android:textSize="14sp" />
+                    android:textSize="13sp" />
+
             </LinearLayout>
         </LinearLayout>
 
