@@ -25,12 +25,9 @@ public interface Election_Dao {
     @Delete
     void delete(Election election);
 
-    @Query("SELECT * FROM election")
-    List<Election> getAllElections();
-
     @Query("SELECT * FROM election WHERE election_id = :id")
-    Election getElectionById(int id);
+    LiveData<Election> getElectionById(int id);
 
     @Query("SELECT * FROM election")
-    LiveData<List<Election>> getAllAElectionLive();
+    LiveData<List<Election>> getAllElections();
 }

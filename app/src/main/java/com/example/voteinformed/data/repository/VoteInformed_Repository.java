@@ -46,23 +46,23 @@ public class VoteInformed_Repository {
     // Read opperators need to use LiveData
 
     public LiveData<List<Article>> getAllArticles() {
-        return articleDao.getAllArticlesLive();
+        return articleDao.getAllArticles();
     }
 
     public LiveData<List<Election>> getAllElections() {
-        return electionDao.getAllElectionsLive();
+        return electionDao.getAllElections();
     }
 
     public LiveData<List<Issue>> getAllIssues() {
-        return issueDao.getAllIssuesLive();
+        return issueDao.getAllIssues();
     }
 
     public LiveData<List<Politician>> getAllPoliticians() {
-        return politicianDao.getAllPoliticiansLive();
+        return politicianDao.getAllPoliticians();
     }
 
     public LiveData<List<User>> getAllUsers() {
-        return userDao.getAllUsersLive();
+        return userDao.getAllUsers();
     }
 
     // Write opperators need to use executor

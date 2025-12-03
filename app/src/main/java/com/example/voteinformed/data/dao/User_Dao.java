@@ -28,16 +28,9 @@ public interface User_Dao {
     @Delete
     void delete(User user);
 
-    @Query("SELECT * FROM user")
-    List<User> getAllUsers();
-
     @Query("SELECT * FROM user WHERE user_id = :id")
-    User getUserById(int id);
-
-    @Transaction
-    @Query("SELECT * FROM user WHERE user_id = :id")
-    UserWithArticles getUserWithArticles(int id);
+    LiveData<User> getUserById(int id);
 
     @Query("SELECT * FROM user")
-    LiveData<List<User>> getAllUserLive();
+    LiveData<List<User>> getAllUsers();
 }
