@@ -9,12 +9,16 @@ import com.example.voteinformed.data.dao.Article_Dao;
 import com.example.voteinformed.data.dao.Election_Dao;
 import com.example.voteinformed.data.dao.Issue_Dao;
 import com.example.voteinformed.data.dao.Politician_Dao;
+import com.example.voteinformed.data.dao.SavedArticle_Dao;
 import com.example.voteinformed.data.dao.User_Dao;
+
+
 import com.example.voteinformed.data.database.VoteInformed_Database;
 import com.example.voteinformed.data.entity.Article;
 import com.example.voteinformed.data.entity.Election;
 import com.example.voteinformed.data.entity.Issue;
 import com.example.voteinformed.data.entity.Politician;
+import com.example.voteinformed.data.entity.SavedArticle;
 import com.example.voteinformed.data.entity.User;
 
 import java.util.List;
@@ -31,6 +35,8 @@ public class VoteInformed_Repository {
     private final Issue_Dao issueDao;
     private final Politician_Dao politicianDao;
     private final User_Dao userDao;
+    private final SavedArticle_Dao savedArticleDao;
+
 
 
 
@@ -44,6 +50,7 @@ public class VoteInformed_Repository {
         issueDao = voteInformed_db.issueDao();
         politicianDao = voteInformed_db.politicianDao();
         userDao = voteInformed_db.userDao();
+        savedArticleDao = voteInformed_db.savedArticleDao();
 
     }
 
@@ -69,6 +76,23 @@ public class VoteInformed_Repository {
     public LiveData<List<Politician>> getAllPoliticians() {
         return politicianDao.getAllPoliticians();
     }
+
+    public LiveData<List<SavedArticle>> getAllSavedArticles() {
+        return savedArticleDao.getAllSaved();
+    }
+
+    public void saveArticle(SavedArticle article) {
+        executor.execute(() -> savedArticleDao.saveArticle(article));
+    }
+
+    public void removeSaved(String articleId) {
+        executor.execute(() -> savedArticleDao.removeSaved(articleId));
+    }
+
+    public boolean isArticleSaved(String articleId) {
+        return savedArticleDao.isArticleSaved(articleId);
+    }
+
 
     public LiveData<List<Politician>> searchPoliticiansFiltered(String query, String party) {
         // 실제 DB나 API 검색 로직 구현
@@ -174,6 +198,8 @@ public class VoteInformed_Repository {
     public void deleteUser(User user) {
         executor.execute(() -> userDao.delete(user));
     }
+
+
 
 
 }
