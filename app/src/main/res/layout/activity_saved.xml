@@ -94,12 +94,13 @@
                     <ImageView
                         android:id="@+id/bookmark1"
                         android:layout_width="24dp"
-                        android:layout_height="32dp"
+                        android:layout_height="24dp"
                         android:layout_gravity="top|end"
                         android:layout_marginEnd="12dp"
+                        android:layout_marginTop="8dp"
                         android:elevation="2dp"
-                        android:src="@drawable/bookmark"
-                        app:tint="@color/app_secondary_teal" />
+                        android:src="@drawable/ic_heart_filled"
+                        android:contentDescription="Saved article" />
                 </FrameLayout>
 
                 <!-- Bookmark 2 -->
@@ -121,12 +122,13 @@
                     <ImageView
                         android:id="@+id/bookmark2"
                         android:layout_width="24dp"
-                        android:layout_height="32dp"
+                        android:layout_height="24dp"
                         android:layout_gravity="top|end"
                         android:layout_marginEnd="12dp"
+                        android:layout_marginTop="8dp"
                         android:elevation="2dp"
-                        android:src="@drawable/bookmark"
-                        app:tint="@color/app_secondary_teal" />
+                        android:src="@drawable/ic_heart_filled"
+                        android:contentDescription="Saved article" />
                 </FrameLayout>
 
                 <!-- Bookmark 3 -->
@@ -148,12 +150,13 @@
                     <ImageView
                         android:id="@+id/bookmark3"
                         android:layout_width="24dp"
-                        android:layout_height="32dp"
+                        android:layout_height="24dp"
                         android:layout_gravity="top|end"
                         android:layout_marginEnd="12dp"
+                        android:layout_marginTop="8dp"
                         android:elevation="2dp"
-                        android:src="@drawable/bookmark"
-                        app:tint="@color/app_secondary_teal" />
+                        android:src="@drawable/ic_heart_filled"
+                        android:contentDescription="Saved article" />
                 </FrameLayout>
 
                 <!-- Bookmark 4 -->
@@ -175,12 +178,13 @@
                     <ImageView
                         android:id="@+id/bookmark4"
                         android:layout_width="24dp"
-                        android:layout_height="32dp"
+                        android:layout_height="24dp"
                         android:layout_gravity="top|end"
                         android:layout_marginEnd="12dp"
+                        android:layout_marginTop="8dp"
                         android:elevation="2dp"
-                        android:src="@drawable/bookmark"
-                        app:tint="@color/app_secondary_teal" />
+                        android:src="@drawable/ic_heart_filled"
+                        android:contentDescription="Saved article" />
                 </FrameLayout>
             </GridLayout>
 
