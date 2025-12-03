@@ -14,6 +14,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.voteinformed.R;
+import com.example.voteinformed.data.repository.VoteInformed_Repository;
 import com.example.voteinformed.ui.home.HomeActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
@@ -21,10 +22,12 @@ import com.google.android.material.textfield.TextInputEditText;
 public class RegisterActivity extends AppCompatActivity {
 
     private TextInputEditText inputEmail, inputPassword, inputConfirmPassword;
+    private VoteInformed_Repository voteInformedRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        voteInformedRepository = new VoteInformed_Repository(getApplicationContext());
 
         // Enable edge-to-edge layout
         EdgeToEdge.enable(this);
@@ -69,9 +72,18 @@ public class RegisterActivity extends AppCompatActivity {
                 return;
             }
 
-            // Registration successful, redirect to HomeActivity
-            startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
-            finish();
+            voteInformedRepository.register(email, pass, (success, emailTaken) -> {
+                if (emailTaken) {
+                    Toast.makeText(this, "Email already in use", Toast.LENGTH_SHORT).show();
+                } else if (success) {
+                    Toast.makeText(this, "Registration successful", Toast.LENGTH_SHORT).show();
+
+                    startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
+                    finish();
+                } else {
+                    Toast.makeText(this, "Registration failed", Toast.LENGTH_SHORT).show();
+                }
+            });
         });
     }
 }

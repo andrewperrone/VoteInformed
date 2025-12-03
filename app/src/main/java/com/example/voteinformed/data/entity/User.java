@@ -39,7 +39,7 @@ public class User {
         this.name = "John Doe";
         this.email = email;
         this.password = password;
-        this.location = "123 Main Street, City Hall";
+        this.location = "123 Main St. City Hall";
         this.preference = "[Preferences]";
         this.is_admin = false;
     }
