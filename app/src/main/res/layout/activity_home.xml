@@ -1,36 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/app_background">
+    android:background="#F5F5F5"
+    tools:context=".ui.previously_made.HomeActivity">
 
-    <!-- ============================= -->
-    <!-- MAIN CONTENT - Must be first child for DrawerLayout -->
-    <!-- ============================= -->
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         android:padding="16dp">
 
+        <!-- TOP SECTION -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- TOP BAR WITH LEFT & RIGHT BUTTONS -->
+            <!-- TOP BAR WITH LEFT/RIGHT BUTTONS -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginBottom="8dp"
-                android:background="@color/app_top_bar_background"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingHorizontal="8dp">
 
-                <!-- Left menu button (hamburger) -->
                 <ImageButton
                     android:id="@+id/btnLeftMenu"
                     android:layout_width="32dp"
@@ -40,13 +38,11 @@
                     android:scaleType="centerCrop"
                     android:src="@drawable/menus" />
 
-                <!-- Spacer to push right button to end -->
                 <View
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1" />
 
-                <!-- Right user/profile button -->
                 <ImageButton
                     android:id="@+id/btnRightMenu"
                     android:layout_width="32dp"
@@ -65,7 +61,6 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <!-- Page title -->
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -75,7 +70,6 @@
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
-                <!-- Voice Concerns Button -->
                 <Button
                     android:id="@+id/btnVoiceConcerns"
                     android:layout_width="120dp"
@@ -88,94 +82,383 @@
                     app:strokeColor="@color/app_secondary_teal" />
             </LinearLayout>
 
-            <!-- GRID OF TOP ISSUES (2 columns, 2 rows) -->
-            <GridLayout
+            <!-- TOP CONCERNS - HORIZONTAL SCROLLING ARTICLES -->
+            <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:alignmentMode="alignMargins"
-                android:columnCount="2"
-                android:columnOrderPreserved="false"
-                android:rowCount="2">
+                android:scrollbars="none">
 
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="120dp"
-                    android:layout_columnWeight="1"
-                    android:layout_margin="8dp"
-                    android:background="@drawable/rounded_box" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="120dp"
-                    android:layout_columnWeight="1"
-                    android:layout_margin="8dp"
-                    android:background="@drawable/rounded_box" />
+                    <!-- Article 1 -->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/article1card"
+                        android:layout_width="160dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="12dp"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="4dp">
 
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="120dp"
-                    android:layout_columnWeight="1"
-                    android:layout_margin="8dp"
-                    android:background="@drawable/rounded_box" />
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
 
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="120dp"
-                    android:layout_columnWeight="1"
-                    android:layout_margin="8dp"
-                    android:background="@drawable/rounded_box" />
-            </GridLayout>
+                            <ImageView
+                                android:id="@+id/article1image"
+                                android:layout_width="match_parent"
+                                android:layout_height="100dp"
+                                android:scaleType="centerCrop"
+                                android:contentDescription="Article" />
 
-            <!-- CURRENT ISSUES TITLE -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:text="@string/current_issues"
-                android:textColor="@color/app_secondary_teal"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                            <ImageButton
+                                android:id="@+id/bookmark_article1"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_alignParentTop="true"
+                                android:layout_alignParentEnd="true"
+                                android:layout_marginTop="2dp"
+                                android:layout_marginEnd="8dp"
+                                android:background="?attr/selectableItemBackgroundBorderless"
+                                android:src="@drawable/ic_heart_unfilled"
+                                android:contentDescription="Bookmark article" />
 
-            <!-- GRID OF CURRENT ISSUES -->
-            <GridLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:alignmentMode="alignMargins"
-                android:columnCount="2"
-                android:columnOrderPreserved="false"
-                android:rowCount="2">
+                            <TextView
+                                android:id="@+id/article1title"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/article1image"
+                                android:layout_margin="6dp"
+                                android:text="Article Title"
+                                android:textSize="12sp"
+                                android:maxLines="2"
+                                android:ellipsize="end"
+                                android:textColor="@android:color/black" />
 
-                <!-- Large spanning issue -->
-                <View
-                    android:layout_width="363dp"
-                    android:layout_height="120dp"
-                    android:layout_columnSpan="2"
-                    android:layout_margin="8dp"
-                    android:background="@drawable/rounded_box" />
+                        </RelativeLayout>
+                    </androidx.cardview.widget.CardView>
 
-                <!-- Two smaller issues -->
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="120dp"
-                    android:layout_columnWeight="1"
-                    android:layout_margin="8dp"
-                    android:background="@drawable/rounded_box" />
+                    <!-- Article 2 -->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/article2card"
+                        android:layout_width="160dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="12dp"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="4dp">
 
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="120dp"
-                    android:layout_columnWeight="1"
-                    android:layout_margin="8dp"
-                    android:background="@drawable/rounded_box" />
-            </GridLayout>
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:id="@+id/article2image"
+                                android:layout_width="match_parent"
+                                android:layout_height="100dp"
+                                android:scaleType="centerCrop"
+                                android:contentDescription="Article" />
+
+                            <ImageButton
+                                android:id="@+id/bookmark_article2"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_alignParentTop="true"
+                                android:layout_alignParentEnd="true"
+                                android:layout_marginTop="2dp"
+                                android:layout_marginEnd="8dp"
+                                android:background="?attr/selectableItemBackgroundBorderless"
+                                android:src="@drawable/ic_heart_unfilled"
+                                android:contentDescription="Bookmark article" />
+
+                            <TextView
+                                android:id="@+id/article2title"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/article2image"
+                                android:layout_margin="6dp"
+                                android:text="Article Title"
+                                android:textSize="12sp"
+                                android:maxLines="2"
+                                android:ellipsize="end"
+                                android:textColor="@android:color/black" />
+
+                        </RelativeLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Article 3 -->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/article3card"
+                        android:layout_width="160dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="12dp"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="4dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:id="@+id/article3image"
+                                android:layout_width="match_parent"
+                                android:layout_height="100dp"
+                                android:scaleType="centerCrop"
+                                android:contentDescription="Article" />
+
+                            <ImageButton
+                                android:id="@+id/bookmark_article3"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_alignParentTop="true"
+                                android:layout_alignParentEnd="true"
+                                android:layout_marginTop="2dp"
+                                android:layout_marginEnd="8dp"
+                                android:background="?attr/selectableItemBackgroundBorderless"
+                                android:src="@drawable/ic_heart_unfilled"
+                                android:contentDescription="Bookmark article" />
+
+                            <TextView
+                                android:id="@+id/article3title"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/article3image"
+                                android:layout_margin="6dp"
+                                android:text="Article Title"
+                                android:textSize="12sp"
+                                android:maxLines="2"
+                                android:ellipsize="end"
+                                android:textColor="@android:color/black" />
+
+                        </RelativeLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Article 4 -->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/article4card"
+                        android:layout_width="160dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="12dp"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="4dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:id="@+id/article4image"
+                                android:layout_width="match_parent"
+                                android:layout_height="100dp"
+                                android:scaleType="centerCrop"
+                                android:contentDescription="Article" />
+
+                            <ImageButton
+                                android:id="@+id/bookmark_article4"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_alignParentTop="true"
+                                android:layout_alignParentEnd="true"
+                                android:layout_marginTop="2dp"
+                                android:layout_marginEnd="8dp"
+                                android:background="?attr/selectableItemBackgroundBorderless"
+                                android:src="@drawable/ic_heart_unfilled"
+                                android:contentDescription="Bookmark article" />
+
+                            <TextView
+                                android:id="@+id/article4title"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/article4image"
+                                android:layout_margin="6dp"
+                                android:text="Article Title"
+                                android:textSize="12sp"
+                                android:maxLines="2"
+                                android:ellipsize="end"
+                                android:textColor="@android:color/black" />
+
+                        </RelativeLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Article 5 -->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/article5card"
+                        android:layout_width="160dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="12dp"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="4dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:id="@+id/article5image"
+                                android:layout_width="match_parent"
+                                android:layout_height="100dp"
+                                android:scaleType="centerCrop"
+                                android:contentDescription="Article" />
+
+                            <ImageButton
+                                android:id="@+id/bookmark_article5"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_alignParentTop="true"
+                                android:layout_alignParentEnd="true"
+                                android:layout_marginTop="2dp"
+                                android:layout_marginEnd="8dp"
+                                android:background="?attr/selectableItemBackgroundBorderless"
+                                android:src="@drawable/ic_heart_unfilled"
+                                android:contentDescription="Bookmark article" />
+
+                            <TextView
+                                android:id="@+id/article5title"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/article5image"
+                                android:layout_margin="6dp"
+                                android:text="Article Title"
+                                android:textSize="12sp"
+                                android:maxLines="2"
+                                android:ellipsize="end"
+                                android:textColor="@android:color/black" />
+
+                        </RelativeLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Article 6 -->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/article6card"
+                        android:layout_width="160dp"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="4dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:id="@+id/article6image"
+                                android:layout_width="match_parent"
+                                android:layout_height="100dp"
+                                android:scaleType="centerCrop"
+                                android:contentDescription="Article" />
+
+                            <ImageButton
+                                android:id="@+id/bookmark_article6"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_alignParentTop="true"
+                                android:layout_alignParentEnd="true"
+                                android:layout_marginTop="2dp"
+                                android:layout_marginEnd="8dp"
+                                android:background="?attr/selectableItemBackgroundBorderless"
+                                android:src="@drawable/ic_heart_unfilled"
+                                android:contentDescription="Bookmark article" />
+
+                            <TextView
+                                android:id="@+id/article6title"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/article6image"
+                                android:layout_margin="6dp"
+                                android:text="Article Title"
+                                android:textSize="12sp"
+                                android:maxLines="2"
+                                android:ellipsize="end"
+                                android:textColor="@android:color/black" />
+
+                        </RelativeLayout>
+                    </androidx.cardview.widget.CardView>
+
+                </LinearLayout>
+            </HorizontalScrollView>
 
         </LinearLayout>
-    </ScrollView>
 
-    <!-- ============================= -->
-    <!-- NAVIGATION DRAWER - Must be last child -->
-    <!-- ============================= -->
+        <!-- LEGISLATION SECTION -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:text="NYC Legislation (2025)"
+            android:textColor="@color/app_secondary_teal"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:scrollbars="none">
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipGroupConcerns"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:singleSelection="true">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipAll"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="All Topics" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipHealth"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Healthcare" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipCrime"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Crime" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipEnvironment"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Environment" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipTransport"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Transport" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipEducation"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Education" />
+
+            </com.google.android.material.chip.ChipGroup>
+        </HorizontalScrollView>
+
+        <!-- RECYCLERVIEW -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerLegislation"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:clipToPadding="false" />
+    </LinearLayout>
+
+    <!-- NAVIGATION DRAWER -->
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"

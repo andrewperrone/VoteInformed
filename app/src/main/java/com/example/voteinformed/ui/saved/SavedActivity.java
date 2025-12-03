@@ -19,7 +19,6 @@ import com.example.voteinformed.ui.user.ProfileActivity;
 import com.google.android.material.navigation.NavigationView;
 
 public class SavedActivity extends AppCompatActivity {
-
     private DrawerLayout drawerLayout;
 
     @Override
@@ -30,6 +29,10 @@ public class SavedActivity extends AppCompatActivity {
         // Initialize drawer
         drawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navView = findViewById(R.id.nav_view);
+
+        // Highlight current item and make it non-clickable
+        navView.setCheckedItem(R.id.nav_saved);
+        navView.getMenu().findItem(R.id.nav_saved).setEnabled(false);
 
         // Setup navigation header
         setupNavHeader(navView);
@@ -71,10 +74,12 @@ public class SavedActivity extends AppCompatActivity {
                 startActivity(new Intent(SavedActivity.this, SearchActivity.class));
             } else if (id == R.id.nav_saved) {
                 // Already on Saved page
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+            } else if (id == R.id.nav_comparison) {
+                startActivity(new Intent(SavedActivity.this, PoliticianComparisonActivity.class));
             } else if (id == R.id.nav_profile) {
                 startActivity(new Intent(SavedActivity.this, ProfileActivity.class));
-            } else if (id == R.id.nav_settings) {
-                // TODO: Implement SettingsActivity
             } else if (id == R.id.nav_sign_out) {
                 startActivity(new Intent(SavedActivity.this, HomescreenActivity.class));
                 finish();
@@ -87,6 +92,7 @@ public class SavedActivity extends AppCompatActivity {
         });
     }
 
+
     @Override
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -95,4 +101,5 @@ public class SavedActivity extends AppCompatActivity {
             super.onBackPressed();
         }
     }
+
 }

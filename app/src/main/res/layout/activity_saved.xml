@@ -70,7 +70,7 @@
                 android:id="@+id/gridBookmarked"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="32dp"
                 android:alignmentMode="alignMargins"
                 android:columnCount="2"
                 android:columnOrderPreserved="false">
@@ -94,12 +94,13 @@
                     <ImageView
                         android:id="@+id/bookmark1"
                         android:layout_width="24dp"
-                        android:layout_height="32dp"
+                        android:layout_height="24dp"
                         android:layout_gravity="top|end"
                         android:layout_marginEnd="12dp"
+                        android:layout_marginTop="8dp"
                         android:elevation="2dp"
-                        android:src="@drawable/bookmark"
-                        app:tint="@color/app_secondary_teal" />
+                        android:src="@drawable/ic_heart_filled"
+                        android:contentDescription="Saved article" />
                 </FrameLayout>
 
                 <!-- Bookmark 2 -->
@@ -121,12 +122,13 @@
                     <ImageView
                         android:id="@+id/bookmark2"
                         android:layout_width="24dp"
-                        android:layout_height="32dp"
+                        android:layout_height="24dp"
                         android:layout_gravity="top|end"
                         android:layout_marginEnd="12dp"
+                        android:layout_marginTop="8dp"
                         android:elevation="2dp"
-                        android:src="@drawable/bookmark"
-                        app:tint="@color/app_secondary_teal" />
+                        android:src="@drawable/ic_heart_filled"
+                        android:contentDescription="Saved article" />
                 </FrameLayout>
 
                 <!-- Bookmark 3 -->
@@ -148,12 +150,13 @@
                     <ImageView
                         android:id="@+id/bookmark3"
                         android:layout_width="24dp"
-                        android:layout_height="32dp"
+                        android:layout_height="24dp"
                         android:layout_gravity="top|end"
                         android:layout_marginEnd="12dp"
+                        android:layout_marginTop="8dp"
                         android:elevation="2dp"
-                        android:src="@drawable/bookmark"
-                        app:tint="@color/app_secondary_teal" />
+                        android:src="@drawable/ic_heart_filled"
+                        android:contentDescription="Saved article" />
                 </FrameLayout>
 
                 <!-- Bookmark 4 -->
@@ -175,53 +178,16 @@
                     <ImageView
                         android:id="@+id/bookmark4"
                         android:layout_width="24dp"
-                        android:layout_height="32dp"
+                        android:layout_height="24dp"
                         android:layout_gravity="top|end"
                         android:layout_marginEnd="12dp"
+                        android:layout_marginTop="8dp"
                         android:elevation="2dp"
-                        android:src="@drawable/bookmark"
-                        app:tint="@color/app_secondary_teal" />
+                        android:src="@drawable/ic_heart_filled"
+                        android:contentDescription="Saved article" />
                 </FrameLayout>
             </GridLayout>
 
-            <!-- Following Section -->
-            <TextView
-                android:id="@+id/titleFollowing"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:fontFamily="@font/urbanistmedium"
-                android:text="Following"
-                android:textColor="@color/app_secondary_teal"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <GridLayout
-                android:id="@+id/gridFollowing"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:alignmentMode="alignMargins"
-                android:columnCount="2"
-                android:columnOrderPreserved="false">
-
-                <!-- Following 1 -->
-                <FrameLayout
-                    android:layout_width="0dp"
-                    android:layout_height="140dp"
-                    android:layout_columnWeight="1"
-                    android:layout_margin="8dp"
-                    android:background="@drawable/rounded_box" />
-
-                <!-- Following 2 -->
-                <FrameLayout
-                    android:layout_width="0dp"
-                    android:layout_height="140dp"
-                    android:layout_columnWeight="1"
-                    android:layout_margin="8dp"
-                    android:background="@drawable/rounded_box" />
-            </GridLayout>
-
-            <!-- Bottom Spacing -->
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="32dp" />

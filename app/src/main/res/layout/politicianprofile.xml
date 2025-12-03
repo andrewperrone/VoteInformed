@@ -49,7 +49,6 @@
                 android:paddingEnd="20dp"
                 android:paddingBottom="24dp">
 
-
                 <TextView
                     android:id="@+id/textName"
                     android:layout_width="wrap_content"
@@ -62,7 +61,6 @@
                     app:layout_constraintBottom_toTopOf="@+id/textParty"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
-
 
                 <TextView
                     android:id="@+id/textParty"
@@ -94,11 +92,7 @@
                         android:layout_height="match_parent"
                         android:layout_margin="4dp"
                         android:background="@drawable/rounded_bubble"
-                        android:translationX="0dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/tabPolicy"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        android:translationX="0dp" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/tabAbout"
@@ -138,8 +132,10 @@
                         app:backgroundTint="#3A4475"
                         app:strokeColor="#8591C7"
                         app:strokeWidth="2dp" />
+
                 </com.google.android.material.button.MaterialButtonToggleGroup>
 
+                <!-- ABOUT SECTION -->
                 <LinearLayout
                     android:id="@+id/sectionAbout"
                     android:layout_width="0dp"
@@ -156,13 +152,12 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/urbanistmedium"
                         android:lineHeight="22sp"
-                        android:text="Barack Obama served as the 44th President of the United States from 2009–2017. Before the presidency, he represented Illinois as a U.S. Senator (2005–2008) and State Senator (1997–2004). Born in Hawaii, he studied Political Science at Columbia University and earned his law degree at Harvard, where he was president of the Harvard Law Review.
-                        \n
-                        \nObama is known for his background as a community organizer in Chicago, his focus on healthcare reform, economic recovery, and foreign diplomacy. Since leaving office, he has remained active through the Obama Foundation, focusing on civic engagement, leadership, and public service."
+                        android:text="Barack Obama served as the 44th President of the United States from 2009–2017. Before the presidency, he represented Illinois as a U.S. Senator (2005–2008) and State Senator (1997–2004). Born in Hawaii, he studied Political Science at Columbia University and earned his law degree at Harvard, where he was president of the Harvard Law Review.\n\nObama is known for his background as a community organizer in Chicago, his focus on healthcare reform, economic recovery, and foreign diplomacy. Since leaving office, he has remained active through the Obama Foundation, focusing on civic engagement, leadership, and public service."
                         android:textColor="@android:color/white"
                         android:textSize="14sp" />
                 </LinearLayout>
 
+                <!-- POLICY SECTION -->
                 <LinearLayout
                     android:id="@+id/sectionPolicy"
                     android:layout_width="0dp"
@@ -179,19 +174,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/urbanistmedium"
-                        android:text="Healthcare: Signed the Affordable Care Act to expand coverage and protect patients with pre-existing conditions.
-                        \n
-                        \nEconomy: Passed stimulus measures to address the 2008 financial crisis and promoted middle-class tax cuts.
-                        \n
-                        \nForeign Affairs: Advocated diplomacy, ordered the mission that killed Osama bin Laden, and opened relations with Cuba.
-                        \n
-                        \nEnvironment: Supported renewable energy and signed the Paris Climate Agreement.
-                        \n
-                        \nSocial Issues: Advanced LGBTQ+ rights, including support for same-sex marriage, and strengthened protections for women’s rights."
+                        android:text="Healthcare: Signed the Affordable Care Act to expand coverage and protect patients with pre-existing conditions.\n\nEconomy: Passed stimulus measures to address the 2008 financial crisis and promoted middle-class tax cuts.\n\nForeign Affairs: Advocated diplomacy, ordered the mission that killed Osama bin Laden, and opened relations with Cuba.\n\nEnvironment: Supported renewable energy and signed the Paris Climate Agreement.\n\nSocial Issues: Advanced LGBTQ+ rights and strengthened protections for women’s rights."
                         android:textColor="@android:color/white"
                         android:textSize="14sp" />
                 </LinearLayout>
 
+                <!-- CONTACT SECTION -->
                 <LinearLayout
                     android:id="@+id/sectionContact"
                     android:layout_width="0dp"
@@ -208,22 +196,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/urbanistmedium"
-                        android:text="Official Website: barackobama.com
-                        \nObama Foundation: obama.org
-                        \nEmail (Foundation): info@obama.org
-                        \n
-                        \nMailing Address:
-                        \nThe Obama Foundation
-                        \n5235 S. Harper Court, Suite 1140
-                        \nChicago, IL 60615
-                        \n
-                        \nTwitter: @BarackObama
-                        \nFacebook: facebook.com/barackobama
-                        \nInstagram: @barackobama"
+                        android:text="Official Website: barackobama.com\nObama Foundation: obama.org\nEmail: info@obama.org\n\nMailing Address:\nThe Obama Foundation\n5235 S. Harper Court, Suite 1140\nChicago, IL 60615\n\nTwitter: @BarackObama\nFacebook: facebook.com/barackobama\nInstagram: @barackobama"
                         android:textColor="@android:color/white"
                         android:textSize="14sp" />
                 </LinearLayout>
-
 
                 <Space
                     android:layout_width="0dp"

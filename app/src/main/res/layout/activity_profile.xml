@@ -7,18 +7,13 @@
     android:background="@color/app_background"
     android:fillViewport="true">
 
-    <!-- ============================= -->
-    <!-- MAIN CONTAINER -->
-    <!-- ============================= -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- ============================= -->
-        <!-- BACK BUTTON -->
-        <!-- ============================= -->
+        <!-- Back Button -->
         <ImageButton
             android:id="@+id/btnBackProfile"
             android:layout_width="32dp"
@@ -29,9 +24,7 @@
             android:src="@android:drawable/ic_menu_close_clear_cancel"
             app:tint="@color/text_primary" />
 
-        <!-- ============================= -->
-        <!-- PROFILE SECTION -->
-        <!-- ============================= -->
+        <!-- Profile Section -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -39,7 +32,6 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <!-- Profile Image -->
             <androidx.cardview.widget.CardView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
@@ -58,7 +50,6 @@
                     app:tint="@android:color/white" />
             </androidx.cardview.widget.CardView>
 
-            <!-- Name, Email, Edit Button -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -69,10 +60,10 @@
                     android:id="@+id/profileName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-medium"
+                    android:fontFamily="@font/urbanistmedium"
                     android:text="John Doe"
                     android:textColor="@color/text_primary"
-                    android:textSize="20sp"
+                    android:textSize="22sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -80,68 +71,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
+                    android:fontFamily="@font/urbanistmedium"
                     android:text="realjohndoe@voteinformed.com"
                     android:textColor="@color/text_secondary"
                     android:textSize="13sp" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnEditProfile"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="8dp"
-                    android:text="Edit Profile"
-                    android:textAllCaps="false"
-                    android:textColor="@android:color/white"
-                    android:textSize="14sp"
-                    app:backgroundTint="#66D9C5"
-                    app:cornerRadius="20dp" />
             </LinearLayout>
         </LinearLayout>
 
-        <!-- ============================= -->
-        <!-- SETTINGS OPTIONS -->
-        <!-- ============================= -->
+        <!-- Settings Options -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
-            <!-- Language -->
-            <LinearLayout
-                android:id="@+id/btnLanguage"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginBottom="8dp"
-                android:background="@drawable/rounded_box"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackground"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingHorizontal="16dp">
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@android:drawable/ic_dialog_map"
-                    app:tint="@color/app_primary_blue" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_weight="1"
-                    android:text="Language"
-                    android:textColor="@color/text_primary"
-                    android:textSize="16sp" />
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:scaleX="-1"
-                    android:src="@android:drawable/ic_media_play"
-                    app:tint="@color/text_secondary" />
-            </LinearLayout>
 
             <!-- Personal Information -->
             <LinearLayout
@@ -155,57 +97,22 @@
                 android:foreground="?attr/selectableItemBackground"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingHorizontal="16dp">
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp">
 
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:src="@drawable/user"
-                    app:tint="@color/app_primary_blue" />
+                    app:tint="#78909C" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_weight="1"
+                    android:fontFamily="@font/urbanistmedium"
                     android:text="Personal Information"
-                    android:textColor="@color/text_primary"
-                    android:textSize="16sp" />
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:scaleX="-1"
-                    android:src="@android:drawable/ic_media_play"
-                    app:tint="@color/text_secondary" />
-            </LinearLayout>
-
-            <!-- Login Security -->
-            <LinearLayout
-                android:id="@+id/btnLoginSecurity"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginBottom="8dp"
-                android:background="@drawable/rounded_box"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackground"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingHorizontal="16dp">
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@android:drawable/ic_lock_lock"
-                    app:tint="@color/app_primary_blue" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_weight="1"
-                    android:text="Login Security"
                     android:textColor="@color/text_primary"
                     android:textSize="16sp" />
 
@@ -229,168 +136,23 @@
                 android:foreground="?attr/selectableItemBackground"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingHorizontal="16dp">
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp">
 
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/bookmark"
-                    app:tint="@color/app_primary_blue" />
+                    android:src="@drawable/ic_heart_unfilled"
+                    app:tint="#78909C"
+                    android:contentDescription="Bookmarks" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_weight="1"
+                    android:fontFamily="@font/urbanistmedium"
                     android:text="Bookmarks"
-                    android:textColor="@color/text_primary"
-                    android:textSize="16sp" />
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:scaleX="-1"
-                    android:src="@android:drawable/ic_media_play"
-                    app:tint="@color/text_secondary" />
-            </LinearLayout>
-
-            <!-- Following -->
-            <LinearLayout
-                android:id="@+id/btnFollowing"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginBottom="8dp"
-                android:background="@drawable/rounded_box"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackground"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingHorizontal="16dp">
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@android:drawable/ic_menu_myplaces"
-                    app:tint="@color/app_primary_blue" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_weight="1"
-                    android:text="Following"
-                    android:textColor="@color/text_primary"
-                    android:textSize="16sp" />
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:scaleX="-1"
-                    android:src="@android:drawable/ic_media_play"
-                    app:tint="@color/text_secondary" />
-            </LinearLayout>
-
-            <!-- Search History -->
-            <LinearLayout
-                android:id="@+id/btnSearchHistory"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginBottom="8dp"
-                android:background="@drawable/rounded_box"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackground"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingHorizontal="16dp">
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/search"
-                    app:tint="@color/app_primary_blue" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_weight="1"
-                    android:text="Search History"
-                    android:textColor="@color/text_primary"
-                    android:textSize="16sp" />
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:scaleX="-1"
-                    android:src="@android:drawable/ic_media_play"
-                    app:tint="@color/text_secondary" />
-            </LinearLayout>
-
-            <!-- Clear Cache -->
-            <LinearLayout
-                android:id="@+id/btnClearCache"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginBottom="8dp"
-                android:background="@drawable/rounded_box"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackground"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingHorizontal="16dp">
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@android:drawable/ic_menu_delete"
-                    app:tint="@color/app_primary_blue" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_weight="1"
-                    android:text="Clear Cache"
-                    android:textColor="@color/text_primary"
-                    android:textSize="16sp" />
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:scaleX="-1"
-                    android:src="@android:drawable/ic_media_play"
-                    app:tint="@color/text_secondary" />
-            </LinearLayout>
-
-            <!-- Clear History -->
-            <LinearLayout
-                android:id="@+id/btnClearHistory"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginBottom="8dp"
-                android:background="@drawable/rounded_box"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackground"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingHorizontal="16dp">
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@android:drawable/ic_menu_delete"
-                    app:tint="@color/app_primary_blue" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_weight="1"
-                    android:text="Clear History"
                     android:textColor="@color/text_primary"
                     android:textSize="16sp" />
 
@@ -413,19 +175,21 @@
                 android:foreground="?attr/selectableItemBackground"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingHorizontal="16dp">
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp">
 
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:src="@drawable/logout"
-                    app:tint="@color/app_primary_blue" />
+                    app:tint="#78909C" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_weight="1"
+                    android:fontFamily="@font/urbanistmedium"
                     android:text="Log Out"
                     android:textColor="@color/text_primary"
                     android:textSize="16sp" />

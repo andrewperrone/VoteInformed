@@ -15,18 +15,25 @@
         android:icon="@drawable/bookmark"
         android:title="Saved" />
 
+    <!-- Comparison Tool entry -->
+    <item
+        android:id="@+id/nav_comparison"
+        android:icon="@drawable/compare"
+        android:title="Comparison Tool" />
+
     <item
         android:id="@+id/nav_profile"
         android:icon="@drawable/user"
         android:title="Profile" />
 
     <item
-        android:id="@+id/nav_settings"
-        android:icon="@android:drawable/ic_menu_manage"
-        android:title="Settings" />
-
-    <item
         android:id="@+id/nav_sign_out"
         android:icon="@drawable/logout"
         android:title="Sign Out" />
+
+    <!-- ✅ DEBUG - SIMPLE BOTTOM BUTTON (NO SAVED COUNT) -->
+    <item
+        android:id="@+id/nav_debug"
+        android:icon="@android:drawable/ic_menu_info_details"
+        android:title="DEBUG MODE" />
 </menu>
