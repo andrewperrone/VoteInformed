@@ -4,7 +4,8 @@ import androidx.room.Database;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
-import com.example.voteinformed.data.entity.Committee;
+import com.example.voteinformed.data.entity.relation.Politician_Election;
+import com.example.voteinformed.data.entity.relation.Politician_Issue;
 import com.example.voteinformed.data.util.Converters;
 
 import com.example.voteinformed.data.dao.Article_Dao;
@@ -12,13 +13,11 @@ import com.example.voteinformed.data.dao.Election_Dao;
 import com.example.voteinformed.data.dao.Issue_Dao;
 import com.example.voteinformed.data.dao.Politician_Dao;
 import com.example.voteinformed.data.dao.User_Dao;
-import com.example.voteinformed.data.dao.Committee_Dao;
 import com.example.voteinformed.data.entity.User;
 import com.example.voteinformed.data.entity.Article;
 import com.example.voteinformed.data.entity.Issue;
 import com.example.voteinformed.data.entity.Politician;
 import com.example.voteinformed.data.entity.Election;
-import com.example.voteinformed.data.entity.Committee;
 
 // relations table
 import com.example.voteinformed.data.entity.relation.User_Article;
@@ -28,6 +27,8 @@ import com.example.voteinformed.data.entity.relation.User_Politician;
 import com.example.voteinformed.data.entity.relation.Article_Issue;
 import com.example.voteinformed.data.entity.relation.Article_Election;
 import com.example.voteinformed.data.entity.relation.Article_Politician;
+import com.example.voteinformed.data.entity.relation.Politician_Election;
+import com.example.voteinformed.data.entity.relation.Politician_Issue;
 
 @Database(
         entities = {
@@ -36,7 +37,6 @@ import com.example.voteinformed.data.entity.relation.Article_Politician;
                 Issue.class,
                 Politician.class,
                 Election.class,
-                Committee.class,
 
                 // relations table
                 User_Article.class,
@@ -45,7 +45,9 @@ import com.example.voteinformed.data.entity.relation.Article_Politician;
                 User_Politician.class,
                 Article_Issue.class,
                 Article_Election.class,
-                Article_Politician.class
+                Article_Politician.class,
+                Politician_Election.class,
+                Politician_Issue.class
         },
         version = 1,
         exportSchema = false
@@ -58,6 +60,4 @@ public abstract class VoteInformed_Database extends RoomDatabase {
     public abstract Issue_Dao issueDao();
     public abstract Election_Dao electionDao();
     public abstract Politician_Dao politicianDao();
-    public abstract Committee_Dao committee_Dao();
-
 }
