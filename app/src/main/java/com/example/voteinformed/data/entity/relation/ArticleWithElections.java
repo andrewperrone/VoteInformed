@@ -9,7 +9,7 @@ import com.example.voteinformed.data.entity.Election;
 
 import java.util.List;
 
-public class ArticleWithElection {
+public class ArticleWithElections {
 
     @Embedded
     public Article article;

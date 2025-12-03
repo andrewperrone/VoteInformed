@@ -9,7 +9,7 @@ import com.example.voteinformed.data.entity.Issue;
 
 import java.util.List;
 
-public class ArticleWithIssue {
+public class ArticleWithIssues {
 
     @Embedded
     public Article article;
