@@ -35,8 +35,8 @@ public class DatabaseClient {
 
                                 // Example: add some dummy politicians
                                 byte[] image = new byte[1];
-                                politicianDao.insert(new Politician("John Doe", "Party A", image));
-                                politicianDao.insert(new Politician("Jane Smith", "Party B", image));
+                                politicianDao.insert(new Politician("John Doe", "Party A", image, "###-####", "background", "NYC"));
+                                politicianDao.insert(new Politician("Jane Smith", "Party B", image, "###-####", "background", "NYC"));
 
                                 // Example: add some dummy elections
                                 electionDao.insert(new Election(
