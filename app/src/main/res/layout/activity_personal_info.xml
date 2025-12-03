@@ -54,20 +54,12 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/user"
-                    android:padding="20dp"
                     android:background="@color/app_primary_blue"
-                    app:tint="@android:color/white"/>
+                    android:padding="20dp"
+                    android:src="@drawable/user"
+                    app:tint="@android:color/white" />
             </androidx.cardview.widget.CardView>
 
-            <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_gravity="bottom|end"
-                android:background="@drawable/rounded_button"
-                android:src="@android:drawable/ic_menu_edit"
-                android:padding="6dp"
-                app:tint="@android:color/white"/>
         </FrameLayout>
 
         <com.google.android.material.textfield.TextInputLayout

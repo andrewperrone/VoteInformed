@@ -84,17 +84,6 @@
                     android:textColor="@color/text_secondary"
                     android:textSize="13sp" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnEditProfile"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="8dp"
-                    android:text="Edit Profile"
-                    android:textAllCaps="false"
-                    android:textColor="@android:color/white"
-                    android:textSize="14sp"
-                    app:backgroundTint="#66D9C5"
-                    app:cornerRadius="20dp" />
             </LinearLayout>
         </LinearLayout>
 
