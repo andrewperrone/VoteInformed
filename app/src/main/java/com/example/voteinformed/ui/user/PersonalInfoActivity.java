@@ -1,10 +1,15 @@
 package com.example.voteinformed.ui.user;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.ImageButton;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.voteinformed.R;
+import com.example.voteinformed.data.entity.User;
+import com.example.voteinformed.data.repository.VoteInformed_Repository;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -12,10 +17,18 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
     private TextInputEditText inputUsername, inputEmail, inputPollSite;
 
+    // --- ADDED: Declare these variables so they can be used throughout the class ---
+    private VoteInformed_Repository repository;
+    private User currentUser;
+    private int userId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_info);
+
+        // --- ADDED: Initialize the Repository ---
+        repository = new VoteInformed_Repository(getApplicationContext());
 
         // --- Initialize Views ---
         ImageButton btnBack = findViewById(R.id.btnBackPersonalInfo);
@@ -24,6 +37,17 @@ public class PersonalInfoActivity extends AppCompatActivity {
         inputUsername = findViewById(R.id.inputUsername);
         inputEmail = findViewById(R.id.inputEmail);
         inputPollSite = findViewById(R.id.inputPollSite);
+
+        // --- ADDED: Get User ID and Load Data ---
+        // This assumes you saved "user_id" in SharedPreferences during Login
+        SharedPreferences sharedPreferences = getSharedPreferences("UserSession", Context.MODE_PRIVATE);
+        userId = sharedPreferences.getInt("user_id", -1);
+
+        if (userId != -1) {
+            loadUserData();
+        } else {
+            Toast.makeText(this, "Error: No user logged in", Toast.LENGTH_SHORT).show();
+        }
 
         // --- Back Button Logic ---
         btnBack.setOnClickListener(v -> finish());
@@ -37,9 +61,38 @@ public class PersonalInfoActivity extends AppCompatActivity {
             if (name.isEmpty() || email.isEmpty()) {
                 Toast.makeText(this, "Name and Email are required", Toast.LENGTH_SHORT).show();
             } else {
-                // Still needed: Save data to database/preferences
-                Toast.makeText(this, "Information Updated", Toast.LENGTH_SHORT).show();
-                finish(); // Close screen and return to profile
+                // 1. Update the user object with the new data
+                if (currentUser != null) {
+                    currentUser.setName(name);
+                    currentUser.setEmail(email);
+                    currentUser.setLocation(pollSite);
+
+                    // 2. Save to database using the callback
+                    repository.updateUser(currentUser, success -> {
+                        if (success) {
+                            Toast.makeText(this, "Information Updated", Toast.LENGTH_SHORT).show();
+                            finish();
+                        } else {
+                            Toast.makeText(this, "Update Failed", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } else {
+                    Toast.makeText(this, "Error: User data not loaded yet", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    // --- ADDED: Helper method to fetch user data from DB ---
+    private void loadUserData() {
+        repository.getUserById(userId).observe(this, user -> {
+            if (user != null) {
+                this.currentUser = user; // This initializes the 'currentUser' variable!
+
+                // Pre-fill the text boxes
+                if (inputUsername.getText().toString().isEmpty()) inputUsername.setText(user.getName());
+                if (inputEmail.getText().toString().isEmpty()) inputEmail.setText(user.getEmail());
+                if (inputPollSite.getText().toString().isEmpty()) inputPollSite.setText(user.getLocation());
             }
         });
     }

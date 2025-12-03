@@ -168,8 +168,22 @@ public class VoteInformed_Repository {
     public void insertUser(User user) {
         executor.execute(() -> userDao.insert(user));
     }
-    public void updateUser(User user) {
-        executor.execute(() -> userDao.update(user));
+    public void updateUser(User user, UpdateCallback callback) {
+        executor.execute(() -> {
+            try {
+                userDao.update(user);
+
+                // Success: Notify UI on Main Thread
+                new Handler(Looper.getMainLooper()).post(() -> {
+                    if (callback != null) callback.onResult(true);
+                });
+            } catch (Exception e) {
+                // Failure: Notify UI
+                new Handler(Looper.getMainLooper()).post(() -> {
+                    if (callback != null) callback.onResult(false);
+                });
+            }
+        });
     }
     public void deleteUser(User user) {
         executor.execute(() -> userDao.delete(user));
@@ -196,6 +210,9 @@ public class VoteInformed_Repository {
         void onResult(boolean success, boolean emailAlreadyExists);
     }
 
+    public interface UpdateCallback {
+        void onResult(boolean success);
+    }
     public void register(String email, String password, RegisterCallback callback) {
         executor.execute(()->
         {
