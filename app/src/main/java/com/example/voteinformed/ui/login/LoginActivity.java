@@ -14,6 +14,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.voteinformed.R;
+import com.example.voteinformed.data.repository.VoteInformed_Repository;
 import com.example.voteinformed.ui.home.HomeActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
@@ -22,10 +23,13 @@ public class LoginActivity extends AppCompatActivity {
 
     // Input fields for email and password
     private TextInputEditText inputEmail, inputPassword;
+    private VoteInformed_Repository voteInformedRepository;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        voteInformedRepository = new VoteInformed_Repository(getApplicationContext());
 
         // Enable edge-to-edge layout for full-screen effect
         EdgeToEdge.enable(this);
@@ -72,11 +76,14 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        // TODO: Add real authentication logic here
-
-        // Redirect to HomeActivity after "login"
-        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-        startActivity(intent);
-        finish(); // Finish LoginActivity so user can't go back with back button
+        voteInformedRepository.login(email, password, success->{
+            if (success){
+                Toast.makeText(this,"Login Successful", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                finish();
+            } else {
+                Toast.makeText(this, "Invalid email or password", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

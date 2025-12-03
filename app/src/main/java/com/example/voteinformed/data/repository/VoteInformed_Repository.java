@@ -1,6 +1,8 @@
 package com.example.voteinformed.data.repository;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 
 import androidx.lifecycle.LiveData;
 
@@ -156,9 +158,29 @@ public class VoteInformed_Repository {
         executor.execute(() -> userDao.delete(user));
     }
 
+    public interface LoginCallback{
+        void onResult(boolean success);
+    }
+
+    public void login(String email, String password, LoginCallback callback)
+    {
+        executor.execute(()->{
+           User user = userDao.login(email, password);
+           boolean success = (user != null);
+
+           // Return result to UI
+           new Handler(Looper.getMainLooper()).post(() -> {
+               callback.onResult(success);
+           });
+        });
+    }
+
     public void removeSaved(String articleId) {
         executor.execute(() -> savedArticleDao.removeSaved(articleId));
     }
+
+
+
 
     public boolean isArticleSaved(String articleId) {
         return savedArticleDao.isArticleSaved(articleId);
