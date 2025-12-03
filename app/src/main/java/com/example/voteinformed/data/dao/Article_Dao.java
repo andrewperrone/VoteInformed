@@ -23,9 +23,9 @@ public interface Article_Dao {
     @Delete
     void delete(Article article);
 
-    @Query("SELECT * FROM Article")
-    List<Article> getAllArticle();
+    @Query("SELECT * FROM article")
+    List<Article> getAllArticles();
 
-    @Query("SELECT * FROM Article WHERE article_id = :id")
+    @Query("SELECT * FROM article WHERE article_id = :id")
     Article getArticleById(int id);
 }

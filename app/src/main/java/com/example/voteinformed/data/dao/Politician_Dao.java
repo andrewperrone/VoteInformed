@@ -25,9 +25,9 @@ public interface Politician_Dao {
     @Delete
     void delete(Politician politician);
 
-    @Query("SELECT * FROM Politician")
-    List<Politician> getAllPolitician();
+    @Query("SELECT * FROM politician")
+    List<Politician> getAllPoliticians();
 
-    @Query("SELECT * FROM Politician WHERE politician_id = :id")
+    @Query("SELECT * FROM politician WHERE politician_id = :id")
     Politician getPoliticianById(int id);
 }

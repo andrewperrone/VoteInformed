@@ -25,10 +25,10 @@ public interface Issue_Dao {
     @Delete
     void delete(Issue issue);
 
-    @Query("SELECT * FROM Issue")
-    List<Issue> getAllIssue();
+    @Query("SELECT * FROM issue")
+    List<Issue> getAllIssues();
 
-    @Query("SELECT * FROM Issue WHERE issue_id = :id")
+    @Query("SELECT * FROM issue WHERE issue_id = :id")
     Issue getIssueById(int id);
 }
 

@@ -40,7 +40,4 @@ public class VoteInformed_Repository {
         Toast.makeText(context, "Database initialized...", Toast.LENGTH_LONG).show();
     }
 
-    //--------------- Insert Task --------------------
-
-
 }
