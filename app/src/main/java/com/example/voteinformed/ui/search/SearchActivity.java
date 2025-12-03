@@ -55,7 +55,7 @@ public class SearchActivity extends AppCompatActivity {
         String query = inputSearch.getText() == null ? "" : inputSearch.getText().toString().trim();
 
         if (query.equalsIgnoreCase("obama")) {
-            // Open politician profile if query matches "obama"
+            // Open politicians profile if query matches "obama"
             Intent intent = new Intent(SearchActivity.this, PoliticianProfileActivity.class);
             startActivity(intent);
         } else {

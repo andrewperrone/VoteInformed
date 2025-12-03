@@ -1,4 +1,4 @@
-package com.example.voteinformed.data.entity;// Politician.java - Entity that represents a politician's information
+package com.example.voteinformed.data.entity;// Politician.java - Entity that represents a politicians's information
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey;
 import java.util.Arrays;
 import java.util.Objects;
 
-@Entity(tableName = "politician")
+@Entity(tableName = "politicians")
 public class Politician
 {
     @PrimaryKey(autoGenerate = true)
