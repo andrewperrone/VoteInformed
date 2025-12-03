@@ -14,13 +14,13 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- TOP SECTION (KEEP ORIGINAL STRUCTURE) -->
+        <!-- TOP SECTION -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- TOP BAR WITH LEFT/RIGHT BUTTONS (UNCHANGED) -->
+            <!-- TOP BAR WITH LEFT/RIGHT BUTTONS -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
@@ -53,7 +53,7 @@
                     android:src="@drawable/user" />
             </LinearLayout>
 
-            <!-- TITLE AND ACTION BUTTON (UNCHANGED) -->
+            <!-- TITLE AND ACTION BUTTON -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -82,160 +82,238 @@
                     app:strokeColor="@color/app_secondary_teal" />
             </LinearLayout>
 
-            <!-- TOP CONCERNS - Articles 2x2 WITH TITLES -->
-            <GridLayout
+            <!-- TOP CONCERNS - HORIZONTAL SCROLLING ARTICLES -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:text="Top Community Issues"
+                android:textColor="@color/app_secondary_teal"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:alignmentMode="alignMargins"
-                android:columnCount="2"
-                android:columnOrderPreserved="false"
-                android:rowCount="2">
+                android:scrollbars="none">
 
-                <!-- Article 1 -->
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/article1card"
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:layout_margin="6dp"
-                    app:cardCornerRadius="12dp"
-                    app:cardElevation="4dp">
+                    android:orientation="horizontal">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <!-- Article 1 -->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/article1card"
+                        android:layout_width="160dp"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:layout_marginEnd="12dp"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="4dp">
 
-                        <ImageView
-                            android:id="@+id/article1image"
-                            android:layout_width="match_parent"
-                            android:layout_height="80dp"
-                            android:scaleType="centerCrop"
-                            android:contentDescription="Article" />
-
-                        <TextView
-                            android:id="@+id/article1title"
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_margin="4dp"
-                            android:text="Article Title"
-                            android:textSize="12sp"
-                            android:maxLines="2"
-                            android:ellipsize="end"
-                            android:textColor="@android:color/black" />
+                            android:orientation="vertical">
 
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
+                            <ImageView
+                                android:id="@+id/article1image"
+                                android:layout_width="match_parent"
+                                android:layout_height="100dp"
+                                android:scaleType="centerCrop"
+                                android:contentDescription="Article" />
 
-                <!-- Article 2 -->
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/article2card"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:layout_margin="6dp"
-                    app:cardCornerRadius="12dp"
-                    app:cardElevation="4dp">
+                            <TextView
+                                android:id="@+id/article1title"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="6dp"
+                                android:text="Article Title"
+                                android:textSize="12sp"
+                                android:maxLines="2"
+                                android:ellipsize="end"
+                                android:textColor="@android:color/black" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Article 2 -->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/article2card"
+                        android:layout_width="160dp"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:layout_marginEnd="12dp"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="4dp">
 
-                        <ImageView
-                            android:id="@+id/article2image"
-                            android:layout_width="match_parent"
-                            android:layout_height="80dp"
-                            android:scaleType="centerCrop"
-                            android:contentDescription="Article" />
-
-                        <TextView
-                            android:id="@+id/article2title"
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_margin="4dp"
-                            android:text="Article Title"
-                            android:textSize="12sp"
-                            android:maxLines="2"
-                            android:ellipsize="end"
-                            android:textColor="@android:color/black" />
+                            android:orientation="vertical">
 
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
+                            <ImageView
+                                android:id="@+id/article2image"
+                                android:layout_width="match_parent"
+                                android:layout_height="100dp"
+                                android:scaleType="centerCrop"
+                                android:contentDescription="Article" />
 
-                <!-- Article 3 -->
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/article3card"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:layout_margin="6dp"
-                    app:cardCornerRadius="12dp"
-                    app:cardElevation="4dp">
+                            <TextView
+                                android:id="@+id/article2title"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="6dp"
+                                android:text="Article Title"
+                                android:textSize="12sp"
+                                android:maxLines="2"
+                                android:ellipsize="end"
+                                android:textColor="@android:color/black" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Article 3 -->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/article3card"
+                        android:layout_width="160dp"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:layout_marginEnd="12dp"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="4dp">
 
-                        <ImageView
-                            android:id="@+id/article3image"
-                            android:layout_width="match_parent"
-                            android:layout_height="80dp"
-                            android:scaleType="centerCrop"
-                            android:contentDescription="Article" />
-
-                        <TextView
-                            android:id="@+id/article3title"
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_margin="4dp"
-                            android:text="Article Title"
-                            android:textSize="12sp"
-                            android:maxLines="2"
-                            android:ellipsize="end"
-                            android:textColor="@android:color/black" />
+                            android:orientation="vertical">
 
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
+                            <ImageView
+                                android:id="@+id/article3image"
+                                android:layout_width="match_parent"
+                                android:layout_height="100dp"
+                                android:scaleType="centerCrop"
+                                android:contentDescription="Article" />
 
-                <!-- Article 4 -->
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/article4card"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:layout_margin="6dp"
-                    app:cardCornerRadius="12dp"
-                    app:cardElevation="4dp">
+                            <TextView
+                                android:id="@+id/article3title"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="6dp"
+                                android:text="Article Title"
+                                android:textSize="12sp"
+                                android:maxLines="2"
+                                android:ellipsize="end"
+                                android:textColor="@android:color/black" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Article 4 -->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/article4card"
+                        android:layout_width="160dp"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:layout_marginEnd="12dp"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="4dp">
 
-                        <ImageView
-                            android:id="@+id/article4image"
-                            android:layout_width="match_parent"
-                            android:layout_height="80dp"
-                            android:scaleType="centerCrop"
-                            android:contentDescription="Article" />
-
-                        <TextView
-                            android:id="@+id/article4title"
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_margin="4dp"
-                            android:text="Article Title"
-                            android:textSize="12sp"
-                            android:maxLines="2"
-                            android:ellipsize="end"
-                            android:textColor="@android:color/black" />
+                            android:orientation="vertical">
 
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-            </GridLayout>
+                            <ImageView
+                                android:id="@+id/article4image"
+                                android:layout_width="match_parent"
+                                android:layout_height="100dp"
+                                android:scaleType="centerCrop"
+                                android:contentDescription="Article" />
+
+                            <TextView
+                                android:id="@+id/article4title"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="6dp"
+                                android:text="Article Title"
+                                android:textSize="12sp"
+                                android:maxLines="2"
+                                android:ellipsize="end"
+                                android:textColor="@android:color/black" />
+
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Article 5 (Extra - will show when scrolling) -->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/article5card"
+                        android:layout_width="160dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="12dp"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="4dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/article5image"
+                                android:layout_width="match_parent"
+                                android:layout_height="100dp"
+                                android:scaleType="centerCrop"
+                                android:contentDescription="Article" />
+
+                            <TextView
+                                android:id="@+id/article5title"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="6dp"
+                                android:text="Article Title"
+                                android:textSize="12sp"
+                                android:maxLines="2"
+                                android:ellipsize="end"
+                                android:textColor="@android:color/black" />
+
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Article 6 (Extra - will show when scrolling) -->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/article6card"
+                        android:layout_width="160dp"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="4dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/article6image"
+                                android:layout_width="match_parent"
+                                android:layout_height="100dp"
+                                android:scaleType="centerCrop"
+                                android:contentDescription="Article" />
+
+                            <TextView
+                                android:id="@+id/article6title"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="6dp"
+                                android:text="Article Title"
+                                android:textSize="12sp"
+                                android:maxLines="2"
+                                android:ellipsize="end"
+                                android:textColor="@android:color/black" />
+
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                </LinearLayout>
+            </HorizontalScrollView>
 
         </LinearLayout>
 
@@ -243,6 +321,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:layout_marginBottom="8dp"
             android:text="NYC Legislation (2025)"
             android:textColor="@color/app_secondary_teal"
@@ -307,7 +386,7 @@
             </com.google.android.material.chip.ChipGroup>
         </HorizontalScrollView>
 
-        <!-- RECYCLERVIEW TAKES REMAINING SPACE -->
+        <!-- RECYCLERVIEW -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerLegislation"
             android:layout_width="match_parent"

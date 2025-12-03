@@ -184,11 +184,14 @@ public class HomeActivity extends AppCompatActivity {
                     public void onResponse(Call<NewsResponse> call, Response<NewsResponse> response) {
                         if (response.isSuccessful() && response.body() != null && response.body().articles != null) {
                             List<Article> articles = response.body().articles;
-                            for (int i = 0; i < Math.min(4, articles.size()); i++) {
+                            // Load up to 6 articles for horizontal scrolling
+                            for (int i = 0; i < Math.min(6, articles.size()); i++) {
                                 Article article = articles.get(i);
                                 ImageView imageView = findViewById(getTopArticleImageId(i));
                                 TextView titleView = findViewById(getTopArticleTitleId(i));
-                                loadArticleImage(imageView, titleView, article);
+                                if (imageView != null && titleView != null) {
+                                    loadArticleImage(imageView, titleView, article);
+                                }
                             }
                         }
                     }
@@ -206,6 +209,8 @@ public class HomeActivity extends AppCompatActivity {
             case 1: return R.id.article2image;
             case 2: return R.id.article3image;
             case 3: return R.id.article4image;
+            case 4: return R.id.article5image;
+            case 5: return R.id.article6image;
             default: return R.id.article1image;
         }
     }
@@ -216,6 +221,8 @@ public class HomeActivity extends AppCompatActivity {
             case 1: return R.id.article2title;
             case 2: return R.id.article3title;
             case 3: return R.id.article4title;
+            case 4: return R.id.article5title;
+            case 5: return R.id.article6title;
             default: return R.id.article1title;
         }
     }
@@ -231,10 +238,13 @@ public class HomeActivity extends AppCompatActivity {
             titleView.setText(article.title);
         }
 
+        // Make entire card clickable
         View cardView = (View) imageView.getParent().getParent();
         cardView.setOnClickListener(v -> {
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(article.url));
-            startActivity(intent);
+            if (article.url != null) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(article.url));
+                startActivity(intent);
+            }
         });
     }
 
@@ -244,8 +254,8 @@ public class HomeActivity extends AppCompatActivity {
             ImageView profileImage = headerView.findViewById(R.id.profile_image);
             TextView userName = headerView.findViewById(R.id.user_name);
             TextView userEmail = headerView.findViewById(R.id.user_email);
-            userName.setText("John Doe");
-            userEmail.setText("john.doe@example.com");
+            if (userName != null) userName.setText("John Doe");
+            if (userEmail != null) userEmail.setText("john.doe@example.com");
         }
     }
 

@@ -27,13 +27,6 @@ public class ProfileActivity extends AppCompatActivity {
             startActivity(new Intent(ProfileActivity.this, PersonalInfoActivity.class));
         });
 
-        // Login Security
-        LinearLayout btnLoginSecurity = findViewById(R.id.btnLoginSecurity);
-        btnLoginSecurity.setOnClickListener(v -> {
-            Toast.makeText(this, "Login Security", Toast.LENGTH_SHORT).show();
-            // TODO: Implement login security settings
-        });
-
         // Bookmarks (Navigates to SavedActivity)
         LinearLayout btnBookmarks = findViewById(R.id.btnBookmarks);
         btnBookmarks.setOnClickListener(v -> {
