@@ -5,6 +5,7 @@ import androidx.room.Junction;
 import androidx.room.Relation;
 
 import com.example.voteinformed.data.entity.Politician;
+import com.example.voteinformed.data.entity.Issue;
 
 import java.util.List;
 
@@ -18,5 +19,5 @@ public class PoliticianWithIssues {
             entityColumn = "issue_id",
             associateBy = @Junction(Politician_Issue.class)
     )
-    public List<Politician> politicians;
+    public List<Issue> issues;
 }

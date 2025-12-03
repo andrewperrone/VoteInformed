@@ -1,5 +1,6 @@
 package com.example.voteinformed.data.dao;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
@@ -37,4 +38,6 @@ public interface User_Dao {
     @Query("SELECT * FROM user WHERE user_id = :id")
     UserWithArticles getUserWithArticles(int id);
 
+    @Query("SELECT * FROM user")
+    LiveData<List<User>> getAllUserLive();
 }
