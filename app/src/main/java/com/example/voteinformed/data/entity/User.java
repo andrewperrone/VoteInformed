@@ -19,28 +19,28 @@ public class User {
     @ColumnInfo(name = "location")
     private String location;
     @ColumnInfo(name = "preference")
-    private String preferences;
-    @ColumnInfo(name = "isAdmin")
+    private String preference;
+    @ColumnInfo(name = "is_admin")
     private boolean is_admin;
 
-    //Default Constructor
-    public User(String name, String email, String password, String location, String preferences) {
+    // Constructor
+    public User(String name, String email, String password, String location, String preference) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.location = location;
-        this.preferences = preferences;
+        this.preference = preference;
         this.is_admin = false;
     }
 
     //Set admin during construction
     @Ignore
-    public User(String name, String email, String password, String location, String preferences, boolean is_admin) {
+    public User(String name, String email, String password, String location, String preference, boolean is_admin) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.location = location;
-        this.preferences = preferences;
+        this.preference = preference;
         this.is_admin = is_admin;
     }
 
@@ -84,12 +84,12 @@ public class User {
         this.location = location;
     }
 
-    public String getPreferences() {
-        return preferences;
+    public String getPreference() {
+        return preference;
     }
 
-    public void setPreferences(String preferences) {
-        this.preferences = preferences;
+    public void setPreference(String preference) {
+        this.preference = preference;
     }
 
     public boolean isIs_admin() {
@@ -108,7 +108,7 @@ public class User {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", location='" + location + '\'' +
-                ", preferences='" + preferences + '\'' +
+                ", preferences='" + preference + '\'' +
                 ", is_admin=" + is_admin +
                 '}';
     }
@@ -117,11 +117,11 @@ public class User {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return user_id == user.user_id && is_admin == user.is_admin && Objects.equals(name, user.name) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(location, user.location) && Objects.equals(preferences, user.preferences);
+        return user_id == user.user_id && is_admin == user.is_admin && Objects.equals(name, user.name) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(location, user.location) && Objects.equals(preference, user.preference);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(user_id, name, email, password, location, preferences, is_admin);
+        return Objects.hash(user_id, name, email, password, location, preference, is_admin);
     }
 }

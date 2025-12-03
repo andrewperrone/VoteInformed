@@ -16,7 +16,7 @@ public class Politician
     private String politician_name;
     @ColumnInfo(name="politician_party")
     private String politician_party;
-    @ColumnInfo(name="politician_image")//(typeAffinity = ColumnInfo.BLOB)
+    @ColumnInfo(name="politician_image", typeAffinity = ColumnInfo.BLOB)
     public byte[] politician_image;
     @ColumnInfo(name="politician_contact")
     private String politician_contact;
