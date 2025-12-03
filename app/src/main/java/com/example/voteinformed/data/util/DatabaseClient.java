@@ -6,14 +6,14 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import com.example.voteinformed.data.dao.Article_Dao;
 import com.example.voteinformed.data.dao.Election_Dao;
+import com.example.voteinformed.data.dao.Issue_Dao;
 import com.example.voteinformed.data.dao.Politician_Dao;
+import com.example.voteinformed.data.dao.User_Dao;
 import com.example.voteinformed.data.database.VoteInformed_Database;
-import com.example.voteinformed.data.entity.Election;
-import com.example.voteinformed.data.entity.Politician;
 
 import java.util.concurrent.Executors;
-import java.util.Date;
 
 public class DatabaseClient {
 
@@ -29,28 +29,17 @@ public class DatabaseClient {
                             super.onCreate(db);
 
                             Executors.newSingleThreadExecutor().execute(() -> {
-                                // Insert dummy data here
-                                Politician_Dao politicianDao = instance.politicianDao();
+                                Article_Dao articleDao = instance.articleDao();
                                 Election_Dao electionDao = instance.electionDao();
+                                Issue_Dao issueDao = instance.issueDao();
+                                Politician_Dao politicianDao = instance.politicianDao();
+                                User_Dao userDao = instance.userDao();
 
-                                // Example: add some dummy politicians
-                                byte[] image = new byte[1];
-                                politicianDao.insert(new Politician("John Doe", "Party A", image, "###-####", "background", "NYC"));
-                                politicianDao.insert(new Politician("Jane Smith", "Party B", image, "###-####", "background", "NYC"));
-
-                                // Example: add some dummy elections
-                                electionDao.insert(new Election(
-                                        "Presidential Election",
-                                        new Date(),
-                                        "State X",
-                                        "Description of election"
-                                ));
-                                electionDao.insert(new Election(
-                                        "Senate Election",
-                                        new Date(),
-                                        "State Y",
-                                        "Another description"
-                                ));
+                                articleDao.insertAll(InitialData.getArticles());
+                                electionDao.insertAll(InitialData.getElections());
+                                issueDao.insertAll(InitialData.getIssues());
+                                politicianDao.insertAll(InitialData.getPoliticians());
+                                userDao.insertAll(InitialData.getUsers());
                             });
                         }
                     })
