@@ -1,32 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:gravity="center_vertical">
+    android:orientation="vertical"
+    android:paddingVertical="8dp">
 
     <TextView
         android:id="@+id/metricName"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:fontFamily="@font/urbanistmedium"
-        android:text="Leadership"
-        android:textColor="@android:color/white"
-        android:textSize="14sp"
-        android:textStyle="bold" />
+        android:fontFamily="@font/urbanistbold"
+        android:text="Category"
+        android:textColor="#B0BEC5"
+        android:textAllCaps="true"
+        android:textSize="11sp"
+        android:letterSpacing="0.05"/>
 
     <TextView
-        android:id="@+id/metricScore"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
-        android:layout_marginStart="8dp"
-        android:background="@drawable/circle_badge"
+        android:id="@+id/metricContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
         android:fontFamily="@font/urbanistmedium"
-        android:gravity="center"
-        android:text="8"
+        android:text="Content goes here"
         android:textColor="@android:color/white"
-        android:textSize="12sp"
-        android:textStyle="bold" />
+        android:textSize="13sp"
+        android:lineSpacingExtra="2dp"
+        android:autoLink="all"
+        android:textColorLink="#80CBC4"/>
 </LinearLayout>
