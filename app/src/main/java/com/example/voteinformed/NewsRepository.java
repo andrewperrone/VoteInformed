@@ -6,8 +6,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.Call;
 
 public class NewsRepository {
-    private NewsApiService apiService;
-    private Context context;
+    private final NewsApiService apiService;
+    private final Context context;
 
     public NewsRepository(Context context) {
         this.context = context;

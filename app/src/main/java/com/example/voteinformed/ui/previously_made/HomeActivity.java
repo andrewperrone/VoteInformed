@@ -19,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -48,9 +49,11 @@ public class HomeActivity extends AppCompatActivity {
     private ChipGroup chipGroupConcerns;
     private ImageButton btnLeftMenu, btnRightMenu;
 
-    // Bookmark tracking for articles (using article title as key since no unique ID)
-    private Map<String, Boolean> bookmarkedArticles = new HashMap<>();
-    private Map<Integer, Article> loadedArticles = new HashMap<>(); // Track loaded articles by position
+    // ViewModel for managing saved articles state - ✅ INTEGRATED
+    private HomeViewModel viewModel;
+
+    // Track loaded articles by position for bookmark toggling
+    private final Map<Integer, Article> loadedArticles = new HashMap<>();
 
     // Legistar API token
     private static final String API_TOKEN =
@@ -62,6 +65,9 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        // ✅ ViewModel INITIALIZED - MVVM pattern complete
+        viewModel = new ViewModelProvider(this).get(HomeViewModel.class);
 
         // Drawer and nav
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -215,37 +221,58 @@ public class HomeActivity extends AppCompatActivity {
 
     private int getTopArticleImageId(int position) {
         switch (position) {
-            case 0: return R.id.article1image;
-            case 1: return R.id.article2image;
-            case 2: return R.id.article3image;
-            case 3: return R.id.article4image;
-            case 4: return R.id.article5image;
-            case 5: return R.id.article6image;
-            default: return R.id.article1image;
+            case 0:
+                return R.id.article1image;
+            case 1:
+                return R.id.article2image;
+            case 2:
+                return R.id.article3image;
+            case 3:
+                return R.id.article4image;
+            case 4:
+                return R.id.article5image;
+            case 5:
+                return R.id.article6image;
+            default:
+                return R.id.article1image;
         }
     }
 
     private int getTopArticleTitleId(int position) {
         switch (position) {
-            case 0: return R.id.article1title;
-            case 1: return R.id.article2title;
-            case 2: return R.id.article3title;
-            case 3: return R.id.article4title;
-            case 4: return R.id.article5title;
-            case 5: return R.id.article6title;
-            default: return R.id.article1title;
+            case 0:
+                return R.id.article1title;
+            case 1:
+                return R.id.article2title;
+            case 2:
+                return R.id.article3title;
+            case 3:
+                return R.id.article4title;
+            case 4:
+                return R.id.article5title;
+            case 5:
+                return R.id.article6title;
+            default:
+                return R.id.article1title;
         }
     }
 
     private int getBookmarkButtonId(int position) {
         switch (position) {
-            case 0: return R.id.bookmark_article1;
-            case 1: return R.id.bookmark_article2;
-            case 2: return R.id.bookmark_article3;
-            case 3: return R.id.bookmark_article4;
-            case 4: return R.id.bookmark_article5;
-            case 5: return R.id.bookmark_article6;
-            default: return R.id.bookmark_article1;
+            case 0:
+                return R.id.bookmark_article1;
+            case 1:
+                return R.id.bookmark_article2;
+            case 2:
+                return R.id.bookmark_article3;
+            case 3:
+                return R.id.bookmark_article4;
+            case 4:
+                return R.id.bookmark_article5;
+            case 5:
+                return R.id.bookmark_article6;
+            default:
+                return R.id.bookmark_article1;
         }
     }
 
@@ -260,8 +287,8 @@ public class HomeActivity extends AppCompatActivity {
             titleView.setText(article.title);
         }
 
-        // Setup bookmark button - SET DEFAULT TO UNFILLED
-        setupBookmarkButton(bookmarkBtn, article.title, position);
+        // ✅ FIXED: Now passes Article object to ViewModel-integrated method
+        setupBookmarkButton(bookmarkBtn, article, position);
 
         // Make entire card clickable (excluding bookmark button)
         View cardView = (View) imageView.getParent().getParent();
@@ -273,38 +300,43 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
-    private void setupBookmarkButton(ImageButton bookmarkBtn, String articleTitle, int position) {
-        // Initialize bookmark state (default false)
-        if (!bookmarkedArticles.containsKey(articleTitle)) {
-            bookmarkedArticles.put(articleTitle, false);
-        }
+    private void setupBookmarkButton(ImageButton bookmarkBtn, Article article, int position) {
+        // Check current saved state from ViewModel
+        boolean isSaved = viewModel.isArticleSaved(article);
 
-        boolean isBookmarked = bookmarkedArticles.get(articleTitle);
-        updateBookmarkAppearance(bookmarkBtn, isBookmarked);
+        // Update button appearance based on ViewModel state
+        updateBookmarkAppearance(bookmarkBtn, isSaved);
 
+        // ✅ FIXED: Animate on TOGGLE
         bookmarkBtn.setOnClickListener(v -> {
-            boolean currentState = bookmarkedArticles.get(articleTitle);
-            boolean newState = !currentState;
-            bookmarkedArticles.put(articleTitle, newState);
+            // 1. Toggle state FIRST
+            viewModel.toggleSaved(article);
 
-            // Animate the change
+            // 2. Get NEW state after toggle
+            boolean newState = viewModel.isArticleSaved(article);
+
+            // 3. Update image FIRST (critical!)
+            updateBookmarkAppearance(bookmarkBtn, newState);
+
+            // 4. Animate the change
             animateBookmark(bookmarkBtn, newState);
-            Toast.makeText(this, newState ? "Article bookmarked!" : "Bookmark removed", Toast.LENGTH_SHORT).show();
+
+            // 5. Toast feedback
+            Toast.makeText(this, newState ? "Article saved!" : "Bookmark removed", Toast.LENGTH_SHORT).show();
         });
+
+        // Initial animation (unchanged)
+        animateBookmark(bookmarkBtn, isSaved);
     }
 
-    private void updateBookmarkAppearance(ImageButton bookmarkBtn, boolean isBookmarked) {
-        // Switch between filled and unfilled hearts
-        bookmarkBtn.setImageResource(isBookmarked ? R.drawable.ic_heart_filled : R.drawable.ic_heart_unfilled);
+
+    private void updateBookmarkAppearance(ImageButton bookmarkBtn, boolean isSaved) {
+        bookmarkBtn.setImageResource(isSaved ? R.drawable.ic_heart_filled : R.drawable.ic_heart_unfilled);
     }
 
-    private void animateBookmark(ImageButton bookmarkBtn, boolean isBookmarked) {
-        // Set the correct image FIRST
-        bookmarkBtn.setImageResource(isBookmarked ? R.drawable.ic_heart_filled : R.drawable.ic_heart_unfilled);
-
-        // THEN animate
+    private void animateBookmark(ImageButton bookmarkBtn, boolean isSaved) {
         Animation anim = AnimationUtils.loadAnimation(this,
-                isBookmarked ? R.anim.bookmark_down : R.anim.bookmark_up);
+                isSaved ? R.anim.bookmark_down : R.anim.bookmark_up);
         bookmarkBtn.startAnimation(anim);
     }
 
@@ -336,7 +368,11 @@ public class HomeActivity extends AppCompatActivity {
             } else if (id == R.id.nav_sign_out) {
                 startActivity(new Intent(HomeActivity.this, HomescreenActivity.class));
                 finish();
-            } else {
+            }
+            //else if (id == R.id.nav_debug) {
+            //    startActivity(new Intent(HomeActivity.this, DebugActivity.class));
+            //}
+            else {
                 return false;
             }
             drawerLayout.closeDrawer(GravityCompat.START);
