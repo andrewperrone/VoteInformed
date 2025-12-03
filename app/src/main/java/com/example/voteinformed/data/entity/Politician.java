@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey;
 import java.util.Arrays;
 import java.util.Objects;
 
-@Entity(tableName = "politicians")
+@Entity(tableName = "politician")
 public class Politician
 {
     @PrimaryKey(autoGenerate = true)

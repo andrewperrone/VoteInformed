@@ -24,7 +24,6 @@ import com.example.voteinformed.data.entity.relation.User_Politician;
 import com.example.voteinformed.data.entity.relation.Article_Issue;
 import com.example.voteinformed.data.entity.relation.Article_Election;
 import com.example.voteinformed.data.entity.relation.Article_Politician;
-//change
 
 @Database(
         entities = {

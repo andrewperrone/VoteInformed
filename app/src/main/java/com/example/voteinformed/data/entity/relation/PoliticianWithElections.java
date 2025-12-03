@@ -19,5 +19,5 @@ public class PoliticianWithElections {
             entityColumn = "election_id",
             associateBy = @Junction(Politician_Election.class)
     )
-    public List<Election> electionss;
+    public List<Election> elections;
 }
