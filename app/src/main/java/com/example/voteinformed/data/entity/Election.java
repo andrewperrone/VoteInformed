@@ -15,15 +15,15 @@ public class Election {
     @ColumnInfo(name="election_date")
     private Date election_date;
     @ColumnInfo(name="politician_location")
-    private String politician_location;
+    private String election_location;
     @ColumnInfo(name="description")
-    private String politician_description;
+    private String election_description;
 
-    public Election(String election_name, Date election_date, String politician_location, String politician_description) {
+    public Election(String election_name, Date election_date, String election_location, String election_description) {
         this.election_name = election_name;
         this.election_date = election_date;
-        this.politician_location = politician_location;
-        this.politician_description = politician_description;
+        this.election_location = election_location;
+        this.election_description = election_description;
     }
 
     public int getElection_id() {
@@ -50,20 +50,20 @@ public class Election {
         this.election_date = election_date;
     }
 
-    public String getPolitician_location() {
-        return politician_location;
+    public String getElection_location() {
+        return election_location;
     }
 
-    public void setPolitician_location(String politician_location) {
-        this.politician_location = politician_location;
+    public void setElection_location(String election_location) {
+        this.election_location = election_location;
     }
 
-    public String getPolitician_description() {
-        return politician_description;
+    public String getElection_description() {
+        return election_description;
     }
 
-    public void setPolitician_description(String politician_description) {
-        this.politician_description = politician_description;
+    public void setElection_description(String election_description) {
+        this.election_description = election_description;
     }
 
     @Override
@@ -72,8 +72,8 @@ public class Election {
                 "election_id=" + election_id +
                 ", election_name='" + election_name + '\'' +
                 ", election_date=" + election_date +
-                ", politician_location='" + politician_location + '\'' +
-                ", politician_description='" + politician_description + '\'' +
+                ", politician_location='" + election_location + '\'' +
+                ", politician_description='" + election_description + '\'' +
                 '}';
     }
 
@@ -81,11 +81,11 @@ public class Election {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Election election = (Election) o;
-        return election_id == election.election_id && Objects.equals(election_name, election.election_name) && Objects.equals(election_date, election.election_date) && Objects.equals(politician_location, election.politician_location) && Objects.equals(politician_description, election.politician_description);
+        return election_id == election.election_id && Objects.equals(election_name, election.election_name) && Objects.equals(election_date, election.election_date) && Objects.equals(election_location, election.election_location) && Objects.equals(election_description, election.election_description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(election_id, election_name, election_date, politician_location, politician_description);
+        return Objects.hash(election_id, election_name, election_date, election_location, election_description);
     }
 }

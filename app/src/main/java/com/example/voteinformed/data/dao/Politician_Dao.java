@@ -7,7 +7,6 @@ import androidx.room.Query;
 import androidx.room.Update;
 import androidx.room.Delete;
 
-import com.example.voteinformed.data.entity.Article;
 import com.example.voteinformed.data.entity.Politician;
 import java.util.List;
 
