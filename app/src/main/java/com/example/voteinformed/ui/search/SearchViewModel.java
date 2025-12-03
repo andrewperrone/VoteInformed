@@ -16,6 +16,7 @@ public class SearchViewModel extends AndroidViewModel {
 
     private final VoteInformed_Repository repo;
 
+    // This LiveData holds the list of politicians to show in the UI
     private final MediatorLiveData<List<Politician>> results = new MediatorLiveData<>();
     private LiveData<List<Politician>> currentSource;
 
@@ -35,11 +36,16 @@ public class SearchViewModel extends AndroidViewModel {
     }
 
     public void search(String query) {
+        // 1. Detach the old search results (if any)
         if (currentSource != null) {
             results.removeSource(currentSource);
         }
 
-        currentSource = repo.searchPoliticiansFiltered(query, currentFilter);
-        results.addSource(currentSource, results::setValue);
+        // 2. Connect to the REAL database method
+        // (Previously this was calling 'searchPoliticiansFiltered' which was empty)
+        currentSource = repo.searchPoliticians(query, currentFilter);
+
+        // 3. Update the UI whenever the database returns new data
+        results.addSource(currentSource, data -> results.setValue(data));
     }
 }
