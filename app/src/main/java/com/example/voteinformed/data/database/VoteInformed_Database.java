@@ -9,7 +9,6 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import com.example.voteinformed.data.entity.SavedArticle;
 import com.example.voteinformed.data.util.Converters;
 
 //dao
@@ -18,7 +17,6 @@ import com.example.voteinformed.data.dao.Election_Dao;
 import com.example.voteinformed.data.dao.Issue_Dao;
 import com.example.voteinformed.data.dao.Politician_Dao;
 import com.example.voteinformed.data.dao.User_Dao;
-import com.example.voteinformed.data.dao.SavedArticle_Dao;
 
 //entities
 import com.example.voteinformed.data.entity.User;
@@ -47,7 +45,6 @@ import com.example.voteinformed.data.util.DatabaseClient;
                 Issue.class,
                 Politician.class,
                 Election.class,
-                SavedArticle.class,
 
                 // Relations
                 User_Article.class,
@@ -77,7 +74,6 @@ public abstract class VoteInformed_Database extends RoomDatabase {
 
     public abstract Politician_Dao politicianDao();
 
-    public abstract SavedArticle_Dao savedArticleDao();
 
     //IMPORTANT NEEDS SINGLE INSTANCE SO MULTIPLE DON'T GET MADE
     private static volatile VoteInformed_Database INSTANCE;
