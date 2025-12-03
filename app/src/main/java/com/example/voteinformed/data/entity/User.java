@@ -33,6 +33,17 @@ public class User {
         this.is_admin = false;
     }
 
+    @Ignore
+    public User(String email, String password)
+    {
+        this.name = "John Doe";
+        this.email = email;
+        this.password = password;
+        this.location = "123 Main Street, City Hall";
+        this.preference = "[Preferences]";
+        this.is_admin = false;
+    }
+
     //Set admin during construction
     @Ignore
     public User(String name, String email, String password, String location, String preference, boolean is_admin) {

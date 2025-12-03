@@ -583,7 +583,7 @@ public class InitialData {
     public static List<User> getUsers()
     {
         List<User> list = new ArrayList<>();
-        list.add(new User("admin", "voteinformed@gmail.com", "voteinformedadmin", "NYC", "[admin preferences]", true ));
+        list.add(new User("admin", "admin@voteinformed.com", "voteinformedadmin", "NYC", "[admin preferences]", true ));
         list.add(new User("[name]", "[email]", "[password]", "[location]", "[preferences]"));
         return list;
     }

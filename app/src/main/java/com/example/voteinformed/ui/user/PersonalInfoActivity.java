@@ -1,4 +1,4 @@
-package com.example.voteinformed.ui.previously_made;
+package com.example.voteinformed.ui.user;
 
 import android.os.Bundle;
 import android.widget.ImageButton;

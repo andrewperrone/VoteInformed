@@ -35,6 +35,9 @@ import com.example.voteinformed.network.LegislationMatter;
 import com.example.voteinformed.ui.concerns.ConcernsActivity;
 import com.example.voteinformed.ui.previously_made.HomeViewModel;
 import com.example.voteinformed.ui.previously_made.PoliticianComparisonActivity;
+import com.example.voteinformed.ui.politician.PoliticianComparisonActivity;
+import com.google.android.material.chip.ChipGroup;
+import com.example.voteinformed.ui.user.ProfileActivity;
 import com.example.voteinformed.ui.saved.SavedActivity;
 import com.example.voteinformed.ui.saved.SavedArticleViewModel;
 import com.example.voteinformed.ui.search.SearchActivity;
@@ -51,13 +54,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class HomeActivity extends AppCompatActivity {
+
     private DrawerLayout drawerLayout;
     private RecyclerView recyclerLegislation;
     private ChipGroup chipGroupConcerns;
     private ImageButton btnLeftMenu, btnRightMenu;
     private SavedArticleViewModel savedVM;
 
-    // ViewModel for managing saved articles state - ✅ INTEGRATED
     private HomeViewModel viewModel;
 
     // Track loaded articles by position for bookmark toggling
@@ -83,7 +86,6 @@ public class HomeActivity extends AppCompatActivity {
         // Drawer and nav
         drawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navView = findViewById(R.id.nav_view);
-
 
         // define the back press behavior
         OnBackPressedCallback callback = new OnBackPressedCallback(false) {
@@ -359,7 +361,6 @@ public class HomeActivity extends AppCompatActivity {
         // Update button appearance based on ViewModel state
         updateBookmarkAppearance(bookmarkBtn, isSaved);
 
-
         bookmarkBtn.setOnClickListener(v -> {
             // 0. b4 Toggle
             boolean wasSaved = viewModel.isArticleSaved(article);
@@ -400,27 +401,8 @@ public class HomeActivity extends AppCompatActivity {
             Toast.makeText(this, newState ? "Article saved!" : "Bookmark removed", Toast.LENGTH_SHORT).show();
         });
 
-
-        /*// ✅ FIXED: Animate on TOGGLE
-        bookmarkBtn.setOnClickListener(v -> {
-            // 1. Toggle state FIRST
-            viewModel.toggleSaved(article);
-
-            // 2. Get NEW state after toggle
-            boolean newState = viewModel.isArticleSaved(article);
-
-            // 3. Update image FIRST (critical!)
-            updateBookmarkAppearance(bookmarkBtn, newState);
-
-            // 4. Animate the change
-            animateBookmark(bookmarkBtn, newState);
-
-            // 5. Toast feedback
-            Toast.makeText(this, newState ? "Article saved!" : "Bookmark removed", Toast.LENGTH_SHORT).show();
-        });
-
         // Initial animation (unchanged)
-        animateBookmark(bookmarkBtn, isSaved);*/
+        animateBookmark(bookmarkBtn, isSaved);
     }
 
 
