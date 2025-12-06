@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Close button -->
+        <ImageButton
+            android:id="@+id/btnClose"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="start"
+            android:background="@android:color/transparent"
+            android:src="@android:drawable/ic_menu_close_clear_cancel"
+            app:tint="@color/black" />
+
+        <!-- Title -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="16dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/voice_your_concerns"
+            android:textColor="@color/app_secondary_teal"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <!-- Empty ChipGroup - chips added programmatically -->
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipGroupConcerns"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:chipSpacingHorizontal="6dp"
+            app:chipSpacingVertical="6dp"
+            app:singleLine="false"
+            app:singleSelection="false" />
+
+    </LinearLayout>
+</ScrollView>

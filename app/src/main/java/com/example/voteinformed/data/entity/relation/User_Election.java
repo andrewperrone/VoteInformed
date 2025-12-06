@@ -1,0 +1,52 @@
+package com.example.voteinformed.data.entity.relation;
+import androidx.room.Entity;
+
+import java.util.Objects;
+
+@Entity(primaryKeys = {"election_id", "user_id"})//(tableName = "user_election")
+public class User_Election{
+    private int election_id;
+    private int user_id;
+
+    public User_Election(int election_id, int user_id) {
+        this.election_id = election_id;
+        this.user_id = user_id;
+    }
+
+    public int getElection_id() {
+        return election_id;
+    }
+
+    public void setElection_id(int election_id) {
+        this.election_id = election_id;
+    }
+
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
+    }
+
+    @Override
+    public String toString() {
+        return "User_Election{" +
+                "election_id=" + election_id +
+                ", user_id=" + user_id +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        User_Election that = (User_Election) o;
+        return election_id == that.election_id && user_id == that.user_id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(election_id, user_id);
+    }
+}
+

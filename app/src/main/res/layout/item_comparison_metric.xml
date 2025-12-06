@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingVertical="8dp">
+
+    <TextView
+        android:id="@+id/metricName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/urbanistbold"
+        android:text="Category"
+        android:textColor="#B0BEC5"
+        android:textAllCaps="true"
+        android:textSize="11sp"
+        android:letterSpacing="0.05"/>
+
+    <TextView
+        android:id="@+id/metricContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:fontFamily="@font/urbanistmedium"
+        android:text="Content goes here"
+        android:textColor="@android:color/white"
+        android:textSize="13sp"
+        android:lineSpacingExtra="2dp"
+        android:autoLink="all"
+        android:textColorLink="#80CBC4"/>
+</LinearLayout>

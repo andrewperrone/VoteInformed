@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_background"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <!-- Header -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="24dp">
+
+            <ImageButton
+                android:id="@+id/btnBackPersonalInfo"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@android:drawable/ic_menu_close_clear_cancel"
+                app:tint="@color/text_primary"
+                android:contentDescription="Back" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Personal Information"
+                android:fontFamily="@font/urbanistmedium"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary"
+                android:layout_marginStart="12dp"/>
+        </LinearLayout>
+
+        <!-- Profile Picture Section -->
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="32dp">
+
+            <!-- Profile Picture -->
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/profileImage"
+                android:layout_width="240dp"
+                android:layout_height="240dp"
+                android:src="@drawable/user"
+                android:scaleType="centerInside"
+                android:padding="56dp"
+                android:background="@android:color/transparent"
+                app:shapeAppearanceOverlay="@style/CircleImage"
+                app:strokeColor="@color/app_primary_blue"
+                app:strokeWidth="4dp"
+                app:tint="@color/app_primary_blue" />
+
+            <!-- Edit Icon -->
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/btnEditPhoto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_marginEnd="48dp"
+                android:layout_marginBottom="48dp"
+                android:src="@android:drawable/ic_menu_edit"
+                app:fabSize="normal"
+                app:tint="@android:color/white"
+                app:backgroundTint="#00BCD4"
+                app:elevation="6dp"
+                android:contentDescription="Edit Photo"/>
+        </FrameLayout>
+
+        <!-- Username Field -->
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:hint="Username"
+            app:boxStrokeColor="@color/app_primary_blue"
+            app:hintTextColor="@color/app_primary_blue">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputUsername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/urbanistmedium"
+                android:inputType="textPersonName"
+                android:text="John Doe"
+                android:textColor="@color/text_primary"
+                android:textSize="16sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Email Field -->
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:hint="Email Address"
+            app:boxStrokeColor="@color/app_primary_blue"
+            app:hintTextColor="@color/app_primary_blue">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/urbanistmedium"
+                android:inputType="textEmailAddress"
+                android:text="realjohndoe@voteinformed.com"
+                android:textColor="@color/text_primary"
+                android:textSize="16sp"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Voting Poll Site Field -->
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:hint="Voting Poll Site"
+            app:boxStrokeColor="@color/app_primary_blue"
+            app:hintTextColor="@color/app_primary_blue">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputPollSite"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/urbanistmedium"
+                android:inputType="textPostalAddress"
+                android:text="123 Main St, City Hall"
+                android:textColor="@color/text_primary"
+                android:textSize="16sp"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Save Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSaveChanges"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:fontFamily="@font/urbanistmedium"
+            android:text="Save Changes"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:backgroundTint="@color/app_primary_blue"
+            app:cornerRadius="28dp" />
+
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.VoteInformed">
+
+        <!-- HOMESCREEN ACTIVITY: Launcher -->
+        <activity
+            android:name=".ui.home.HomescreenActivity"
+            android:exported="true"
+            android:theme="@style/Theme.VoteInformed.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- LOGIN ACTIVITY -->
+        <activity
+            android:name=".ui.login.LoginActivity"
+            android:exported="false"
+            android:theme="@style/Theme.VoteInformed.NoActionBar" />
+
+        <!-- REGISTER ACTIVITY -->
+        <activity
+            android:name=".ui.login.RegisterActivity"
+            android:exported="false"
+            android:theme="@style/Theme.VoteInformed.NoActionBar" />
+
+        <!-- HOME ACTIVITY (AFTER LOGIN) -->
+        <activity
+            android:name=".ui.home.HomeActivity"
+            android:exported="false"
+            android:theme="@style/Theme.VoteInformed.NoActionBar" />
+
+        <!-- PROFILE + PERSONAL INFO -->
+        <activity
+            android:name=".ui.user.ProfileActivity"
+            android:exported="false"
+            android:theme="@style/Theme.VoteInformed.NoActionBar" />
+
+        <activity
+            android:name=".ui.user.PersonalInfoActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@style/Theme.VoteInformed.NoActionBar" />
+
+        <activity
+            android:name=".ui.politician.PoliticianProfileActivity"
+            android:exported="false"
+            android:theme="@style/Theme.VoteInformed.NoActionBar" />
+
+        <!-- OTHER FEATURES -->
+        <activity
+            android:name=".ui.concerns.ConcernsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.VoteInformed.NoActionBar" />
+
+        <activity
+            android:name=".ui.search.SearchActivity"
+            android:exported="false"
+            android:theme="@style/Theme.VoteInformed.NoActionBar" />
+
+        <activity
+            android:name=".ui.saved.SavedActivity"
+            android:exported="false"
+            android:theme="@style/Theme.VoteInformed.NoActionBar" />
+        <activity
+            android:name=".ui.politician.PoliticianComparisonActivity"
+            android:exported="false"
+            android:theme="@style/Theme.VoteInformed.NoActionBar" />
+
+
+    </application>
+</manifest>
