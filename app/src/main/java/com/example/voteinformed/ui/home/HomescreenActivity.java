@@ -60,7 +60,7 @@ public class HomescreenActivity extends AppCompatActivity {
         });
 
         viewModel = new ViewModelProvider(this).get(HomescreenViewModel.class);
-        viewModel.getAllArticles().observe(this, articles -> {
+        viewModel.allArticles.observe(this, articles -> {
             Log.d("DB", "Loaded articles: " + articles.size());
         });
     }

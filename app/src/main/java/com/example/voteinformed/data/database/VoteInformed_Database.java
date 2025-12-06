@@ -40,6 +40,9 @@ import com.example.voteinformed.data.entity.relation.Politician_Election;
 import com.example.voteinformed.data.entity.relation.Politician_Issue;
 import com.example.voteinformed.data.util.DatabaseClient;
 
+import java.util.concurrent.Executors;
+import com.example.voteinformed.data.util.InitialData;
+
 @Database(
         entities = {
                 // Entities
@@ -96,33 +99,31 @@ public abstract class VoteInformed_Database extends RoomDatabase {
                                     VoteInformed_Database.class,
                                     "vote_informed_database"
                             )
+                            .addCallback(sRoomDatabaseCallback) // <--- RE-ADDED this line
                             .fallbackToDestructiveMigration()
-
-                            // POPULATE!!!
-                            .addCallback(new RoomDatabase.Callback() {
-                                @Override
-                                public void onCreate(@NonNull SupportSQLiteDatabase dbObj) {
-                                    super.onCreate(dbObj);
-                                    DatabaseClient.seedDatabase(appContext, INSTANCE);
-                                }
-                            })
                             .build();
                 }
             }
         }
         return INSTANCE;
     }
-}
-/*    // IMPORTANT MUST POPULATE HERE OR CAN GET DUPLICATEs
-    private static final RoomDatabase.Callback databaseCallback =
-            new RoomDatabase.Callback() {
-                @Override
-                public void onCreate(@NonNull SupportSQLiteDatabase dbObj) {
-                    super.onCreate(dbObj);
 
-                    // Seed using the SAME instance returned by getInstance()
-                    DatabaseClient.seedDatabase(appContext, INSTANCE);
+    // In VoteInformed_Database.java (around line 110-120)
+
+    private static final RoomDatabase.Callback sRoomDatabaseCallback = new RoomDatabase.Callback() {
+        @Override
+        public void onCreate(@NonNull SupportSQLiteDatabase db) {
+            super.onCreate(db);
+
+            // This task runs ONLY when the database is first created
+            Executors.newSingleThreadExecutor().execute(() -> {
+                Politician_Dao dao = INSTANCE.politicianDao();
+
+                // Iterate through the list and insert each politician individually
+                for (Politician p : InitialData.getPoliticians()) {
+                    dao.insert(p);
                 }
-            };
-
-}*/
+            });
+        }
+    };
+}

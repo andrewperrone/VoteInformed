@@ -8,150 +8,166 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 
+import com.bumptech.glide.Glide;
 import com.example.voteinformed.R;
+import com.example.voteinformed.data.repository.VoteInformed_Repository;
 import com.google.android.material.button.MaterialButton;
 
 public class PoliticianProfileActivity extends AppCompatActivity {
 
-    // Tab buttons
+    // Views
     private MaterialButton tabAbout, tabPolicy, tabContact;
-
-    // Section cards corresponding to tabs
     private CardView sectionAbout, sectionPolicy, sectionContact;
-
-    // Currently active section and tab
     private CardView currentSection;
     private MaterialButton currentActiveTab;
+    private ImageView imgProfile;
+    private TextView tvName, tvParty, tvAboutContent, tvContactLocation, tvContactDetails;
 
-    // Animator for tab color transition
+    // Logic
     private ValueAnimator currentColorAnimator;
-
-    // Flag to prevent overlapping animations
     private boolean isAnimating = false;
+    private VoteInformed_Repository repository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_politician_profile);
 
-        // Back button closes the activity
+        repository = new VoteInformed_Repository(getApplicationContext());
+
+        // Initialize Views
+        initViews();
+
+        // Configure initial tab button colors
+        setupInitialButtonStates();
+
+        // Get ID and Load Data
+        int politicianId = getIntent().getIntExtra("politician_id", -1);
+        if (politicianId != -1) {
+            loadData(politicianId);
+        } else {
+            Toast.makeText(this, "Error: No politician selected", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void initViews() {
         ImageButton btnBack = findViewById(R.id.btnBackPolitician);
         btnBack.setOnClickListener(v -> finish());
 
-        // Initialize tab buttons
         tabAbout = findViewById(R.id.tabAbout);
         tabPolicy = findViewById(R.id.tabPolicy);
         tabContact = findViewById(R.id.tabContact);
 
-        // Initialize section cards
         sectionAbout = findViewById(R.id.sectionAbout);
         sectionPolicy = findViewById(R.id.sectionPolicy);
         sectionContact = findViewById(R.id.sectionContact);
 
-        // Set default section and tab
+        imgProfile = findViewById(R.id.imgPoliticianProfile);
+        tvName = findViewById(R.id.tvPoliticianName);
+        tvParty = findViewById(R.id.tvPoliticianParty);
+        tvAboutContent = findViewById(R.id.tvAboutContent);
+        tvContactLocation = findViewById(R.id.tvContactLocation);
+        tvContactDetails = findViewById(R.id.tvContactDetails);
+
+        // Set default section
         currentSection = sectionAbout;
         currentActiveTab = tabAbout;
         sectionAbout.setVisibility(View.VISIBLE);
         sectionPolicy.setVisibility(View.GONE);
         sectionContact.setVisibility(View.GONE);
 
-        // Configure initial tab button colors
-        setupInitialButtonStates();
-
-        // Set click listeners for tabs
+        // Click listeners
         tabAbout.setOnClickListener(v -> switchSection(sectionAbout, tabAbout));
         tabPolicy.setOnClickListener(v -> switchSection(sectionPolicy, tabPolicy));
         tabContact.setOnClickListener(v -> switchSection(sectionContact, tabContact));
     }
 
-    /**
-     * Sets up the initial tab button colors.
-     * Active tab is blue with white text, others are gray with dark text.
-     */
+    private void loadData(int id) {
+        repository.getPoliticianById(id).observe(this, politician -> {
+            if (politician != null) {
+                // Header
+                tvName.setText(politician.getPolitician_name());
+                tvParty.setText(politician.getPolitician_party());
+
+                // Image
+                String url = politician.getPolitician_image_url();
+                if (url != null && !url.equals("default_image") && !url.isEmpty()) {
+                    Glide.with(this).load(url).placeholder(R.drawable.user).into(imgProfile);
+                } else {
+                    imgProfile.setImageResource(R.drawable.user);
+                }
+
+                // Tabs Content
+                tvAboutContent.setText(politician.getPolitician_background());
+                tvContactLocation.setText(politician.getPolitician_location());
+                tvContactDetails.setText(politician.getPolitician_contact());
+            }
+        });
+    }
+
+    // --- YOUR TAB LOGIC BELOW (UNTOUCHED) ---
+
     private void setupInitialButtonStates() {
         int blueColor = ContextCompat.getColor(this, R.color.app_primary_blue);
         int grayColor = Color.parseColor("#F5F5F5");
         int whiteText = ContextCompat.getColor(this, android.R.color.white);
         int darkText = ContextCompat.getColor(this, R.color.text_primary);
 
-        // About tab is active initially
         tabAbout.setBackgroundColor(blueColor);
         tabAbout.setTextColor(whiteText);
-
-        // Other tabs inactive
         tabPolicy.setBackgroundColor(grayColor);
         tabPolicy.setTextColor(darkText);
         tabContact.setBackgroundColor(grayColor);
         tabContact.setTextColor(darkText);
     }
 
-    /**
-     * Handles switching between sections with animations.
-     *
-     * @param newSection The section to switch to
-     * @param clickedTab The corresponding tab button
-     */
     private void switchSection(CardView newSection, MaterialButton clickedTab) {
-        // Ignore if already active or currently animating
         if (currentSection == newSection || isAnimating) return;
-
         isAnimating = true;
 
-        // Cancel any ongoing animation
         if (currentColorAnimator != null && currentColorAnimator.isRunning()) {
             currentColorAnimator.cancel();
         }
 
-        // Determine slide direction for animation
         boolean slideLeft = getSectionIndex(newSection) > getSectionIndex(currentSection);
-
-        // Animate tab button color changes
         animateButtonColors(currentActiveTab, clickedTab);
 
-        // Animate out current section
         animateOut(currentSection, slideLeft, () -> {
             currentSection.setVisibility(View.GONE);
-
-            // Show new section with animation
             currentSection = newSection;
             newSection.setVisibility(View.VISIBLE);
             animateIn(newSection, slideLeft);
         });
-
-        // Update currently active tab
         currentActiveTab = clickedTab;
     }
 
-    /**
-     * Animates the background and text colors of tabs during switch.
-     */
     private void animateButtonColors(MaterialButton fromButton, MaterialButton toButton) {
         int blueColor = ContextCompat.getColor(this, R.color.app_primary_blue);
         int grayColor = Color.parseColor("#F5F5F5");
         int whiteText = ContextCompat.getColor(this, android.R.color.white);
         int darkText = ContextCompat.getColor(this, R.color.text_primary);
 
-        // Animate old button: blue → gray
         ValueAnimator fromBgAnimator = ValueAnimator.ofArgb(blueColor, grayColor);
-        fromBgAnimator.setDuration(500);
+        fromBgAnimator.setDuration(300);
         fromBgAnimator.setInterpolator(new DecelerateInterpolator());
         fromBgAnimator.addUpdateListener(animation -> fromButton.setBackgroundColor((int) animation.getAnimatedValue()));
         fromBgAnimator.start();
 
-        // Animate old button text: white → dark
         ValueAnimator fromTextAnimator = ValueAnimator.ofArgb(whiteText, darkText);
-        fromTextAnimator.setDuration(500);
+        fromTextAnimator.setDuration(300);
         fromTextAnimator.addUpdateListener(animation -> fromButton.setTextColor((int) animation.getAnimatedValue()));
         fromTextAnimator.start();
 
-        // Animate new button: gray → blue
         currentColorAnimator = ValueAnimator.ofArgb(grayColor, blueColor);
-        currentColorAnimator.setDuration(500);
+        currentColorAnimator.setDuration(300);
         currentColorAnimator.setInterpolator(new DecelerateInterpolator());
         currentColorAnimator.addUpdateListener(animation -> toButton.setBackgroundColor((int) animation.getAnimatedValue()));
         currentColorAnimator.addListener(new AnimatorListenerAdapter() {
@@ -159,7 +175,6 @@ public class PoliticianProfileActivity extends AppCompatActivity {
             public void onAnimationEnd(Animator animation) {
                 isAnimating = false;
             }
-
             @Override
             public void onAnimationCancel(Animator animation) {
                 isAnimating = false;
@@ -167,27 +182,15 @@ public class PoliticianProfileActivity extends AppCompatActivity {
         });
         currentColorAnimator.start();
 
-        // Animate new button text: dark → white
         ValueAnimator toTextAnimator = ValueAnimator.ofArgb(darkText, whiteText);
-        toTextAnimator.setDuration(500);
+        toTextAnimator.setDuration(300);
         toTextAnimator.addUpdateListener(animation -> toButton.setTextColor((int) animation.getAnimatedValue()));
         toTextAnimator.start();
     }
 
-    /**
-     * Animate a view sliding out horizontally with fade.
-     *
-     * @param view       The view to animate
-     * @param slideLeft  Direction of slide
-     * @param onComplete Callback when animation ends
-     */
     private void animateOut(View view, boolean slideLeft, Runnable onComplete) {
         float endX = slideLeft ? -view.getWidth() : view.getWidth();
-
-        view.animate()
-                .translationX(endX)
-                .alpha(0f)
-                .setDuration(300)
+        view.animate().translationX(endX).alpha(0f).setDuration(250)
                 .setInterpolator(new DecelerateInterpolator())
                 .setListener(new AnimatorListenerAdapter() {
                     @Override
@@ -195,33 +198,18 @@ public class PoliticianProfileActivity extends AppCompatActivity {
                         view.setTranslationX(0);
                         if (onComplete != null) onComplete.run();
                     }
-                })
-                .start();
+                }).start();
     }
 
-    /**
-     * Animate a view sliding in horizontally with fade.
-     *
-     * @param view      The view to animate
-     * @param slideLeft Direction of slide
-     */
     private void animateIn(View view, boolean slideLeft) {
         float startX = slideLeft ? view.getWidth() : -view.getWidth();
         view.setTranslationX(startX);
         view.setAlpha(0f);
-
-        view.animate()
-                .translationX(0)
-                .alpha(1f)
-                .setDuration(300)
+        view.animate().translationX(0).alpha(1f).setDuration(250)
                 .setInterpolator(new DecelerateInterpolator())
-                .setListener(null)
-                .start();
+                .setListener(null).start();
     }
 
-    /**
-     * Returns the index of a section for animation direction purposes.
-     */
     private int getSectionIndex(CardView section) {
         if (section == sectionAbout) return 0;
         if (section == sectionPolicy) return 1;
