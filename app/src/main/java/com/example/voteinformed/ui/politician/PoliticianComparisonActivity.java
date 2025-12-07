@@ -183,6 +183,7 @@ public class PoliticianComparisonActivity extends AppCompatActivity
             tvName.setText("Empty Slot");
             tvParty.setText("Select a candidate");
             ivImage.setImageResource(R.drawable.user);
+            clearAllRows(side);
             return;
         }
 
@@ -195,6 +196,31 @@ public class PoliticianComparisonActivity extends AppCompatActivity
         } else {
             ivImage.setImageResource(R.drawable.user);
         }
+        // Show metrics based on active tab
+        if (currentActiveTab == tabOverview) {
+
+            setMetricRow(side, 1, "Office Location", politician.getPolitician_location());
+            setMetricRow(side, 2, "Party", politician.getPolitician_party());
+            setMetricRow(side, 3, "Background", politician.getPolitician_background());
+
+            for (int i = 4; i <= 7; i++) setMetricRow(side, i, null, null);
+
+        } else if (currentActiveTab == tabIssues) {
+
+            setMetricRow(side, 1, "Political Background", politician.getPolitician_background());
+            setMetricRow(side, 2, "Key Focus", "Issue data not available");
+            setMetricRow(side, 3, "Policy Direction", "Issue data not available");
+
+            for (int i = 4; i <= 7; i++) setMetricRow(side, i, null, null);
+
+        } else if (currentActiveTab == tabContact) {
+
+            setMetricRow(side, 1, "Contact", politician.getPolitician_contact());
+            setMetricRow(side, 2, "Office Location", politician.getPolitician_location());
+
+            for (int i = 3; i <= 7; i++) setMetricRow(side, i, null, null);
+        }
+
     }
 
     private void openProfile(Politician politician) {
@@ -241,6 +267,10 @@ public class PoliticianComparisonActivity extends AppCompatActivity
 
         animateButtonColors(currentActiveTab, clicked);
         currentActiveTab = clicked;
+
+        if (leftPolitician != null) updateCard(true, leftPolitician);
+        if (rightPolitician != null) updateCard(false, rightPolitician);
+
     }
 
     private void animateButtonColors(MaterialButton from, MaterialButton to) {
@@ -336,6 +366,37 @@ public class PoliticianComparisonActivity extends AppCompatActivity
                     viewModel.setRightPolitician(politician);
                 }
             });
+        }
+    }
+
+    // Set title and value for a metric row
+    private void setMetricRow(String side, int index, String label, String value) {
+        int layoutId = getResources().getIdentifier(
+                "metric" + side + index,
+                "id",
+                getPackageName()
+        );
+
+        View row = findViewById(layoutId);
+
+        if (row == null) return;
+
+        if (value == null || value.trim().isEmpty()) {
+            row.setVisibility(View.GONE); // Hide empty data
+        } else {
+            row.setVisibility(View.VISIBLE);
+            TextView tvLabel = row.findViewById(R.id.metricName);
+            TextView tvValue = row.findViewById(R.id.metricContent);
+
+            if (tvLabel != null) tvLabel.setText(label);
+            if (tvValue != null) tvValue.setText(value);
+        }
+    }
+
+    // Clear all metric rows for a side
+    private void clearAllRows(String side) {
+        for (int i = 1; i <= 7; i++) {
+            setMetricRow(side, i, null, null);
         }
     }
 
