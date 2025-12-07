@@ -1,6 +1,8 @@
 package com.example.voteinformed.ui.home;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
@@ -26,10 +30,10 @@ import androidx.activity.OnBackPressedCallback;
 
 import com.bumptech.glide.Glide;
 import com.example.voteinformed.Article;
-import com.example.voteinformed.NewsRepository;
+import com.example.voteinformed.data.repository.NewsRepository;
 import com.example.voteinformed.NewsResponse;
 import com.example.voteinformed.R;
-import com.example.voteinformed.data.entity.SavedArticle;
+import com.example.voteinformed.data.repository.BookmarkRepository;
 import com.example.voteinformed.network.LegistarApiService;
 import com.example.voteinformed.network.LegislationMatter;
 import com.example.voteinformed.ui.concerns.ConcernsActivity;
@@ -39,19 +43,18 @@ import com.example.voteinformed.ui.user.ProfileActivity;
 import com.example.voteinformed.ui.saved.SavedActivity;
 import com.example.voteinformed.ui.saved.SavedArticleViewModel;
 import com.example.voteinformed.ui.search.SearchActivity;
+import com.example.voteinformed.data.repository.VoteInformed_Repository;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import android.content.Context;
-import android.content.SharedPreferences;
-import com.example.voteinformed.data.repository.VoteInformed_Repository;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -60,11 +63,11 @@ public class HomeActivity extends AppCompatActivity {
     private ChipGroup chipGroupConcerns;
     private ImageButton btnLeftMenu, btnRightMenu;
     private SavedArticleViewModel savedVM;
-
     private HomeViewModel viewModel;
-
-    // Track loaded articles by position for bookmark toggling
+    private BookmarkRepository bookmarkRepo;
     private final Map<Integer, Article> loadedArticles = new HashMap<>();
+    private static final String CONCERNS_PREFS = "ConcernsPrefs";
+    private static final String SELECTED_CHIPS_KEY = "SelectedChips";
 
     // Legistar API token
     private static final String LEGISTAR_KEY =
@@ -72,34 +75,35 @@ public class HomeActivity extends AppCompatActivity {
 
     private String selectedTopicFilter = "";
 
+    private ActivityResultLauncher<Intent> concernsLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    loadedArticles.clear();
+                    loadHomeScreenArticles();
+                }
+            }
+    );
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        // Import Saved Article VIew Model!!!
+
         savedVM = new ViewModelProvider(this).get(SavedArticleViewModel.class);
-
-
-        // ViewModel INITIALIZED - MVVM pattern complete
         viewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+        bookmarkRepo = new BookmarkRepository(this);
 
-        // Drawer and nav
         drawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navView = findViewById(R.id.nav_view);
 
-        // define the back press behavior
         OnBackPressedCallback callback = new OnBackPressedCallback(false) {
             @Override
             public void handleOnBackPressed() {
-                // This is only called if the drawer is open (enabled = true)
                 drawerLayout.closeDrawer(GravityCompat.START);
             }
         };
-
-// Add the callback to the dispatcher
         getOnBackPressedDispatcher().addCallback(this, callback);
-
-// Toggle the callback: only intercept 'Back' when the drawer is actually open
         drawerLayout.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
             @Override
             public void onDrawerOpened(View drawerView) {
@@ -116,49 +120,40 @@ public class HomeActivity extends AppCompatActivity {
         navView.getMenu().findItem(R.id.nav_home).setEnabled(false);
         setupNavHeader(navView);
 
-        // Top bar buttons
         btnLeftMenu = findViewById(R.id.btnLeftMenu);
         btnRightMenu = findViewById(R.id.btnRightMenu);
-
         btnLeftMenu.setOnClickListener(v -> drawerLayout.openDrawer(GravityCompat.START));
-        btnRightMenu.setOnClickListener(v ->
-                startActivity(new Intent(HomeActivity.this, ProfileActivity.class)));
+        btnRightMenu.setOnClickListener(v -> startActivity(new Intent(HomeActivity.this, ProfileActivity.class)));
 
-        // Voice Concerns button
         Button voiceConcerns = findViewById(R.id.btnVoiceConcerns);
-        voiceConcerns.setOnClickListener(v ->
-                startActivity(new Intent(HomeActivity.this, ConcernsActivity.class)));
+        voiceConcerns.setOnClickListener(v -> {
+            Intent intent = new Intent(HomeActivity.this, ConcernsActivity.class);
+            concernsLauncher.launch(intent);
+        });
 
-        // Recycler + chips
         recyclerLegislation = findViewById(R.id.recyclerLegislation);
         recyclerLegislation.setLayoutManager(new LinearLayoutManager(this));
-
         chipGroupConcerns = findViewById(R.id.chipGroupConcerns);
         setupFilters();
 
-        // Load articles and legislation
         loadHomeScreenArticles();
         fetchLegislation();
-
-        // Navigation drawer menu
         setupNavMenu(navView);
     }
 
     private void setupFilters() {
         chipGroupConcerns.setOnCheckedChangeListener((group, checkedId) -> {
-            if (checkedId == R.id.chipHealth) {
+            if (checkedId == R.id.chipHealth)
                 selectedTopicFilter = "and substringof('Health', MatterBodyName) eq true";
-            } else if (checkedId == R.id.chipCrime) {
+            else if (checkedId == R.id.chipCrime)
                 selectedTopicFilter = "and substringof('Public Safety', MatterBodyName) eq true";
-            } else if (checkedId == R.id.chipEnvironment) {
+            else if (checkedId == R.id.chipEnvironment)
                 selectedTopicFilter = "and substringof('Environmental', MatterBodyName) eq true";
-            } else if (checkedId == R.id.chipEducation) {
+            else if (checkedId == R.id.chipEducation)
                 selectedTopicFilter = "and substringof('Education', MatterBodyName) eq true";
-            } else if (checkedId == R.id.chipTransport) {
+            else if (checkedId == R.id.chipTransport)
                 selectedTopicFilter = "and substringof('Transportation', MatterBodyName) eq true";
-            } else {
-                selectedTopicFilter = "";
-            }
+            else selectedTopicFilter = "";
             fetchLegislation();
         });
     }
@@ -173,9 +168,7 @@ public class HomeActivity extends AppCompatActivity {
                     public void onResponse(@NonNull Call<List<LegislationMatter>> call,
                                            @NonNull Response<List<LegislationMatter>> response) {
                         if (response.isSuccessful() && response.body() != null) {
-                            List<LegislationMatter> bills = response.body();
-                            Log.d("HomeActivity", "Received " + bills.size() + " legislation items");
-                            recyclerLegislation.setAdapter(new LegislationAdapter(bills));
+                            recyclerLegislation.setAdapter(new LegislationAdapter(response.body()));
                         } else {
                             Toast.makeText(HomeActivity.this, "Error: " + response.code(), Toast.LENGTH_SHORT).show();
                         }
@@ -211,16 +204,12 @@ public class HomeActivity extends AppCompatActivity {
             holder.status.setText(item.getStatus() != null ? item.getStatus() : "Status Unknown");
             holder.committee.setText(item.getCommittee() != null ? item.getCommittee() : "Committee Unknown");
 
-            // Click listener
             holder.itemView.setOnClickListener(v -> {
                 String url = item.getWebLink();
-
                 if (url != null && !url.isEmpty()) {
-                    // Create Intent to open the web browser
                     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                     v.getContext().startActivity(intent);
                 } else {
-                    // Otherwise display error message
                     Toast.makeText(v.getContext(), "No details link available", Toast.LENGTH_SHORT).show();
                 }
             });
@@ -244,32 +233,37 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void loadHomeScreenArticles() {
+        SharedPreferences prefs = getSharedPreferences(CONCERNS_PREFS, MODE_PRIVATE);
+        Set<String> concerns = prefs.getStringSet(SELECTED_CHIPS_KEY, new HashSet<>());
+        String concernsText = concerns.isEmpty() ? "NONE (default NYC)" : String.join(", ", concerns);
+
         NewsRepository newsRepo = new NewsRepository(this);
-        newsRepo.getArticlesForConcern("New York City")
-                .enqueue(new Callback<NewsResponse>() {
-                    @Override
-                    public void onResponse(Call<NewsResponse> call, Response<NewsResponse> response) {
-                        if (response.isSuccessful() && response.body() != null && response.body().articles != null) {
-                            List<Article> articles = response.body().articles;
-                            // Load up to 6 articles for horizontal scrolling
-                            for (int i = 0; i < Math.min(6, articles.size()); i++) {
-                                Article article = articles.get(i);
-                                ImageView imageView = findViewById(getTopArticleImageId(i));
-                                TextView titleView = findViewById(getTopArticleTitleId(i));
-                                ImageButton bookmarkBtn = findViewById(getBookmarkButtonId(i));
-                                if (imageView != null && titleView != null && bookmarkBtn != null) {
-                                    loadArticleImage(imageView, titleView, bookmarkBtn, article, i);
-                                    loadedArticles.put(i, article);
-                                }
-                            }
+        newsRepo.getArticlesForConcerns().enqueue(new Callback<NewsResponse>() {
+            @Override
+            public void onResponse(Call<NewsResponse> call, Response<NewsResponse> response) {
+                if (response.isSuccessful() && response.body() != null && response.body().articles != null) {
+                    List<Article> articles = response.body().articles;
+                    loadedArticles.clear();
+
+                    for (int i = 0; i < Math.min(6, articles.size()); i++) {
+                        Article article = articles.get(i);
+                        ImageView imageView = findViewById(getTopArticleImageId(i));
+                        TextView titleView = findViewById(getTopArticleTitleId(i));
+                        ImageButton bookmarkBtn = findViewById(getBookmarkButtonId(i));
+                        if (imageView != null && titleView != null && bookmarkBtn != null) {
+                            loadArticleImage(imageView, titleView, bookmarkBtn, article, i);
+                            loadedArticles.put(i, article);
                         }
                     }
+                }
+            }
 
-                    @Override
-                    public void onFailure(Call<NewsResponse> call, Throwable t) {
-                        Log.e("HomeActivity", "Articles load failed", t);
-                    }
-                });
+            @Override
+            public void onFailure(Call<NewsResponse> call, Throwable t) {
+                Log.e("HomeActivity", "Network error: " + t.getMessage());
+                Toast.makeText(HomeActivity.this, "Network error", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private int getTopArticleImageId(int position) {
@@ -336,14 +330,10 @@ public class HomeActivity extends AppCompatActivity {
                 .error(android.R.color.darker_gray)
                 .into(imageView);
 
-        if (titleView != null && article.title != null) {
-            titleView.setText(article.title);
-        }
+        if (titleView != null && article.title != null) titleView.setText(article.title);
 
-        // passes Article to bookmark button
         setupBookmarkButton(bookmarkBtn, article, position);
 
-        // Make the entire card clickable excluding bookmark button
         View cardView = (View) imageView.getParent().getParent();
         cardView.setOnClickListener(v -> {
             if (article.url != null) {
@@ -354,56 +344,20 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void setupBookmarkButton(ImageButton bookmarkBtn, Article article, int position) {
-        // Check current saved state from ViewModel
-        boolean isSaved = viewModel.isArticleSaved(article);
-
-        // Update button appearance based on ViewModel state
+        if (article.url == null) return;
+        boolean isSaved = bookmarkRepo.isBookmarked(article.url);
         updateBookmarkAppearance(bookmarkBtn, isSaved);
 
         bookmarkBtn.setOnClickListener(v -> {
-            // b4 Toggle
-            boolean wasSaved = viewModel.isArticleSaved(article);
-
-            // save state to viewModel
-            viewModel.toggleSaved(article);
-
-            // after toggle
-            boolean newState = viewModel.isArticleSaved(article);
-
-            // 3. save to DB
-            if (!wasSaved && newState) {
-                //  DB insert
-                if (article.url != null) {
-                    SavedArticle saved = new SavedArticle(
-                            article.url,
-                            article.title,
-                            article.description != null ? article.description : "",
-                            article.urlToImage != null ? article.urlToImage : "",
-                            System.currentTimeMillis()
-                    );
-                    savedVM.save(saved);
-                }
-            } else if (wasSaved && !newState) {
-                // DB delete
-                if (article.url != null) {
-                    savedVM.remove(article.url);
-                }
-            }
-
-            // update icon
+            bookmarkRepo.toggleBookmark(article);
+            boolean newState = bookmarkRepo.isBookmarked(article.url);
             updateBookmarkAppearance(bookmarkBtn, newState);
-
-            // animation
             animateBookmark(bookmarkBtn, newState);
-
-            // Toast pop up
-            Toast.makeText(this, newState ? "Article saved!" : "Bookmark removed", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, newState ? "Bookmarked!" : "Unbookmarked", Toast.LENGTH_SHORT).show();
         });
 
-        // Initial animation (unchanged)
         animateBookmark(bookmarkBtn, isSaved);
     }
-
 
     private void updateBookmarkAppearance(ImageButton bookmarkBtn, boolean isSaved) {
         bookmarkBtn.setImageResource(isSaved ? R.drawable.ic_heart_filled : R.drawable.ic_heart_unfilled);
@@ -420,14 +374,11 @@ public class HomeActivity extends AppCompatActivity {
             View headerView = navView.getHeaderView(0);
             TextView userName = headerView.findViewById(R.id.user_name);
             TextView userEmail = headerView.findViewById(R.id.user_email);
-            // ImageView profileImage = headerView.findViewById(R.id.profile_image); // If you add image logic later
 
-            // Get User ID from Session
-            SharedPreferences prefs = getSharedPreferences("UserSession", Context.MODE_PRIVATE);
+            SharedPreferences prefs = getSharedPreferences("UserSession", MODE_PRIVATE);
             int userId = prefs.getInt("user_id", -1);
 
             if (userId != -1) {
-                //Fetch data from DB
                 VoteInformed_Repository repo = new VoteInformed_Repository(getApplicationContext());
                 repo.getUserById(userId).observe(this, user -> {
                     if (user != null) {
@@ -436,7 +387,6 @@ public class HomeActivity extends AppCompatActivity {
                     }
                 });
             } else {
-                // Default if not logged in
                 if (userName != null) userName.setText("Guest");
                 if (userEmail != null) userEmail.setText("Please Log In");
             }
@@ -446,30 +396,21 @@ public class HomeActivity extends AppCompatActivity {
     private void setupNavMenu(NavigationView navView) {
         navView.setNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
-            if (id == R.id.nav_home) {
-                drawerLayout.closeDrawer(GravityCompat.START);
-                return true;
-            } else if (id == R.id.nav_search) {
+            if (id == R.id.nav_home) drawerLayout.closeDrawer(GravityCompat.START);
+            else if (id == R.id.nav_search)
                 startActivity(new Intent(HomeActivity.this, SearchActivity.class));
-            } else if (id == R.id.nav_saved) {
+            else if (id == R.id.nav_saved)
                 startActivity(new Intent(HomeActivity.this, SavedActivity.class));
-            } else if (id == R.id.nav_comparison) {
+            else if (id == R.id.nav_comparison)
                 startActivity(new Intent(HomeActivity.this, PoliticianComparisonActivity.class));
-            } else if (id == R.id.nav_profile) {
+            else if (id == R.id.nav_profile)
                 startActivity(new Intent(HomeActivity.this, ProfileActivity.class));
-            } else if (id == R.id.nav_sign_out) {
+            else if (id == R.id.nav_sign_out) {
                 startActivity(new Intent(HomeActivity.this, HomescreenActivity.class));
                 finish();
-            }
-            //else if (id == R.id.nav_debug) {
-            //    startActivity(new Intent(HomeActivity.this, DebugActivity.class));
-            //}
-            else {
-                return false;
-            }
+            } else return false;
             drawerLayout.closeDrawer(GravityCompat.START);
             return true;
         });
     }
-
 }

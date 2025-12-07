@@ -1,5 +1,6 @@
 package com.example.voteinformed.ui.concerns;
 
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.TypedValue;
@@ -33,16 +34,15 @@ public class ConcernsActivity extends AppCompatActivity {
 
         sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
 
-        // Close button
         ImageButton btnClose = findViewById(R.id.btnClose);
-        btnClose.setOnClickListener(v -> finish());
+        btnClose.setOnClickListener(v -> {
+            setResult(Activity.RESULT_OK);
+            finish();
+        });
 
         chipGroup = findViewById(R.id.chipGroupConcerns);
-
-        // Load saved selections and initialize chips
         initializeChips();
 
-        // Listener to handle check changes
         CompoundButton.OnCheckedChangeListener chipListener = (buttonView, isChecked) -> {
             String chipText = buttonView.getText().toString();
             updateChipStatus(chipText, isChecked);
@@ -50,54 +50,34 @@ public class ConcernsActivity extends AppCompatActivity {
             reorderChips();
         };
 
-        // Add chips to ChipGroup (already sorted)
         for (ChipData data : allChips) {
             chipGroup.addView(createChip(data, chipListener));
         }
     }
 
-    //Initialize chips based on saved selections
-    //Chips are sorted: selected first, then unselected
     private void initializeChips() {
         Set<String> savedSelections = sharedPreferences.getStringSet(SELECTED_CHIPS_KEY, new HashSet<>());
 
-        // Define all chip texts
         String[] chipTexts = {
-                "Civil Rights",
-                "Healthcare",
-                "Infrastructure",
-                "Transportation",
-                "Jobs",
-                "Environment",
-                "Military",
-                "Economy",
-                "Crime",
-                "Taxes",
-                "Privacy",
-                "Education"
+                "Civil Rights", "Healthcare", "Infrastructure", "Transportation",
+                "Jobs", "Environment", "Military", "Economy",
+                "Crime", "Taxes", "Privacy", "Education"
         };
 
-        // Create two lists: selected and unselected
         List<ChipData> selectedChips = new ArrayList<>();
         List<ChipData> unselectedChips = new ArrayList<>();
 
         for (String text : chipTexts) {
             boolean selected = savedSelections.contains(text);
             ChipData chipData = new ChipData(text, selected);
-
-            if (selected) {
-                selectedChips.add(chipData);
-            } else {
-                unselectedChips.add(chipData);
-            }
+            if (selected) selectedChips.add(chipData);
+            else unselectedChips.add(chipData);
         }
 
-        // Add selected chips first, then unselected
         allChips.addAll(selectedChips);
         allChips.addAll(unselectedChips);
     }
 
-    //Update the selection state in memory
     private void updateChipStatus(String text, boolean isChecked) {
         for (ChipData data : allChips) {
             if (data.text.equals(text)) {
@@ -107,37 +87,27 @@ public class ConcernsActivity extends AppCompatActivity {
         }
     }
 
-    //Save selected chips to SharedPreferences
     private void saveSelections() {
         Set<String> selectedChips = new HashSet<>();
         for (ChipData data : allChips) {
-            if (data.isSelected) {
-                selectedChips.add(data.text);
-            }
+            if (data.isSelected) selectedChips.add(data.text);
         }
         sharedPreferences.edit().putStringSet(SELECTED_CHIPS_KEY, selectedChips).apply();
+        setResult(Activity.RESULT_OK);
     }
 
-    //Reorder chips: selected first, then unselected
     private void reorderChips() {
-        // Separate into selected and unselected
         List<ChipData> selectedChips = new ArrayList<>();
         List<ChipData> unselectedChips = new ArrayList<>();
-
         for (ChipData data : allChips) {
-            if (data.isSelected) {
-                selectedChips.add(data);
-            } else {
-                unselectedChips.add(data);
-            }
+            if (data.isSelected) selectedChips.add(data);
+            else unselectedChips.add(data);
         }
 
-        // Update allChips list with new order
         allChips.clear();
         allChips.addAll(selectedChips);
         allChips.addAll(unselectedChips);
 
-        // Rebuild UI
         chipGroup.removeAllViews();
 
         CompoundButton.OnCheckedChangeListener chipListener = (buttonView, isChecked) -> {
@@ -147,13 +117,13 @@ public class ConcernsActivity extends AppCompatActivity {
             reorderChips();
         };
 
-        // Add chips in new order
         for (ChipData data : allChips) {
             chipGroup.addView(createChip(data, chipListener));
         }
+
+        setResult(Activity.RESULT_OK);
     }
 
-    //Create a Chip with the given data and listener
     private Chip createChip(ChipData data, CompoundButton.OnCheckedChangeListener listener) {
         Chip chip = new Chip(this);
         chip.setText(data.text);
@@ -178,7 +148,6 @@ public class ConcernsActivity extends AppCompatActivity {
         return chip;
     }
 
-    //Helper class to store chip state
     private static class ChipData {
         String text;
         boolean isSelected;

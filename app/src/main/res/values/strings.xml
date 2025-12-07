@@ -16,5 +16,6 @@
     <string name="current_issues">Current Issues</string>
     <string name="top_community_issues">Top Community Issues</string>
     <string name="currentissues">Current Issues</string>
-    <string name="search_politician">Search politician</string>
+    <string name="remove_bookmark">Remove Bookmark</string>
+    <string name="search_politician">Search Politician</string>
 </resources>
