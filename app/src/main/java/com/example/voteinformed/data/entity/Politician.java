@@ -19,7 +19,6 @@ public class Politician {
     @ColumnInfo(name="politician_party")
     private String politician_party;
 
-    // 🔵 변경됨: BLOB → TEXT(URL)
     @ColumnInfo(name="politician_image_url")
     private String politician_image_url;
 
@@ -32,7 +31,6 @@ public class Politician {
     @ColumnInfo(name="politician_location")
     private String politician_location;
 
-    // 🔵 생성자도 URL 사용하도록 수정
     public Politician(
             String politician_name,
             String politician_party,
