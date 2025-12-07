@@ -7,6 +7,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -23,9 +24,12 @@ import com.example.voteinformed.ui.user.ProfileActivity;
 import com.google.android.material.navigation.NavigationView;
 
 public class SavedActivity extends AppCompatActivity {
+
     private DrawerLayout drawerLayout;
-    private SavedArticleViewModel savedVM;
+    private NavigationView navView;
+
     private RecyclerView recyclerSaved;
+    private SavedArticleViewModel savedVM;
     private SavedArticleAdapter savedAdapter;
 
     @Override
@@ -33,96 +37,98 @@ public class SavedActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_saved);
 
-        // Initialize drawer
+        // Drawer + Nav
         drawerLayout = findViewById(R.id.drawer_layout);
-        NavigationView navView = findViewById(R.id.nav_view);
+        navView = findViewById(R.id.nav_view);
 
-        // Connect to ViewModel
-        savedVM = new ViewModelProvider(this).get(SavedArticleViewModel.class);
-
-    // RecyclerView find
-        recyclerSaved = findViewById(R.id.recyclerSaved);
-        recyclerSaved.setLayoutManager(new LinearLayoutManager(this));
-
-        //Adapter gerenate and conncet
-        savedAdapter = new SavedArticleAdapter();
-        recyclerSaved.setAdapter(savedAdapter);
-
-        // DB LiveData observe atuo update
-        savedVM.savedArticles.observe(this, list -> {
-            savedAdapter.submitList(list);
-        });
-
-        // Highlight current item and make it non-clickable
+        // Highlight current page in drawer
         navView.setCheckedItem(R.id.nav_saved);
         navView.getMenu().findItem(R.id.nav_saved).setEnabled(false);
 
-        // Setup navigation header
-        setupNavHeader(navView);
+        // Drawer header
+        setupNavHeader();
 
-        // Left menu button: opens drawer
+        // Back press handler (drawer closer)
+        setupBackPressHandler();
+
+        // Navigation menu click events
+        setupNavMenu();
+
+        // Menu buttons
         ImageButton btnLeft = findViewById(R.id.btnLeftMenu);
         btnLeft.setOnClickListener(v -> drawerLayout.openDrawer(GravityCompat.START));
 
-        // Profile button: opens ProfileActivity
-        ImageButton btnRight = findViewById(R.id.btnRightMenu);
-        btnRight.setOnClickListener(v -> {
-            Intent intent = new Intent(SavedActivity.this, ProfileActivity.class);
-            startActivity(intent);
-        });
+        ImageButton btnClose = findViewById(R.id.btnRightMenu);
+        btnClose.setOnClickListener(v -> finish());
 
-        // Setup navigation menu
-        setupNavMenu(navView);
+        // Recycler setup
+        recyclerSaved = findViewById(R.id.recyclerSaved);
+        recyclerSaved.setLayoutManager(new LinearLayoutManager(this));
+
+        savedVM = new ViewModelProvider(this).get(SavedArticleViewModel.class);
+        savedAdapter = new SavedArticleAdapter();
+        recyclerSaved.setAdapter(savedAdapter);
+
+        savedVM.savedArticles.observe(this, list -> savedAdapter.submitList(list));
     }
 
-    private void setupNavHeader(NavigationView navView) {
+    private void setupNavHeader() {
         if (navView.getHeaderCount() > 0) {
-            View headerView = navView.getHeaderView(0);
-            ImageView profileImage = headerView.findViewById(R.id.profile_image);
-            TextView userName = headerView.findViewById(R.id.user_name);
-            TextView userEmail = headerView.findViewById(R.id.user_email);
+            View header = navView.getHeaderView(0);
+            ImageView img = header.findViewById(R.id.profile_image);
+            TextView name = header.findViewById(R.id.user_name);
+            TextView email = header.findViewById(R.id.user_email);
 
-            userName.setText("John Doe");
-            userEmail.setText("john.doe@example.com");
+            name.setText("John Doe");
+            email.setText("john.doe@example.com");
         }
     }
 
-    private void setupNavMenu(NavigationView navView) {
+    private void setupBackPressHandler() {
+        OnBackPressedCallback callback = new OnBackPressedCallback(false) {
+            @Override
+            public void handleOnBackPressed() {
+                drawerLayout.closeDrawer(GravityCompat.START);
+            }
+        };
+
+        getOnBackPressedDispatcher().addCallback(this, callback);
+
+        drawerLayout.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                callback.setEnabled(true);
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                callback.setEnabled(false);
+            }
+        });
+    }
+
+    private void setupNavMenu() {
         navView.setNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
 
             if (id == R.id.nav_home) {
-                startActivity(new Intent(SavedActivity.this, HomeActivity.class));
+                startActivity(new Intent(this, HomeActivity.class));
             } else if (id == R.id.nav_search) {
-                startActivity(new Intent(SavedActivity.this, SearchActivity.class));
+                startActivity(new Intent(this, SearchActivity.class));
             } else if (id == R.id.nav_saved) {
-                // Already on Saved page
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
             } else if (id == R.id.nav_comparison) {
-                startActivity(new Intent(SavedActivity.this, PoliticianComparisonActivity.class));
+                startActivity(new Intent(this, PoliticianComparisonActivity.class));
             } else if (id == R.id.nav_profile) {
-                startActivity(new Intent(SavedActivity.this, ProfileActivity.class));
+                startActivity(new Intent(this, ProfileActivity.class));
             } else if (id == R.id.nav_sign_out) {
-                startActivity(new Intent(SavedActivity.this, HomescreenActivity.class));
+                startActivity(new Intent(this, HomescreenActivity.class));
                 finish();
-            } else {
-                return false;
             }
 
             drawerLayout.closeDrawer(GravityCompat.START);
             return true;
         });
     }
-
-
-    @Override
-    public void onBackPressed() {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
-
 }
