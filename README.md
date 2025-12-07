@@ -36,15 +36,15 @@ Core ideas:
 
 - **Andrew Perrone** — Project owner, architect, repository manager. Responsibilities: overall app architecture, database schema design, project structure, main contributor.
 - **Sarah Torres** — Fullstack lead, API integration. Responsibilities: API design and integration, backend/server glue, integration testing.
-- **Jennifer Kwon** — Database designer. Responsibilities: schema design and query optimization, seed data.
+-- **Jennifer Kwon** — Database designer. Responsibilities: schema design and query optimization.
 - **Jeff Lin** — UI/UX lead and API integrator. Responsibilities: UI/UX design, RecyclerView/adapter implementations, integration with image loading.
 
-If you make changes, add your name, role, and contributions here and open a PR.
+
 
 **Specific areas of expertise & notable contributions**
 - **Andrew Perrone (Architecture & Data):** designed the app structure, repository pattern, and authored `db/schema.sql` and Gradle config.
 - **Sarah Torres (API & Backend):** API design, sample server scaffolding, and integration tests for network flows.
-- **Jennifer Kwon (Database):** authored `db/seed_data.sql`, table/index design, and Room migrations guidance.
+- **Jennifer Kwon (Database):** table/index design and Room migrations guidance.
 - **Jeff Lin (UI/UX & Android):** implemented the comparison UI, `PoliticianSearchAdapter`, and polished image loading with Glide.
 
 ---
@@ -136,8 +136,6 @@ This section explains how to run a simple server-backed environment (example usi
 psql -U postgres -c "CREATE DATABASE voteinformed_dev;"
 # Apply the schema
 psql -U postgres -d voteinformed_dev -f db/schema.sql
-# Seed initial data (optional)
-psql -U postgres -d voteinformed_dev -f db/seed_data.sql
 ```
 
 If you need to create a dedicated database user and grant privileges (recommended for production):
@@ -195,7 +193,6 @@ This repo includes SQL scripts under `db/` for creating a development database q
 
 Files included:
 - `db/schema.sql` — SQL DDL to create tables (PostgreSQL DDL statements).
-- `db/seed_data.sql` — optional seed rows for quick testing.
 
 How to run (PostgreSQL example):
 
@@ -207,8 +204,6 @@ How to run (PostgreSQL example):
 psql -U postgres -c "CREATE DATABASE voteinformed_dev;"
 # Apply schema
 psql -U postgres -d voteinformed_dev -f db/schema.sql
-# Apply seed data (optional)
-psql -U postgres -d voteinformed_dev -f db/seed_data.sql
 ```
 
 If `psql` is not in your PATH, you may need to use the full path to `psql.exe` or run the commands from the PostgreSQL `bin` directory. On managed DB services, upload/execute the SQL files via the provider's console or a DB client.
@@ -436,16 +431,9 @@ If you are unsure where to start, check the Issues tab and look for `good first 
 
 This project follows a Code of Conduct to foster an open and welcoming environment. Please see `CODE_OF_CONDUCT.md` for the full text. Key points:
 
-- Be respectful, inclusive, and constructive.
-- Focus feedback on code and behavior, not individuals.
-- Do not tolerate harassment or abusive conduct.
 
 If you experience or witness unacceptable behavior, contact the project maintainers or open an issue labeled `moderation`.
 
-If you want, I can now:
-- run a local `.\gradlew.bat assembleDebug` and report build output, or
-- create `CONTRIBUTING.md` and `CODE_OF_CONDUCT.md`, or
-- scaffold a minimal example server to demonstrate applying `db/schema.sql` and serve the example endpoints.
 
 Which would you like me to do next?
 
