@@ -71,7 +71,7 @@ public class PoliticianComparisonActivity extends AppCompatActivity {
             } else if (id == R.id.nav_saved) {
                 startActivity(new Intent(this, SavedActivity.class));
             } else if (id == R.id.nav_comparison) {
-                // 현재 화면 → 아무것도 안함
+
             } else if (id == R.id.nav_profile) {
                 startActivity(new Intent(this, ProfileActivity.class));
             } else if (id == R.id.nav_sign_out) {

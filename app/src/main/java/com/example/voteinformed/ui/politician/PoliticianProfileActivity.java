@@ -204,18 +204,28 @@ public class PoliticianProfileActivity extends AppCompatActivity {
 
         isAnimating = true;
 
+        currentSection.animate().cancel();
+        newSection.animate().cancel();
+
         boolean slideLeft = getSectionIndex(newSection) > getSectionIndex(currentSection);
+
         animateButtonColors(currentActiveTab, clickedTab);
 
         animateOut(currentSection, slideLeft, () -> {
             currentSection.setVisibility(View.GONE);
+
             currentSection = newSection;
             newSection.setVisibility(View.VISIBLE);
+
             animateIn(newSection, slideLeft);
+
+            isAnimating = false;
         });
 
         currentActiveTab = clickedTab;
     }
+
+
 
     private void animateButtonColors(MaterialButton fromBtn, MaterialButton toBtn) {
         int blue = ContextCompat.getColor(this, R.color.app_primary_blue);
@@ -235,13 +245,6 @@ public class PoliticianProfileActivity extends AppCompatActivity {
 
         ValueAnimator bg2 = ValueAnimator.ofArgb(gray, blue);
         bg2.setDuration(300);
-        bg2.addUpdateListener(a -> toBtn.setBackgroundColor((int) a.getAnimatedValue()));
-        bg2.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animator) {
-                isAnimating = false;
-            }
-        });
         bg2.start();
 
         ValueAnimator text2 = ValueAnimator.ofArgb(dark, white);
@@ -252,23 +255,40 @@ public class PoliticianProfileActivity extends AppCompatActivity {
 
     private void animateOut(View v, boolean slideLeft, Runnable done) {
         float endX = slideLeft ? -v.getWidth() : v.getWidth();
-        v.animate().translationX(endX).alpha(0f).setDuration(250)
+        v.animate()
+                .translationX(endX)
+                .alpha(0f)
+                .setDuration(250)
                 .setListener(new AnimatorListenerAdapter() {
                     @Override
-                    public void onAnimationEnd(Animator a) {
+                    public void onAnimationEnd(Animator animation) {
                         v.setTranslationX(0);
+                        v.setAlpha(1f);
                         if (done != null) done.run();
                     }
-                }).start();
+                    @Override
+                    public void onAnimationCancel(Animator animation) {
+                        v.setTranslationX(0);
+                        v.setAlpha(1f);
+                        if (done != null) done.run();
+                    }
+                })
+                .start();
     }
 
     private void animateIn(View v, boolean slideLeft) {
+        v.animate().cancel();
         v.setTranslationX(slideLeft ? v.getWidth() : -v.getWidth());
         v.setAlpha(0f);
-
-        v.animate().translationX(0).alpha(1f).setDuration(250)
-                .setInterpolator(new DecelerateInterpolator()).start();
+        v.animate()
+                .translationX(0)
+                .alpha(1f)
+                .setDuration(250)
+                .setInterpolator(new DecelerateInterpolator())
+                .setListener(null)
+                .start();
     }
+
 
     private int getSectionIndex(CardView section) {
         if (section == sectionAbout) return 0;
