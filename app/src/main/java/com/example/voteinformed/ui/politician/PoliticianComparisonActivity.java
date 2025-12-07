@@ -3,23 +3,26 @@ package com.example.voteinformed.ui.politician;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-
 import com.bumptech.glide.Glide;
 import com.example.voteinformed.R;
 import com.example.voteinformed.data.entity.Politician;
 import com.example.voteinformed.data.repository.VoteInformed_Repository;
 import com.example.voteinformed.ui.home.HomeActivity;
+import com.example.voteinformed.ui.home.HomescreenActivity;
 import com.example.voteinformed.ui.saved.SavedActivity;
 import com.example.voteinformed.ui.search.SearchActivity;
 import com.example.voteinformed.ui.user.ProfileActivity;
@@ -30,7 +33,7 @@ import java.util.List;
 
 public class PoliticianComparisonActivity extends AppCompatActivity {
 
-    private VoteInformed_Repository repository;
+    private PoliticianComparisonViewModel viewModel;
     private List<Politician> allPoliticians = new ArrayList<>();
 
     private Politician leftPolitician;
@@ -44,12 +47,12 @@ public class PoliticianComparisonActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_politician_comparison);
 
-        repository = new VoteInformed_Repository(getApplicationContext());
+        // Initialize the ViewModel
+        viewModel = new ViewModelProvider(this).get(PoliticianComparisonViewModel.class);
 
         initDrawerMenu();
-        initButtons();
-
-        loadPoliticians();
+        setupUI();
+        observeViewModel();
     }
 
     private void initDrawerMenu() {
@@ -75,7 +78,7 @@ public class PoliticianComparisonActivity extends AppCompatActivity {
             } else if (id == R.id.nav_profile) {
                 startActivity(new Intent(this, ProfileActivity.class));
             } else if (id == R.id.nav_sign_out) {
-                startActivity(new Intent(this, HomeActivity.class));
+                startActivity(new Intent(this, HomescreenActivity.class));
                 finish();
             }
 
@@ -108,50 +111,70 @@ public class PoliticianComparisonActivity extends AppCompatActivity {
         }
     }
 
-    private void initButtons() {
-        ImageButton btnBack = findViewById(R.id.btnBack);
-        btnBack.setOnClickListener(v -> finish());
+    private void setupUI() {
+        // back button
+        findViewById(R.id.btnBack).setOnClickListener(v -> finish());
 
+        // swap buttons
         findViewById(R.id.btnSwapLeft).setOnClickListener(v -> showSelectionDialog(true));
         findViewById(R.id.btnSwapRight).setOnClickListener(v -> showSelectionDialog(false));
 
-        findViewById(R.id.btnRemoveLeft).setOnClickListener(v -> updateCard(true, null));
-        findViewById(R.id.btnRemoveRight).setOnClickListener(v -> updateCard(false, null));
+        // remove buttons
+        findViewById(R.id.btnRemoveLeft).setOnClickListener(v -> viewModel.setLeftPolitician(null));
+        findViewById(R.id.btnRemoveRight).setOnClickListener(v -> viewModel.setRightPolitician(null));
     }
 
-    private void loadPoliticians() {
-        repository.getAllPoliticians().observe(this, politicians -> {
+    private void observeViewModel() {
+        // get list of all politicians
+        viewModel.getAllPoliticians().observe(this, politicians -> {
             if (politicians != null && !politicians.isEmpty()) {
-                this.allPoliticians = politicians;
-
-                if (leftPolitician == null) updateCard(true, politicians.get(0));
-                if (rightPolitician == null && politicians.size() > 1)
-                    updateCard(false, politicians.get(1));
+                allPoliticians.clear();
+                allPoliticians.addAll(politicians);
+                viewModel.setInitialPoliticians(politicians);
             } else {
                 Toast.makeText(this, "No politicians found.", Toast.LENGTH_SHORT).show();
             }
         });
+
+        // getLeftPolitictian and update
+        viewModel.getLeftPolitician().observe(this, politician -> {
+            updateCard(true, politician);
+        });
+
+        // getRightPolitictian and update
+        viewModel.getRightPolitician().observe(this, politician -> {
+            updateCard(false, politician);
+        });
     }
 
     private void showSelectionDialog(boolean isLeft) {
-        if (allPoliticians.isEmpty()) return;
+        if (allPoliticians.isEmpty()) {
+            Toast.makeText(this, "No politicians to select.", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         String[] names = new String[allPoliticians.size()];
-        for (int i = 0; i < allPoliticians.size(); i++)
+        for (int i = 0; i < allPoliticians.size(); i++) {
             names[i] = allPoliticians.get(i).getPolitician_name();
+        }
 
         new AlertDialog.Builder(this)
                 .setTitle("Select Candidate")
-                .setItems(names, (dialog, which) -> updateCard(isLeft, allPoliticians.get(which)))
+                .setItems(names, (dialog, which) -> {
+                    Politician selected = allPoliticians.get(which);
+                    if (isLeft) {
+                        viewModel.setLeftPolitician(selected);
+                    } else {
+                        viewModel.setRightPolitician(selected);
+                    }
+                })
                 .show();
     }
 
     private void updateCard(boolean isLeft, Politician politician) {
-        if (isLeft) leftPolitician = politician;
-        else rightPolitician = politician;
-
         String side = isLeft ? "Left" : "Right";
 
+        // Find the main views for this side
         int nameId = getResources().getIdentifier("name" + side, "id", getPackageName());
         int partyId = getResources().getIdentifier("party" + side, "id", getPackageName());
         int imageId = getResources().getIdentifier("image" + side, "id", getPackageName());
@@ -160,23 +183,28 @@ public class PoliticianComparisonActivity extends AppCompatActivity {
         TextView tvParty = findViewById(partyId);
         ImageView ivImage = findViewById(imageId);
 
+        // Handle empty state
         if (politician == null) {
             tvName.setText("Empty Slot");
             tvParty.setText("Select a candidate");
             ivImage.setImageResource(R.drawable.user);
 
+            // Hide all info rows
             for (int i = 1; i <= 7; i++) setMetricRow(side, i, null, null);
             return;
         }
 
+        // Set Header Info
         tvName.setText(politician.getPolitician_name());
         tvParty.setText(politician.getPolitician_party());
 
+        // Set Image
         String url = politician.getPolitician_image_url();
-        if (url != null && !url.isEmpty() && !url.equals("default_image"))
+        if (url != null && !url.equals("default_image") && !url.isEmpty()) {
             Glide.with(this).load(url).placeholder(R.drawable.user).into(ivImage);
-        else
+        } else {
             ivImage.setImageResource(R.drawable.user);
+        }
 
         setMetricRow(side, 1, "Office Location", politician.getPolitician_location());
         setMetricRow(side, 2, "Contact Info", politician.getPolitician_contact());
@@ -185,18 +213,22 @@ public class PoliticianComparisonActivity extends AppCompatActivity {
         for (int i = 4; i <= 7; i++) setMetricRow(side, i, null, null);
     }
 
+    // Set title and text for a specific row
     private void setMetricRow(String side, int index, String label, String content) {
+        // Find the included layout (ex: metricLeft1)
         int layoutId = getResources().getIdentifier("metric" + side + index, "id", getPackageName());
         View row = findViewById(layoutId);
 
-        if (row == null) return;
-
-        if (content == null || content.isEmpty()) {
-            row.setVisibility(View.GONE);
-        } else {
-            row.setVisibility(View.VISIBLE);
-            ((TextView) row.findViewById(R.id.metricName)).setText(label);
-            ((TextView) row.findViewById(R.id.metricContent)).setText(content);
+        if (row != null) {
+            if (content == null || content.isEmpty()) {
+                row.setVisibility(View.GONE);
+            } else {
+                row.setVisibility(View.VISIBLE);
+                TextView tvLabel = row.findViewById(R.id.metricName);
+                TextView tvContent = row.findViewById(R.id.metricContent);
+                tvLabel.setText(label);
+                tvContent.setText(content);
+            }
         }
     }
 }
