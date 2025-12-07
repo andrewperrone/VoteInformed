@@ -22,8 +22,7 @@
             android:orientation="horizontal"
             android:paddingHorizontal="20dp"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="16dp"
-            >
+            android:layout_marginTop="16dp">
 
             <ImageButton
                 android:id="@+id/btnLeftMenu"
@@ -151,12 +150,15 @@
                             android:gravity="end"
                             android:padding="12dp">
 
+                            <!-- ✅ FIXED -->
                             <ImageButton
                                 android:id="@+id/btnSwapLeft"
                                 android:layout_width="32dp"
                                 android:layout_height="32dp"
                                 android:src="@android:drawable/ic_popup_sync"
                                 android:background="?attr/selectableItemBackgroundBorderless"
+                                android:clickable="true"
+                                android:elevation="30dp"
                                 app:tint="@android:color/white" />
 
                             <ImageButton
@@ -225,12 +227,15 @@
                             android:gravity="end"
                             android:padding="12dp">
 
+                            <!-- ✅ FIXED -->
                             <ImageButton
                                 android:id="@+id/btnSwapRight"
                                 android:layout_width="32dp"
                                 android:layout_height="32dp"
                                 android:src="@android:drawable/ic_popup_sync"
                                 android:background="?attr/selectableItemBackgroundBorderless"
+                                android:clickable="true"
+                                android:elevation="30dp"
                                 app:tint="@android:color/white" />
 
                             <ImageButton

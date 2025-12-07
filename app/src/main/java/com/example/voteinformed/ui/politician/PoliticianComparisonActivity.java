@@ -3,20 +3,19 @@ package com.example.voteinformed.ui.politician;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import androidx.appcompat.app.AlertDialog;
+
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.bumptech.glide.Glide;
 import com.example.voteinformed.R;
 import com.example.voteinformed.data.entity.Politician;
@@ -31,7 +30,8 @@ import com.google.android.material.navigation.NavigationView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PoliticianComparisonActivity extends AppCompatActivity {
+public class PoliticianComparisonActivity extends AppCompatActivity{
+        //implements PoliticianSearchDialog.OnPoliticianSelectedListener
 
     private PoliticianComparisonViewModel viewModel;
     private List<Politician> allPoliticians = new ArrayList<>();
@@ -47,20 +47,30 @@ public class PoliticianComparisonActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_politician_comparison);
 
-        // Initialize the ViewModel
         viewModel = new ViewModelProvider(this).get(PoliticianComparisonViewModel.class);
 
         initDrawerMenu();
         setupUI();
         observeViewModel();
+
+        int incomingId = getIntent().getIntExtra("politician_id", -1);
+        if (incomingId != -1) {
+            viewModel.setInitialById(incomingId);
+        }
+
+        restoreComparisonState();
     }
 
     private void initDrawerMenu() {
         drawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navView = findViewById(R.id.nav_view);
-
         btnLeftMenu = findViewById(R.id.btnLeftMenu);
-        btnLeftMenu.setOnClickListener(v -> drawerLayout.openDrawer(GravityCompat.START));
+
+        if (drawerLayout == null || navView == null || btnLeftMenu == null) return;
+
+        btnLeftMenu.setOnClickListener(v ->
+                drawerLayout.openDrawer(GravityCompat.START)
+        );
 
         setupNavHeader(navView);
 
@@ -73,8 +83,6 @@ public class PoliticianComparisonActivity extends AppCompatActivity {
                 startActivity(new Intent(this, SearchActivity.class));
             } else if (id == R.id.nav_saved) {
                 startActivity(new Intent(this, SavedActivity.class));
-            } else if (id == R.id.nav_comparison) {
-                // 현재 화면 → 아무것도 안함
             } else if (id == R.id.nav_profile) {
                 startActivity(new Intent(this, ProfileActivity.class));
             } else if (id == R.id.nav_sign_out) {
@@ -112,123 +120,111 @@ public class PoliticianComparisonActivity extends AppCompatActivity {
     }
 
     private void setupUI() {
-        // back button
+
+
         findViewById(R.id.btnBack).setOnClickListener(v -> finish());
 
-        // swap buttons
-        findViewById(R.id.btnSwapLeft).setOnClickListener(v -> showSelectionDialog(true));
-        findViewById(R.id.btnSwapRight).setOnClickListener(v -> showSelectionDialog(false));
 
-        // remove buttons
+        /*findViewById(R.id.btnSwapLeft).setOnClickListener(v -> openSearchDialog(true));
+        findViewById(R.id.btnSwapRight).setOnClickListener(v -> openSearchDialog(false));*/
+
         findViewById(R.id.btnRemoveLeft).setOnClickListener(v -> viewModel.setLeftPolitician(null));
         findViewById(R.id.btnRemoveRight).setOnClickListener(v -> viewModel.setRightPolitician(null));
+
+        // OPEN PROFILE THROUGH PROFILE PHOTO
+        ImageView leftImage = findViewById(R.id.imageLeft);
+        if (leftImage != null) leftImage.setOnClickListener(v -> openProfile(leftPolitician));
+
+        ImageView rightImage = findViewById(R.id.imageRight);
+        if (rightImage != null) rightImage.setOnClickListener(v -> openProfile(rightPolitician));
+
     }
 
-    private void observeViewModel() {
-        // get list of all politicians
-        viewModel.getAllPoliticians().observe(this, politicians -> {
-            if (politicians != null && !politicians.isEmpty()) {
-                allPoliticians.clear();
-                allPoliticians.addAll(politicians);
-                viewModel.setInitialPoliticians(politicians);
-            } else {
-                Toast.makeText(this, "No politicians found.", Toast.LENGTH_SHORT).show();
-            }
-        });
+    /*private void openSearchDialog(boolean isLeft) {
+        FragmentManager fm = getSupportFragmentManager();
+        PoliticianSearchDialog dialog = PoliticianSearchDialog.newInstance(isLeft);
+        dialog.show(fm, "PoliticianSearchDialog");
+    }*/
 
-        // getLeftPolitictian and update
+    /*@Override
+    public void onPoliticianSelected(Politician politician, boolean isLeft) {
+        if (isLeft) viewModel.setLeftPolitician(politician);
+        else viewModel.setRightPolitician(politician);
+    }*/
+
+    private void observeViewModel() {
+
         viewModel.getLeftPolitician().observe(this, politician -> {
+            leftPolitician = politician;
             updateCard(true, politician);
         });
 
-        // getRightPolitictian and update
         viewModel.getRightPolitician().observe(this, politician -> {
+            rightPolitician = politician;
             updateCard(false, politician);
         });
-    }
-
-    private void showSelectionDialog(boolean isLeft) {
-        if (allPoliticians.isEmpty()) {
-            Toast.makeText(this, "No politicians to select.", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        String[] names = new String[allPoliticians.size()];
-        for (int i = 0; i < allPoliticians.size(); i++) {
-            names[i] = allPoliticians.get(i).getPolitician_name();
-        }
-
-        new AlertDialog.Builder(this)
-                .setTitle("Select Candidate")
-                .setItems(names, (dialog, which) -> {
-                    Politician selected = allPoliticians.get(which);
-                    if (isLeft) {
-                        viewModel.setLeftPolitician(selected);
-                    } else {
-                        viewModel.setRightPolitician(selected);
-                    }
-                })
-                .show();
     }
 
     private void updateCard(boolean isLeft, Politician politician) {
         String side = isLeft ? "Left" : "Right";
 
-        // Find the main views for this side
-        int nameId = getResources().getIdentifier("name" + side, "id", getPackageName());
-        int partyId = getResources().getIdentifier("party" + side, "id", getPackageName());
-        int imageId = getResources().getIdentifier("image" + side, "id", getPackageName());
+        TextView tvName = findViewById(getResources()
+                .getIdentifier("name" + side, "id", getPackageName()));
+        TextView tvParty = findViewById(getResources()
+                .getIdentifier("party" + side, "id", getPackageName()));
+        ImageView ivImage = findViewById(getResources()
+                .getIdentifier("image" + side, "id", getPackageName()));
 
-        TextView tvName = findViewById(nameId);
-        TextView tvParty = findViewById(partyId);
-        ImageView ivImage = findViewById(imageId);
-
-        // Handle empty state
         if (politician == null) {
             tvName.setText("Empty Slot");
             tvParty.setText("Select a candidate");
             ivImage.setImageResource(R.drawable.user);
-
-            // Hide all info rows
-            for (int i = 1; i <= 7; i++) setMetricRow(side, i, null, null);
             return;
         }
 
-        // Set Header Info
         tvName.setText(politician.getPolitician_name());
         tvParty.setText(politician.getPolitician_party());
 
-        // Set Image
         String url = politician.getPolitician_image_url();
-        if (url != null && !url.equals("default_image") && !url.isEmpty()) {
-            Glide.with(this).load(url).placeholder(R.drawable.user).into(ivImage);
+        if (url != null && !url.isEmpty()) {
+            Glide.with(this).load(url).into(ivImage);
         } else {
             ivImage.setImageResource(R.drawable.user);
         }
-
-        setMetricRow(side, 1, "Office Location", politician.getPolitician_location());
-        setMetricRow(side, 2, "Contact Info", politician.getPolitician_contact());
-        setMetricRow(side, 3, "Biography", politician.getPolitician_background());
-
-        for (int i = 4; i <= 7; i++) setMetricRow(side, i, null, null);
     }
 
-    // Set title and text for a specific row
-    private void setMetricRow(String side, int index, String label, String content) {
-        // Find the included layout (ex: metricLeft1)
-        int layoutId = getResources().getIdentifier("metric" + side + index, "id", getPackageName());
-        View row = findViewById(layoutId);
+    private void openProfile(Politician politician) {
+        if (politician == null) return;
 
-        if (row != null) {
-            if (content == null || content.isEmpty()) {
-                row.setVisibility(View.GONE);
-            } else {
-                row.setVisibility(View.VISIBLE);
-                TextView tvLabel = row.findViewById(R.id.metricName);
-                TextView tvContent = row.findViewById(R.id.metricContent);
-                tvLabel.setText(label);
-                tvContent.setText(content);
-            }
-        }
+        Intent intent = new Intent(this, PoliticianProfileActivity.class);
+        intent.putExtra("politician_id", politician.getPolitician_id());
+        startActivity(intent);
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        SharedPreferences prefs = getSharedPreferences("comparison", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+
+        if (leftPolitician != null)
+            editor.putInt("left_id", leftPolitician.getPolitician_id());
+
+        if (rightPolitician != null)
+            editor.putInt("right_id", rightPolitician.getPolitician_id());
+
+        editor.apply();
+    }
+
+    private void restoreComparisonState() {
+        SharedPreferences prefs = getSharedPreferences("comparison", MODE_PRIVATE);
+
+        int leftId = prefs.getInt("left_id", -1);
+        int rightId = prefs.getInt("right_id", -1);
+
+        if (leftId != -1) viewModel.setInitialById(leftId);
+        if (rightId != -1) viewModel.setRightById(rightId);
     }
 }
