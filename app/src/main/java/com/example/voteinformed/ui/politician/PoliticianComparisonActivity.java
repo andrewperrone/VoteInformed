@@ -254,7 +254,7 @@ public class PoliticianComparisonActivity extends AppCompatActivity
         int dark = ContextCompat.getColor(this, R.color.text_primary);
 
         tabOverview.setBackgroundColor(blue);
-        tabOverview.setTextColor(white);
+        tabOverview.setTextColor(dark);
         tabIssues.setBackgroundColor(gray);
         tabIssues.setTextColor(dark);
         tabContact.setBackgroundColor(gray);
