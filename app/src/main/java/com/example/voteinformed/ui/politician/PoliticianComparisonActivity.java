@@ -1,16 +1,32 @@
 package com.example.voteinformed.ui.politician;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import com.bumptech.glide.Glide;
 import com.example.voteinformed.R;
 import com.example.voteinformed.data.entity.Politician;
+import com.example.voteinformed.data.repository.VoteInformed_Repository;
+import com.example.voteinformed.ui.home.HomeActivity;
+import com.example.voteinformed.ui.saved.SavedActivity;
+import com.example.voteinformed.ui.search.SearchActivity;
+import com.example.voteinformed.ui.user.ProfileActivity;
+import com.google.android.material.navigation.NavigationView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +34,12 @@ public class PoliticianComparisonActivity extends AppCompatActivity {
 
     private PoliticianComparisonViewModel viewModel;
     private List<Politician> allPoliticians = new ArrayList<>();
+
+    private Politician leftPolitician;
+    private Politician rightPolitician;
+
+    private DrawerLayout drawerLayout;
+    private ImageButton btnLeftMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +51,62 @@ public class PoliticianComparisonActivity extends AppCompatActivity {
 
         setupUI();
         observeViewModel();
+    }
+
+    private void initDrawerMenu() {
+        drawerLayout = findViewById(R.id.drawer_layout);
+        NavigationView navView = findViewById(R.id.nav_view);
+
+        btnLeftMenu = findViewById(R.id.btnLeftMenu);
+        btnLeftMenu.setOnClickListener(v -> drawerLayout.openDrawer(GravityCompat.START));
+
+        setupNavHeader(navView);
+
+        navView.setNavigationItemSelectedListener(item -> {
+            int id = item.getItemId();
+
+            if (id == R.id.nav_home) {
+                startActivity(new Intent(this, HomeActivity.class));
+            } else if (id == R.id.nav_search) {
+                startActivity(new Intent(this, SearchActivity.class));
+            } else if (id == R.id.nav_saved) {
+                startActivity(new Intent(this, SavedActivity.class));
+            } else if (id == R.id.nav_comparison) {
+                // 현재 화면 → 아무것도 안함
+            } else if (id == R.id.nav_profile) {
+                startActivity(new Intent(this, ProfileActivity.class));
+            } else if (id == R.id.nav_sign_out) {
+                startActivity(new Intent(this, HomeActivity.class));
+                finish();
+            }
+
+            drawerLayout.closeDrawer(GravityCompat.START);
+            return true;
+        });
+    }
+
+    private void setupNavHeader(NavigationView navView) {
+        if (navView.getHeaderCount() > 0) {
+            View header = navView.getHeaderView(0);
+            TextView username = header.findViewById(R.id.user_name);
+            TextView email = header.findViewById(R.id.user_email);
+
+            SharedPreferences prefs = getSharedPreferences("UserSession", Context.MODE_PRIVATE);
+            int userId = prefs.getInt("user_id", -1);
+
+            if (userId != -1) {
+                VoteInformed_Repository repo = new VoteInformed_Repository(getApplicationContext());
+                repo.getUserById(userId).observe(this, user -> {
+                    if (user != null) {
+                        username.setText(user.getName());
+                        email.setText(user.getEmail());
+                    }
+                });
+            } else {
+                username.setText("Guest");
+                email.setText("Please log in");
+            }
+        }
     }
 
     private void setupUI() {
@@ -91,7 +169,6 @@ public class PoliticianComparisonActivity extends AppCompatActivity {
                 .show();
     }
 
-    // Updates UI of card
     private void updateCard(boolean isLeft, Politician politician) {
         String side = isLeft ? "Left" : "Right";
 
@@ -110,13 +187,16 @@ public class PoliticianComparisonActivity extends AppCompatActivity {
             tvParty.setText("Select a candidate");
             ivImage.setImageResource(R.drawable.user);
 
+            // Hide all info rows
             for (int i = 1; i <= 7; i++) setMetricRow(side, i, null, null);
             return;
         }
 
+        // Set Header Info
         tvName.setText(politician.getPolitician_name());
         tvParty.setText(politician.getPolitician_party());
 
+        // Set Image
         String url = politician.getPolitician_image_url();
         if (url != null && !url.equals("default_image") && !url.isEmpty()) {
             Glide.with(this).load(url).placeholder(R.drawable.user).into(ivImage);
@@ -133,6 +213,7 @@ public class PoliticianComparisonActivity extends AppCompatActivity {
 
     // Set title and text for a specific row
     private void setMetricRow(String side, int index, String label, String content) {
+        // Find the included layout (ex: metricLeft1)
         int layoutId = getResources().getIdentifier("metric" + side + index, "id", getPackageName());
         View row = findViewById(layoutId);
 

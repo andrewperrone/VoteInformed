@@ -8,9 +8,9 @@
 
     <ImageButton
         android:id="@+id/btnBackSearch"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginStart="24dp"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="350dp"
         android:layout_marginTop="24dp"
         android:background="@android:color/transparent"
         android:src="@android:drawable/ic_menu_close_clear_cancel"

@@ -14,13 +14,11 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- TOP SECTION -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- TOP BAR WITH LEFT/RIGHT BUTTONS -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
@@ -53,7 +51,6 @@
                     android:src="@drawable/user" />
             </LinearLayout>
 
-            <!-- TITLE AND ACTION BUTTON -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -82,7 +79,6 @@
                     app:strokeColor="@color/app_secondary_teal" />
             </LinearLayout>
 
-            <!-- TOP CONCERNS - HORIZONTAL SCROLLING ARTICLES -->
             <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -94,7 +90,6 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <!-- Article 1 -->
                     <androidx.cardview.widget.CardView
                         android:id="@+id/article1card"
                         android:layout_width="160dp"
@@ -141,7 +136,6 @@
                         </RelativeLayout>
                     </androidx.cardview.widget.CardView>
 
-                    <!-- Article 2 -->
                     <androidx.cardview.widget.CardView
                         android:id="@+id/article2card"
                         android:layout_width="160dp"
@@ -188,7 +182,6 @@
                         </RelativeLayout>
                     </androidx.cardview.widget.CardView>
 
-                    <!-- Article 3 -->
                     <androidx.cardview.widget.CardView
                         android:id="@+id/article3card"
                         android:layout_width="160dp"
@@ -235,7 +228,6 @@
                         </RelativeLayout>
                     </androidx.cardview.widget.CardView>
 
-                    <!-- Article 4 -->
                     <androidx.cardview.widget.CardView
                         android:id="@+id/article4card"
                         android:layout_width="160dp"
@@ -282,7 +274,6 @@
                         </RelativeLayout>
                     </androidx.cardview.widget.CardView>
 
-                    <!-- Article 5 -->
                     <androidx.cardview.widget.CardView
                         android:id="@+id/article5card"
                         android:layout_width="160dp"
@@ -329,7 +320,6 @@
                         </RelativeLayout>
                     </androidx.cardview.widget.CardView>
 
-                    <!-- Article 6 -->
                     <androidx.cardview.widget.CardView
                         android:id="@+id/article6card"
                         android:layout_width="160dp"
@@ -380,7 +370,6 @@
 
         </LinearLayout>
 
-        <!-- LEGISLATION SECTION -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -449,7 +438,6 @@
             </com.google.android.material.chip.ChipGroup>
         </HorizontalScrollView>
 
-        <!-- RECYCLERVIEW -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerLegislation"
             android:layout_width="match_parent"
@@ -458,7 +446,6 @@
             android:clipToPadding="false" />
     </LinearLayout>
 
-    <!-- NAVIGATION DRAWER -->
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
