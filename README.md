@@ -16,7 +16,6 @@ A developer-focused README with step-by-step environment setup, database creatio
 - [Testing Strategy & Sample Test Cases](#testing-strategy--sample-test-cases)
 - [Features & Technical Implementation](#features--technical-implementation)
 - [Packages & APIs](#packages--apis)
-- 
 ---
 
 ## About
