@@ -17,7 +17,10 @@ public class UserWithElections {
     @Relation(
             parentColumn = "user_id",
             entityColumn = "election_id",
-            associateBy = @Junction(User_Election.class)
+            entity = Election.class,
+            associateBy = @Junction(value = User_Election.class,
+                    parentColumn = "user_id",
+                    entityColumn = "election_id")
     )
     public List<Election> elections;
 }

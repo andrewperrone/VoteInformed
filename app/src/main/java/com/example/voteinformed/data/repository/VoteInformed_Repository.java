@@ -20,6 +20,16 @@ import com.example.voteinformed.data.entity.Issue;
 import com.example.voteinformed.data.entity.Politician;
 import com.example.voteinformed.data.entity.SavedArticle;
 import com.example.voteinformed.data.entity.User;
+import com.example.voteinformed.data.entity.relation.ArticleWithElections;
+import com.example.voteinformed.data.entity.relation.ArticleWithIssues;
+import com.example.voteinformed.data.entity.relation.ArticleWithPoliticians;
+import com.example.voteinformed.data.entity.relation.ElectionWithPoliticians;
+import com.example.voteinformed.data.entity.relation.PoliticianWithElections;
+import com.example.voteinformed.data.entity.relation.PoliticianWithIssues;
+import com.example.voteinformed.data.entity.relation.UserWithArticles;
+import com.example.voteinformed.data.entity.relation.UserWithElections;
+import com.example.voteinformed.data.entity.relation.UserWithIssues;
+import com.example.voteinformed.data.entity.relation.UserWithPoliticians;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -111,11 +121,6 @@ public class VoteInformed_Repository {
         return politicianDao.getPoliticianById(id);
     }
 
-    public LiveData<List<Article>> getArticleWithIssues(int issueId) {
-        return articleDao.getArticleWithIssues(issueId);
-    }
-
-
     //Search
     public LiveData<List<Politician>> searchPoliticians(String query, String filter) {
         return politicianDao.searchPoliticians(query, filter);
@@ -124,8 +129,8 @@ public class VoteInformed_Repository {
     public LiveData<List<Article>> searchArticles(String query, String filter) {
         return articleDao.searchArticles(query, filter);
     }
-    public LiveData<List<Issue>> searchIssues(String query, String filter) {
-        return issueDao.searchIssues(query, filter);
+    public LiveData<List<Issue>> searchIssues(String query) {
+        return issueDao.searchIssues(query);
     }
 
     // Write operators need to use executor
@@ -196,6 +201,53 @@ public class VoteInformed_Repository {
     public void deleteUser(User user) {
         executor.execute(() -> userDao.delete(user));
     }
+
+    //Politician With
+    public LiveData<PoliticianWithIssues> getPoliticianWithIssues(int id) {
+        return politicianDao.getPoliticianWithIssues(id);
+    }
+
+    public LiveData<PoliticianWithElections> getPoliticianWithElections(int id) {
+        return politicianDao.getPoliticianWithElections(id);
+    }
+
+    // User With
+    public LiveData<UserWithArticles> getUserWithArticles(int id) {
+        return userDao.getUserWithArticles(id);
+    }
+
+    public LiveData<UserWithElections> getUserWithElections(int id) {
+        return userDao.getUserWithElections(id);
+    }
+
+    public LiveData<UserWithIssues> getUserWithIssues(int id) {
+        return userDao.getUserWithIssues(id);
+    }
+
+    public LiveData<UserWithPoliticians> getUserWithPoliticians(int id) {
+        return userDao.getUserWithPoliticians(id);
+    }
+
+    //Article With
+    public LiveData<ArticleWithIssues> getArticleWithIssues(int articleId) {
+        return articleDao.getArticleWithIssues(articleId);
+    }
+
+    public LiveData<ArticleWithElections> getArticleWithElections(int articleId) {
+        return articleDao.getArticleWithElections(articleId);
+    }
+
+    public LiveData<ArticleWithPoliticians> getArticleWithPoliticians(int articleId) {
+        return articleDao.getArticleWithPoliticians(articleId);
+    }
+
+    // Election With
+    public LiveData<ElectionWithPoliticians> getElectionWithPoliticians(int id) {
+        return electionDao.getElectionWithPoliticians(id);
+    }
+
+
+
 
     public interface LoginCallback{
         void onResult(User user);

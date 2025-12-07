@@ -9,6 +9,7 @@ import com.example.voteinformed.data.entity.Election;
 
 import java.util.List;
 
+//TODO: should have toString methods etc
 public class ArticleWithElections {
 
     @Embedded
@@ -17,7 +18,10 @@ public class ArticleWithElections {
     @Relation(
             parentColumn = "article_id",
             entityColumn = "election_id",
-            associateBy = @Junction(Article_Election.class)
+            entity = Election.class,
+            associateBy = @Junction(value = Article_Election.class,
+                    parentColumn = "article_id",
+                    entityColumn = "election_id")
     )
     public List<Election> elections;
 }

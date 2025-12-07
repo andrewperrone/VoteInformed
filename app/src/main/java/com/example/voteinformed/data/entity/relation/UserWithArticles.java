@@ -17,7 +17,10 @@ public class UserWithArticles {
     @Relation(
             parentColumn = "user_id",
             entityColumn = "article_id",
-            associateBy = @Junction(User_Article.class)
+            entity = Article.class,
+            associateBy = @Junction(value = User_Article.class,
+                    parentColumn = "user_id",
+                    entityColumn = "article_id")
     )
     public List<Article> articles;
 }
