@@ -16,7 +16,7 @@ public class User_Article {
         this.article_id = article_id;
     }
 
-    @Override
+    /*@Override
     public String toString() {
         return "User_Article{" +
                 "user_id=" + user_id +
@@ -34,5 +34,5 @@ public class User_Article {
     @Override
     public int hashCode() {
         return Objects.hash(user_id, article_id);
-    }
+    }*/
 }

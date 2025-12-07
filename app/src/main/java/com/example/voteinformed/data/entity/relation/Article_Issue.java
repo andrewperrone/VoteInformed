@@ -2,7 +2,6 @@ package com.example.voteinformed.data.entity.relation;
 
 import androidx.room.Entity;
 import androidx.room.Index;
-
 import java.util.Objects;
 
 @Entity(primaryKeys = {"article_id", "issue_id"},
@@ -16,7 +15,7 @@ public class Article_Issue {
         this.issue_id = issue_id;
     }
 
-    @Override
+    /*@Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -35,5 +34,5 @@ public class Article_Issue {
                 "article_id=" + article_id +
                 ", issue_id=" + issue_id +
                 '}';
-    }
+    }*/
 }

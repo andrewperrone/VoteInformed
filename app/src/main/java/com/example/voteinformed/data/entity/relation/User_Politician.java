@@ -1,9 +1,10 @@
 package com.example.voteinformed.data.entity.relation;
 import androidx.room.Entity;
-
+import androidx.room.Index;
 import java.util.Objects;
 
-@Entity(primaryKeys = {"user_id", "politician_id"})//(tableName = "user_politician")
+@Entity(primaryKeys = {"user_id", "politician_id"},
+        indices = {@Index(value = {"politician_id"})})
 public class User_Politician {
     public int user_id;
     public int politician_id;
@@ -12,7 +13,7 @@ public class User_Politician {
         this.user_id = user_id;
         this.politician_id = politician_id;
     }
-
+/*
     @Override
     public String toString() {
         return "User_Politician{" +
@@ -31,5 +32,5 @@ public class User_Politician {
     @Override
     public int hashCode() {
         return Objects.hash(user_id, politician_id);
-    }
+    }*/
 }
