@@ -98,4 +98,8 @@ public interface Politician_Dao {
     @Transaction
     @Query("SELECT * FROM politician WHERE politician_id = :id")
     LiveData<PoliticianWithArticles> getPoliticianWithArticles(int id);
+
+    @Query("SELECT * FROM politician ORDER BY RANDOM() LIMIT 4")
+    LiveData<List<Politician>> getRandomPoliticians();
+
 }

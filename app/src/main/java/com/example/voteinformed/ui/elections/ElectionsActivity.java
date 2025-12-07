@@ -1,5 +1,7 @@
 package com.example.voteinformed.ui.elections;
 
+import android.util.Log;
+
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -7,6 +9,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,7 +25,7 @@ import retrofit2.Response;
 
 import java.util.List;
 import java.util.ArrayList;
-import android.util.Log;
+
 import androidx.annotation.NonNull;
 import com.example.voteinformed.network.CivicApiClient;
 import com.example.voteinformed.model.PollingLocationModel;
@@ -33,6 +37,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.voteinformed.ui.home.HomeActivity;
 import com.example.voteinformed.ui.home.HomescreenActivity;
+import com.example.voteinformed.ui.politician.FeaturedPoliticianAdapter;
+import com.example.voteinformed.ui.politician.FeaturedPoliticianViewModel;
 import com.example.voteinformed.ui.politician.PoliticianComparisonActivity;
 import com.example.voteinformed.ui.saved.SavedActivity;
 import com.example.voteinformed.ui.search.SearchActivity;
@@ -47,12 +53,17 @@ public class ElectionsActivity extends AppCompatActivity {
     private TextView resultText;
     private RecyclerView electionsRecyclerView;
 
+    private RecyclerView politicianRecyclerView;
+    private FeaturedPoliticianAdapter featuredPoliticianAdapter;
     private String API_KEY;
     private CivicApiService apiService;
 
     private DrawerLayout drawerLayout;
     private ImageButton btnLeftMenu, btnRightMenu;
     private NavigationView navView;
+
+
+
 
     private com.example.voteinformed.ui.elections.ElectionsAdapter electionsAdapter;
 
@@ -67,6 +78,8 @@ public class ElectionsActivity extends AppCompatActivity {
         searchButton = findViewById(R.id.search_poll_site_button);
         resultText = findViewById(R.id.poll_site_result);
         electionsRecyclerView = findViewById(R.id.elections_recycler_view);
+        //election page politicians cards
+        politicianRecyclerView = findViewById(R.id.politician_recycler_view);
 
         drawerLayout = findViewById(R.id.drawer_layout);
         navView = findViewById(R.id.nav_view);
@@ -79,10 +92,15 @@ public class ElectionsActivity extends AppCompatActivity {
 
         apiService = CivicApiClient.getClient();
 
+
         electionsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
+        politicianRecyclerView.setLayoutManager(gridLayoutManager);
 
         electionsAdapter = new ElectionsAdapter(new ArrayList<>());
         electionsRecyclerView.setAdapter(electionsAdapter);
+
 
         fetchUpcomingElections();
 
@@ -95,6 +113,14 @@ public class ElectionsActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+       FeaturedPoliticianViewModel viewModel =
+                new ViewModelProvider(this).get(FeaturedPoliticianViewModel.class);
+
+        featuredPoliticianAdapter = new FeaturedPoliticianAdapter();
+        politicianRecyclerView.setAdapter(featuredPoliticianAdapter);
+
+        viewModel.getRandomPoliticians().observe(this,
+                politicians -> featuredPoliticianAdapter.setPoliticians(politicians));
     }
 
     private void fetchUpcomingElections() {

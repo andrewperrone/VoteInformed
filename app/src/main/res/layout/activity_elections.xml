@@ -75,6 +75,27 @@
                 android:contentDescription="Profile" />
         </LinearLayout>
 
+        <!-- Featured Politicians Section -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Featured Politicians"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_marginTop="12dp"
+            android:paddingBottom="8dp"
+            android:paddingHorizontal="16dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/politician_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="240dp"
+            android:nestedScrollingEnabled="true"
+            android:overScrollMode="never"
+            android:layout_marginBottom="10dp"
+            android:padding="12dp"/>
+
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
