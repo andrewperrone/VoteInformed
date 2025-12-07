@@ -245,14 +245,7 @@ public class PoliticianComparisonActivity extends AppCompatActivity implements P
         String[] names = new String[allPoliticians.size()];
         for (int i = 0; i < allPoliticians.size(); i++) {
             names[i] = allPoliticians.get(i).getPolitician_name();
-    }
         }
-
-    private void openSearchDialog() {
-        FragmentManager fm = getSupportFragmentManager();
-        PoliticianSearchDialog dialog = PoliticianSearchDialog.newInstance();
-        dialog.show(fm, "PoliticianSearchDialog");
-    }
 
         new AlertDialog.Builder(this)
             .setTitle("Select Candidate")
@@ -265,6 +258,13 @@ public class PoliticianComparisonActivity extends AppCompatActivity implements P
                 }
             })
             .show();
+    }
+
+    private void openSearchDialog() {
+        FragmentManager fm = getSupportFragmentManager();
+        PoliticianSearchDialog dialog = PoliticianSearchDialog.newInstance();
+        dialog.show(fm, "PoliticianSearchDialog");
+    }
 
     @Override
     public void onPoliticianSelected(Politician politician) {
