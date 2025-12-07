@@ -22,6 +22,7 @@ import com.example.voteinformed.R;
 import com.example.voteinformed.data.entity.Politician;
 import com.example.voteinformed.data.repository.VoteInformed_Repository;
 import com.example.voteinformed.ui.home.HomeActivity;
+import com.example.voteinformed.ui.home.HomescreenActivity;
 import com.example.voteinformed.ui.saved.SavedActivity;
 import com.example.voteinformed.ui.search.SearchActivity;
 import com.example.voteinformed.ui.user.ProfileActivity;
@@ -49,6 +50,7 @@ public class PoliticianComparisonActivity extends AppCompatActivity {
         // Initialize the ViewModel
         viewModel = new ViewModelProvider(this).get(PoliticianComparisonViewModel.class);
 
+        initDrawerMenu();
         setupUI();
         observeViewModel();
     }
@@ -76,7 +78,7 @@ public class PoliticianComparisonActivity extends AppCompatActivity {
             } else if (id == R.id.nav_profile) {
                 startActivity(new Intent(this, ProfileActivity.class));
             } else if (id == R.id.nav_sign_out) {
-                startActivity(new Intent(this, HomeActivity.class));
+                startActivity(new Intent(this, HomescreenActivity.class));
                 finish();
             }
 
