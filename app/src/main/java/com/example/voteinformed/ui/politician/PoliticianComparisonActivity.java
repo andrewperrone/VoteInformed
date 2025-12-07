@@ -1,14 +1,11 @@
 package com.example.voteinformed.ui.politician;
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -16,13 +13,12 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProvider;
 import com.bumptech.glide.Glide;
 import com.example.voteinformed.R;
 import com.example.voteinformed.data.entity.Politician;
@@ -30,12 +26,11 @@ import com.example.voteinformed.data.repository.VoteInformed_Repository;
 import com.example.voteinformed.ui.home.HomeActivity;
 import com.example.voteinformed.ui.home.HomescreenActivity;
 import com.example.voteinformed.ui.saved.SavedActivity;
+import com.example.voteinformed.ui.search.PoliticianSearchDialog;
 import com.example.voteinformed.ui.search.SearchActivity;
 import com.example.voteinformed.ui.user.ProfileActivity;
-import com.google.android.material.navigation.NavigationView;
-import com.example.voteinformed.ui.search.PoliticianSearchDialog;
 import com.google.android.material.button.MaterialButton;
-
+import com.google.android.material.navigation.NavigationView;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +39,6 @@ public class PoliticianComparisonActivity extends AppCompatActivity implements P
     private PoliticianComparisonViewModel viewModel;
     private List<Politician> allPoliticians = new ArrayList<>();
 
-    // Keep track of who is on which side
     private Politician leftPolitician;
     private Politician rightPolitician;
 
@@ -52,18 +46,15 @@ public class PoliticianComparisonActivity extends AppCompatActivity implements P
     private MaterialButton currentActiveTab;
     private ValueAnimator currentColorAnimator;
     private boolean isAnimating = false;
-
     private boolean selectingLeft = true;
 
     private DrawerLayout drawerLayout;
-    private ImageButton btnLeftMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_politician_comparison);
 
-        // Initialize the ViewModel
         viewModel = new ViewModelProvider(this).get(PoliticianComparisonViewModel.class);
 
         initDrawerMenu();
@@ -77,14 +68,13 @@ public class PoliticianComparisonActivity extends AppCompatActivity implements P
         drawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navView = findViewById(R.id.nav_view);
 
-        btnLeftMenu = findViewById(R.id.btnLeftMenu);
+        ImageButton btnLeftMenu = findViewById(R.id.btnLeftMenu);
         btnLeftMenu.setOnClickListener(v -> drawerLayout.openDrawer(GravityCompat.START));
 
         setupNavHeader(navView);
 
         navView.setNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
-
             if (id == R.id.nav_home) {
                 startActivity(new Intent(this, HomeActivity.class));
             } else if (id == R.id.nav_search) {
@@ -92,26 +82,21 @@ public class PoliticianComparisonActivity extends AppCompatActivity implements P
             } else if (id == R.id.nav_saved) {
                 startActivity(new Intent(this, SavedActivity.class));
             } else if (id == R.id.nav_comparison) {
-                // 현재 화면 → 아무것도 안함
+                // Current screen, do nothing
             } else if (id == R.id.nav_profile) {
                 startActivity(new Intent(this, ProfileActivity.class));
             } else if (id == R.id.nav_sign_out) {
                 startActivity(new Intent(this, HomescreenActivity.class));
                 finish();
             }
-
             drawerLayout.closeDrawer(GravityCompat.START);
             return true;
         });
     }
 
     private void setupUI() {
-        // back button
         findViewById(R.id.btnBack).setOnClickListener(v -> finish());
 
-        // swap buttons
-        findViewById(R.id.btnSwapLeft).setOnClickListener(v -> showSelectionDialog(true));
-        findViewById(R.id.btnSwapRight).setOnClickListener(v -> showSelectionDialog(false));
         findViewById(R.id.btnSwapLeft).setOnClickListener(v -> {
             selectingLeft = true;
             openSearchDialog();
@@ -120,53 +105,38 @@ public class PoliticianComparisonActivity extends AppCompatActivity implements P
             selectingLeft = false;
             openSearchDialog();
         });
-        findViewById(R.id.btnRemoveLeft).setOnClickListener(v -> {
-            leftPolitician = null;
-            updateCard(true, null);
-        });
-        findViewById(R.id.btnRemoveRight).setOnClickListener(v -> {
-            rightPolitician = null;
-            updateCard(false, null);
-        });
 
-        // remove buttons
         findViewById(R.id.btnRemoveLeft).setOnClickListener(v -> viewModel.setLeftPolitician(null));
         findViewById(R.id.btnRemoveRight).setOnClickListener(v -> viewModel.setRightPolitician(null));
     }
 
     private void observeViewModel() {
-        // get list of all politicians
         viewModel.getAllPoliticians().observe(this, politicians -> {
             if (politicians != null && !politicians.isEmpty()) {
                 allPoliticians.clear();
                 allPoliticians.addAll(politicians);
-                viewModel.setInitialPoliticians(politicians);
+                // viewModel.setInitialPoliticians(politicians); // Not using until we can make the initial politician the previously searched politician
             } else {
                 Toast.makeText(this, "No politicians found.", Toast.LENGTH_SHORT).show();
             }
         });
 
-        // getLeftPolitictian and update
         viewModel.getLeftPolitician().observe(this, politician -> {
+            this.leftPolitician = politician; // Keep local ref in sync
             updateCard(true, politician);
         });
 
-        // getRightPolitictian and update
         viewModel.getRightPolitician().observe(this, politician -> {
+            this.rightPolitician = politician; // Keep local ref in sync
             updateCard(false, politician);
         });
-
     }
 
     private void initViews() {
         tabOverview = findViewById(R.id.tabOverview);
         tabIssues = findViewById(R.id.tabIssues);
         tabContact = findViewById(R.id.tabContact);
-
         currentActiveTab = tabOverview;
-
-        updateCard(true, null);
-        updateCard(false, null);
 
         View.OnClickListener tabClick = v -> {
             MaterialButton clickedTab = (MaterialButton) v;
@@ -199,7 +169,6 @@ public class PoliticianComparisonActivity extends AppCompatActivity implements P
             View header = navView.getHeaderView(0);
             TextView username = header.findViewById(R.id.user_name);
             TextView email = header.findViewById(R.id.user_email);
-
             SharedPreferences prefs = getSharedPreferences("UserSession", Context.MODE_PRIVATE);
             int userId = prefs.getInt("user_id", -1);
 
@@ -233,30 +202,6 @@ public class PoliticianComparisonActivity extends AppCompatActivity implements P
         if (rightPolitician != null) updateCard(false, rightPolitician);
     }
 
-    private void showSelectionDialog(boolean isLeft) {
-        if (allPoliticians.isEmpty()) {
-            Toast.makeText(this, "No politicians to select.", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        String[] names = new String[allPoliticians.size()];
-        for (int i = 0; i < allPoliticians.size(); i++) {
-            names[i] = allPoliticians.get(i).getPolitician_name();
-        }
-
-        new AlertDialog.Builder(this)
-            .setTitle("Select Candidate")
-            .setItems(names, (dialog, which) -> {
-                Politician selected = allPoliticians.get(which);
-                if (isLeft) {
-                    viewModel.setLeftPolitician(selected);
-                } else {
-                    viewModel.setRightPolitician(selected);
-                }
-            })
-            .show();
-    }
-
     private void openSearchDialog() {
         FragmentManager fm = getSupportFragmentManager();
         PoliticianSearchDialog dialog = PoliticianSearchDialog.newInstance();
@@ -266,12 +211,15 @@ public class PoliticianComparisonActivity extends AppCompatActivity implements P
     @Override
     public void onPoliticianSelected(Politician politician) {
         if (politician == null) return;
-        updateCard(selectingLeft, politician);
+        if (selectingLeft) {
+            viewModel.setLeftPolitician(politician);
+        } else {
+            viewModel.setRightPolitician(politician);
+        }
     }
 
     private void updateCard(boolean isLeft, Politician politician) {
         String side = isLeft ? "Left" : "Right";
-
         int nameId = getResources().getIdentifier("name" + side, "id", getPackageName());
         int partyId = getResources().getIdentifier("party" + side, "id", getPackageName());
         int imageId = getResources().getIdentifier("image" + side, "id", getPackageName());
@@ -327,7 +275,6 @@ public class PoliticianComparisonActivity extends AppCompatActivity implements P
     private void setMetricRow(String side, int index, String label, String content) {
         int layoutId = getResources().getIdentifier("metric" + side + index, "id", getPackageName());
         View row = findViewById(layoutId);
-
         if (row != null) {
             if (content == null || content.isEmpty()) {
                 row.setVisibility(View.GONE);
@@ -349,7 +296,6 @@ public class PoliticianComparisonActivity extends AppCompatActivity implements P
 
         ValueAnimator fromBg = ValueAnimator.ofArgb(blueColor, grayColor);
         fromBg.setDuration(250);
-        fromBg.setInterpolator(new android.view.animation.DecelerateInterpolator());
         fromBg.addUpdateListener(a -> fromButton.setBackgroundColor((int) a.getAnimatedValue()));
         fromBg.start();
 
@@ -360,7 +306,6 @@ public class PoliticianComparisonActivity extends AppCompatActivity implements P
 
         currentColorAnimator = ValueAnimator.ofArgb(grayColor, blueColor);
         currentColorAnimator.setDuration(250);
-        currentColorAnimator.setInterpolator(new android.view.animation.DecelerateInterpolator());
         currentColorAnimator.addUpdateListener(a -> toButton.setBackgroundColor((int) a.getAnimatedValue()));
         currentColorAnimator.addListener(new AnimatorListenerAdapter() {
             @Override
