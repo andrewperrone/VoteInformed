@@ -33,16 +33,12 @@ import com.example.voteinformed.data.entity.SavedArticle;
 import com.example.voteinformed.network.LegistarApiService;
 import com.example.voteinformed.network.LegislationMatter;
 import com.example.voteinformed.ui.concerns.ConcernsActivity;
-import com.example.voteinformed.ui.home.HomeViewModel;
-import com.example.voteinformed.ui.politician.PoliticianComparisonActivity;
 import com.example.voteinformed.ui.politician.PoliticianComparisonActivity;
 import com.google.android.material.chip.ChipGroup;
 import com.example.voteinformed.ui.user.ProfileActivity;
 import com.example.voteinformed.ui.saved.SavedActivity;
 import com.example.voteinformed.ui.saved.SavedArticleViewModel;
 import com.example.voteinformed.ui.search.SearchActivity;
-import com.example.voteinformed.ui.user.ProfileActivity;
-import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.HashMap;
@@ -71,7 +67,7 @@ public class HomeActivity extends AppCompatActivity {
     private final Map<Integer, Article> loadedArticles = new HashMap<>();
 
     // Legistar API token
-    private static final String API_TOKEN =
+    private static final String LEGISTAR_KEY =
             "Uvxb0j9syjm3aI8h46DhQvnX5skN4aSUL0x_Ee3ty9M.ew0KICAiVmVyc2lvbiI6IDEsDQogICJOYW1lIjogIk5ZQyByZWFkIHRva2VuIDIwMTcxMDI2IiwNCiAgIkRhdGUiOiAiMjAxNy0xMC0yNlQxNjoyNjo1Mi42ODM0MDYtMDU6MDAiLA0KICAiV3JpdGUiOiBmYWxzZQ0KfQ";
 
     private String selectedTopicFilter = "";
@@ -171,7 +167,7 @@ public class HomeActivity extends AppCompatActivity {
         String filter = "MatterIntroDate ge datetime'2025-01-01T00:00:00' " + selectedTopicFilter;
         LegistarApiService api = LegistarApiService.Companion.create();
 
-        api.getMatters(API_TOKEN, filter, "MatterIntroDate desc", 20)
+        api.getMatters(LEGISTAR_KEY, filter, "MatterIntroDate desc", 20)
                 .enqueue(new Callback<List<LegislationMatter>>() {
                     @Override
                     public void onResponse(@NonNull Call<List<LegislationMatter>> call,

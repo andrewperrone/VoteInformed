@@ -3,4 +3,10 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
     </style>
+
+    <style name="AppTheme.Dialog" parent="Theme.MaterialComponents.Light.Dialog.Alert">
+        <item name="colorPrimary">@color/app_primary_blue</item>
+        <item name="colorPrimaryVariant">@color/app_primary_blue</item>
+        <item name="colorAccent">@color/app_primary_blue</item>
+    </style>
 </resources>
