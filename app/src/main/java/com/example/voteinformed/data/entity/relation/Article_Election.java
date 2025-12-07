@@ -1,9 +1,11 @@
 package com.example.voteinformed.data.entity.relation;
 import androidx.room.Entity;
+import androidx.room.Index;
 
 import java.util.Objects;
 
-@Entity(primaryKeys = {"article_id", "election_id"})//(tableName = "article_election")
+@Entity(primaryKeys = {"article_id", "election_id"},
+        indices = {@Index(value = {"election_id"})})
 public class Article_Election {
 
     public int article_id;

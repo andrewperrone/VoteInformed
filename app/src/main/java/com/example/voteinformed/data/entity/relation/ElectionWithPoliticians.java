@@ -18,7 +18,7 @@ public class ElectionWithPoliticians {
             entity = Politician.class,
             entityColumn = "politician_id",
             associateBy = @Junction(
-                    value = Election_Politician.class,
+                    value = Politician_Election.class,
                     parentColumn = "election_id",
                     entityColumn = "politician_id"
             )

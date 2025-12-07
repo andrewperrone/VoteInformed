@@ -129,8 +129,8 @@ public class VoteInformed_Repository {
     public LiveData<List<Article>> searchArticles(String query, String filter) {
         return articleDao.searchArticles(query, filter);
     }
-    public LiveData<List<Issue>> searchIssues(String query, String filter) {
-        return issueDao.searchIssues(query, filter);
+    public LiveData<List<Issue>> searchIssues(String query) {
+        return issueDao.searchIssues(query);
     }
 
     // Write operators need to use executor

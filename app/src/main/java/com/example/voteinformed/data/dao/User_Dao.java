@@ -59,7 +59,7 @@ public interface User_Dao {
     void linkUserToArticle(User_Article userArticle);
     @Query("DELETE FROM User_Article WHERE user_id = :userId AND article_id = :articleId")
     void unlinkUserFromArticle(int userId, int articleId);
-    @Query("SELECT a.* FROM article a INNER JOIN User_Article ua ON a.article_id = ua.article_id WHERE ua.user_id = :userId AND a.title LIKE '%' || :query || '%' ")
+    @Query("SELECT a.* FROM article a INNER JOIN User_Article ua ON a.article_id = ua.article_id WHERE ua.user_id = :userId AND a.article_title LIKE '%' || :query || '%' ")
     LiveData<List<Article>> searchArticlesForUser(int userId, String query);
 
     // User/Election

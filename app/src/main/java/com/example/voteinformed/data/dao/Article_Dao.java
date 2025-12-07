@@ -45,7 +45,7 @@ public interface Article_Dao {
     @Query("SELECT * FROM article")
     LiveData<List<Article>> getAllArticles();
 
-    @Query("SELECT * FROM article WHERE (title LIKE '%' || :query || '%' " + "AND (:filter IS NULL OR :filter = '' OR source = :filter))")
+    @Query("SELECT * FROM article WHERE (article_title LIKE '%' || :query || '%' " + "AND (:filter IS NULL OR :filter = '' OR article_url = :filter))")
     LiveData<List<Article>> searchArticles(String query,String filter);
     
     //Relations

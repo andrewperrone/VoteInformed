@@ -1,10 +1,12 @@
 package com.example.voteinformed.data.entity.relation;
 
 import androidx.room.Entity;
+import androidx.room.Index;
 
 import java.util.Objects;
 
-@Entity(primaryKeys = {"user_id", "article_id"})
+@Entity(primaryKeys = {"user_id", "article_id"},
+        indices = {@Index(value = {"article_id"})})
 public class User_Article {
     public int user_id;
     public int article_id;

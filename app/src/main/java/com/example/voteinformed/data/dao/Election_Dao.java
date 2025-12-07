@@ -69,7 +69,7 @@ public interface Election_Dao {
     @Query("DELETE FROM Article_Election WHERE election_id = :electionId AND article_id = :articleId")
     void unlinkElectionFromArticle(int electionId, int articleId);
 
-    @Query("SELECT a.* FROM article a INNER JOIN Article_Election ae ON a.article_id = ae.article_id WHERE ae.election_id = :electionId AND a.title LIKE '%' || :query || '%'")
+    @Query("SELECT a.* FROM article a INNER JOIN Article_Election ae ON a.article_id = ae.article_id WHERE ae.election_id = :electionId AND a.article_title LIKE '%' || :query || '%'")
     LiveData<List<Article>> searchArticlesWithElection(int electionId, String query);
 
     @Transaction
