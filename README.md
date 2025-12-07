@@ -16,8 +16,7 @@ A developer-focused README with step-by-step environment setup, database creatio
 - [Testing Strategy & Sample Test Cases](#testing-strategy--sample-test-cases)
 - [Features & Technical Implementation](#features--technical-implementation)
 - [Packages & APIs](#packages--apis)
-- [Next Steps / Contributions](#next-steps--contributions)
-
+- 
 ---
 
 ## About
@@ -397,43 +396,3 @@ val client = OkHttpClient.Builder()
 Replace `${token}` with a secure in-memory or persisted token management strategy (avoid plaintext storage).
 
 ---
-
-## Next Steps / Contributions
-
-If you'd like me to continue:
-- Add `CONTRIBUTING.md` and `CODE_OF_CONDUCT.md` templates. (I can create these.)
-- Wire a minimal sample server (e.g., Express + Knex or Spring Boot) to serve the provided `db/schema.sql` and the example API endpoints.
-- Run a local Gradle build now and report results.
-
-To contribute code:
-1. Fork the repo.
-2. Create a branch for your change: `git checkout -b feat/your-feature`.
-3. Run tests locally and include tests for new behavior.
-4. Open a PR and request a review.
-
----
-
-## Contributing
-
-We welcome contributions. Please follow the guidance in `CONTRIBUTING.md` for details about branch naming, commit messages, tests, and the PR process. In short:
-
-- Fork the repository and create a topic branch for your change (e.g., `feat/search-debounce`).
-- Keep changes small and focused; add unit/instrumentation tests for new behavior.
-- Run `.
-.\gradlew.bat test` and ensure the build passes before opening a PR.
-- Use descriptive commit messages and include a clear PR description explaining the change and rationale.
-
-If you are unsure where to start, check the Issues tab and look for `good first issue` or `help wanted` labels.
-
----
-
-## Code of Conduct
-
-This project follows a Code of Conduct to foster an open and welcoming environment. Please see `CODE_OF_CONDUCT.md` for the full text. Key points:
-
-
-If you experience or witness unacceptable behavior, contact the project maintainers or open an issue labeled `moderation`.
-
-
-Which would you like me to do next?
-
