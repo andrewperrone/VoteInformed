@@ -17,6 +17,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.voteinformed.R;
 import com.example.voteinformed.data.repository.VoteInformed_Repository;
+import com.example.voteinformed.ui.elections.ElectionsActivity;
 import com.example.voteinformed.ui.home.HomescreenActivity;
 import com.example.voteinformed.ui.home.HomeActivity;
 import com.example.voteinformed.ui.saved.SavedActivity;
@@ -85,7 +86,10 @@ public class ProfileActivity extends AppCompatActivity {
         navView.setNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
 
-            if (id == R.id.nav_home) {
+            if (id == R.id.nav_elections_home){
+                startActivity(new Intent(this, ElectionsActivity.class));
+            }
+            else if (id == R.id.nav_home) {
                 startActivity(new Intent(this, HomeActivity.class));
             } else if (id == R.id.nav_search) {
                 startActivity(new Intent(this, com.example.voteinformed.ui.search.SearchActivity.class));

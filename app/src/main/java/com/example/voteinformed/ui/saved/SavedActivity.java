@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.voteinformed.R;
 import com.example.voteinformed.data.repository.BookmarkRepository;
+import com.example.voteinformed.ui.elections.ElectionsActivity;
 import com.example.voteinformed.ui.home.HomeActivity;
 import com.example.voteinformed.ui.home.HomescreenActivity;
 import com.example.voteinformed.ui.politician.PoliticianComparisonActivity;
@@ -100,7 +101,10 @@ public class SavedActivity extends AppCompatActivity {
     private void setupNavMenu() {
         navView.setNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
-            if (id == R.id.nav_home) {
+            if (id == R.id.nav_elections_home){
+                startActivity(new Intent(this, ElectionsActivity.class));
+            }
+            else if (id == R.id.nav_home) {
                 startActivity(new Intent(this, HomeActivity.class));
             } else if (id == R.id.nav_search) {
                 startActivity(new Intent(this, SearchActivity.class));
