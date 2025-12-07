@@ -59,8 +59,8 @@ public class PoliticianProfileActivity extends AppCompatActivity {
 
         repository = new VoteInformed_Repository(getApplicationContext());
 
-        initViews();
         initDrawerMenu();
+        initViews();
         setupInitialButtonStates();
 
         int politicianId = getIntent().getIntExtra("politician_id", -1);
@@ -70,6 +70,10 @@ public class PoliticianProfileActivity extends AppCompatActivity {
     private void initDrawerMenu() {
         drawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navView = findViewById(R.id.nav_view);
+
+        if (drawerLayout == null || navView == null) {
+            return;
+        }
 
         setupNavHeader(navView);
 
@@ -95,6 +99,7 @@ public class PoliticianProfileActivity extends AppCompatActivity {
             return true;
         });
     }
+
 
     private void setupNavHeader(NavigationView navView) {
         if (navView.getHeaderCount() > 0) {

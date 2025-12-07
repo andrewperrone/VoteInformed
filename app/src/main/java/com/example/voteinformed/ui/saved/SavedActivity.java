@@ -2,6 +2,7 @@ package com.example.voteinformed.ui.saved;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -11,11 +12,11 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.voteinformed.R;
+import com.example.voteinformed.data.repository.BookmarkRepository;
 import com.example.voteinformed.ui.home.HomeActivity;
 import com.example.voteinformed.ui.home.HomescreenActivity;
 import com.example.voteinformed.ui.politician.PoliticianComparisonActivity;
@@ -27,49 +28,39 @@ public class SavedActivity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
     private NavigationView navView;
-
     private RecyclerView recyclerSaved;
-    private SavedArticleViewModel savedVM;
     private SavedArticleAdapter savedAdapter;
+    private BookmarkRepository bookmarkRepo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_saved);
 
-        // Drawer + Nav
+        bookmarkRepo = new BookmarkRepository(this);
+        Log.d("SavedActivity", "Loaded " + bookmarkRepo.getBookmarkedArticles().size() + " bookmarks");
+
         drawerLayout = findViewById(R.id.drawer_layout);
         navView = findViewById(R.id.nav_view);
 
-        // Highlight current page in drawer
         navView.setCheckedItem(R.id.nav_saved);
         navView.getMenu().findItem(R.id.nav_saved).setEnabled(false);
-
-        // Drawer header
         setupNavHeader();
-
-        // Back press handler (drawer closer)
         setupBackPressHandler();
-
-        // Navigation menu click events
         setupNavMenu();
 
-        // Menu buttons
         ImageButton btnLeft = findViewById(R.id.btnLeftMenu);
         btnLeft.setOnClickListener(v -> drawerLayout.openDrawer(GravityCompat.START));
 
         ImageButton btnClose = findViewById(R.id.btnRightMenu);
         btnClose.setOnClickListener(v -> finish());
 
-        // Recycler setup
         recyclerSaved = findViewById(R.id.recyclerSaved);
         recyclerSaved.setLayoutManager(new LinearLayoutManager(this));
-
-        savedVM = new ViewModelProvider(this).get(SavedArticleViewModel.class);
-        savedAdapter = new SavedArticleAdapter();
+        savedAdapter = new SavedArticleAdapter(bookmarkRepo);
         recyclerSaved.setAdapter(savedAdapter);
 
-        savedVM.savedArticles.observe(this, list -> savedAdapter.submitList(list));
+        savedAdapter.updateBookmarks();
     }
 
     private void setupNavHeader() {
@@ -93,7 +84,6 @@ public class SavedActivity extends AppCompatActivity {
         };
 
         getOnBackPressedDispatcher().addCallback(this, callback);
-
         drawerLayout.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
             @Override
             public void onDrawerOpened(View drawerView) {
@@ -110,7 +100,6 @@ public class SavedActivity extends AppCompatActivity {
     private void setupNavMenu() {
         navView.setNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
-
             if (id == R.id.nav_home) {
                 startActivity(new Intent(this, HomeActivity.class));
             } else if (id == R.id.nav_search) {
@@ -126,7 +115,6 @@ public class SavedActivity extends AppCompatActivity {
                 startActivity(new Intent(this, HomescreenActivity.class));
                 finish();
             }
-
             drawerLayout.closeDrawer(GravityCompat.START);
             return true;
         });

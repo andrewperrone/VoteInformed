@@ -5,11 +5,14 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+
 import com.example.voteinformed.data.entity.Politician;
 import com.example.voteinformed.data.repository.VoteInformed_Repository;
+
 import java.util.List;
 
 public class PoliticianComparisonViewModel extends AndroidViewModel {
+
     private VoteInformed_Repository repository;
 
     private LiveData<List<Politician>> allPoliticians;
@@ -21,6 +24,7 @@ public class PoliticianComparisonViewModel extends AndroidViewModel {
         repository = new VoteInformed_Repository(application);
         allPoliticians = repository.getAllPoliticians();
     }
+
 
     public LiveData<List<Politician>> getAllPoliticians() {
         return allPoliticians;
@@ -34,6 +38,7 @@ public class PoliticianComparisonViewModel extends AndroidViewModel {
         return rightPolitician;
     }
 
+
     public void setLeftPolitician(Politician politician) {
         leftPolitician.setValue(politician);
     }
@@ -41,6 +46,7 @@ public class PoliticianComparisonViewModel extends AndroidViewModel {
     public void setRightPolitician(Politician politician) {
         rightPolitician.setValue(politician);
     }
+
 
     public void setInitialPoliticians(List<Politician> politicians) {
         if (politicians != null && !politicians.isEmpty()) {
@@ -51,5 +57,19 @@ public class PoliticianComparisonViewModel extends AndroidViewModel {
                 rightPolitician.setValue(politicians.get(1));
             }
         }
+    }
+
+    public void setInitialById(int politicianId) {
+        repository.getPoliticianById(politicianId)
+                .observeForever(politician -> {
+                    leftPolitician.setValue(politician);
+                });
+    }
+
+    public void setRightById(int politicianId) {
+        repository.getPoliticianById(politicianId)
+                .observeForever(politician -> {
+                    rightPolitician.setValue(politician);
+                });
     }
 }
