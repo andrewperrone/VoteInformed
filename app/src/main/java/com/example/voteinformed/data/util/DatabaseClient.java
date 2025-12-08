@@ -33,6 +33,9 @@ public class DatabaseClient {
             issueDao.insertAll(InitialData.getIssues());
             politicianDao.insertAll(InitialData.getPoliticians());
             userDao.insertAll(InitialData.getUsers());
+
+            //link politician and issues
+
         });
     }
 }

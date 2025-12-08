@@ -6,6 +6,8 @@ import android.os.Looper;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 
 import com.example.voteinformed.data.dao.Article_Dao;
 import com.example.voteinformed.data.dao.Election_Dao;
@@ -97,13 +99,11 @@ public class VoteInformed_Repository {
         return savedArticleDao.isArticleSaved(articleId);
     }
 
-
     public LiveData<List<Politician>> searchPoliticiansFiltered(String query, String party) {
         MutableLiveData<List<Politician>> result = new MutableLiveData<>();
         // result.setValue(...);
         return result;
     }
-
 
     //get_ById
     public LiveData<User> getUserById(int id) {
@@ -201,6 +201,23 @@ public class VoteInformed_Repository {
     }
     public void deleteUser(User user) {
         executor.execute(() -> userDao.delete(user));
+    }
+
+
+    public void linkPoliticianToIssue(int politicianId, int issueId, String opinion) {
+        executor.execute(() -> politicianDao.linkPoliticianToIssue(new Politician_Issue(politicianId, issueId, opinion)));
+    }
+
+    public void linkAllPoliticianToIssue(List<Politician_Issue> politicianIssueList) {
+        executor.execute(() -> politicianDao.linkAllPoliticianToIssue(politicianIssueList));
+    }
+
+    public void unlinkPoliticianFromIssue(int politicianId, int issueId) {
+        executor.execute(() -> politicianDao.unlinkPoliticianFromIssue(politicianId, issueId));
+    }
+
+    public LiveData<List<Issue>> searchIssuesWithPolitician(int politicianId, String query) {
+        return politicianDao.searchIssuesWithPolitician(politicianId, query);
     }
 
     //Politician With

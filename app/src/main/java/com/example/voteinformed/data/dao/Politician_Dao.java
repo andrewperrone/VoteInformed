@@ -53,10 +53,12 @@ public interface Politician_Dao {
     LiveData<List<Politician>> searchPoliticians(String query,String filter);
 
     //relations
-
     // Politician/Issue
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void linkPoliticianToIssue(Politician_Issue politicianIssue);
+    @Transaction
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    void linkAllPoliticianToIssue(List<Politician_Issue> politicianIssueList);
     @Query("DELETE FROM Politician_Issue WHERE politician_id = :politicianId AND issue_id = :issueId")
     void unlinkPoliticianFromIssue(int politicianId, int issueId);
     @Query("SELECT i.* FROM issue i INNER JOIN Politician_Issue pi ON i.issue_id = pi.issue_id WHERE pi.politician_id = :politicianId AND i.title LIKE '%' || :query || '%'")
