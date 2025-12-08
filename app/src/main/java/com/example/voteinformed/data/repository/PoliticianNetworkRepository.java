@@ -3,6 +3,7 @@ package com.example.voteinformed.data.repository;
 import com.example.voteinformed.data.entity.Politician;
 import com.example.voteinformed.data.util.SocrataResponse;
 import com.example.voteinformed.data.dao.Politician_Dao;
+import com.example.voteinformed.network.CouncilMember;
 import com.example.voteinformed.network.PoliticianApiService;
 import com.example.voteinformed.network.LegislatorResponse;
 import android.util.Log;
@@ -47,9 +48,9 @@ public class PoliticianNetworkRepository {
 
     // Public trigger for NYC Council Members
     public void fetchAndSaveCouncilMembers() {
-        nycApiService.getCouncilMembers().enqueue(new Callback<SocrataResponse>() {
+        nycApiService.getCouncilMembers().enqueue(new Callback<List<CouncilMember>>() {
             @Override
-            public void onResponse(Call<SocrataResponse> call, Response<SocrataResponse> response) {
+            public void onResponse(Call<List<CouncilMember>> call, Response<List<CouncilMember>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     List<Politician> newPoliticians = parseSocrataResponse(response.body());
                     insertPoliticiansAsync(newPoliticians, "NYC Council Members");
@@ -58,7 +59,7 @@ public class PoliticianNetworkRepository {
                 }
             }
             @Override
-            public void onFailure(Call<SocrataResponse> call, Throwable t) {
+            public void onFailure(Call<List<CouncilMember>> call, Throwable t) {
                 Log.e(TAG, "NYC Council API connection failed: " + t.getMessage(), t);
             }
         });
@@ -97,19 +98,26 @@ public class PoliticianNetworkRepository {
         }
     }
 
-    // Parser for NYC Council, uses Socrata array of arrays
-    private List<Politician> parseSocrataResponse(SocrataResponse response) {
+    // Parser for NYC Council
+    private List<Politician> parseSocrataResponse(List<CouncilMember> members) {
         List<Politician> politicians = new ArrayList<>();
-        List<List<Object>> dataRows = response.getData();
 
-        for (List<Object> row : dataRows) {
-            if (row.size() < 12) continue;
+        for (CouncilMember member : members) {
 
-            String name = row.get(8) != null ? row.get(8).toString() : "Unknown Member";
-            String district = row.get(9) != null ? row.get(9).toString() : "N/A";
-            String borough = row.get(10) != null ? row.get(10).toString() : "N/A";
-            String party = row.get(11) != null ? row.get(11).toString() : "Independent";
-            if (party.equalsIgnoreCase("Democrat")) { party = "Democratic"; }
+            String name = member.name != null ? member.name : "Unknown Member";
+            String district = member.district != null ? member.district : "N/A";
+            String borough = member.borough != null ? member.borough : "N/A";
+
+
+            String rawParty = member.politicalParty != null ? member.politicalParty : "Independent";
+            String party = "Independent";
+            if (rawParty.equalsIgnoreCase("Democrat") || rawParty.equalsIgnoreCase("Democratic")) {
+                party = "Democratic";
+            } else if (rawParty.equalsIgnoreCase("Republican")) {
+                party = "Republican";
+            } else {
+                party = rawParty;
+            }
 
             String location = "NYC Council, District " + district + " (" + borough + ")";
             String contact = "Contact District Office " + district + " for details.";

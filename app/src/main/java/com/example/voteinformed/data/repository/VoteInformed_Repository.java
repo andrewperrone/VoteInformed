@@ -221,6 +221,19 @@ public class VoteInformed_Repository {
     }
 
     //Politician With
+
+    public void linkPoliticianToIssue(int politicianId, int issueId, String opinion) {
+        executor.execute(() -> politicianDao.linkPoliticianToIssue(new Politician_Issue(politicianId, issueId, opinion)));
+    }
+
+    public void unlinkPoliticianFromIssue(int politicianId, int issueId) {
+        executor.execute(() -> politicianDao.unlinkPoliticianFromIssue(politicianId, issueId));
+    }
+
+    public LiveData<List<Issue>> searchIssuesWithPolitician(int politicianId, String query) {
+        return politicianDao.searchIssuesWithPolitician(politicianId, query);
+    }
+
     public LiveData<PoliticianWithIssues> getPoliticianWithIssues(int id) {
         return politicianDao.getPoliticianWithIssues(id);
     }
