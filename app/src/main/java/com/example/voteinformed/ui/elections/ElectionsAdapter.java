@@ -51,9 +51,6 @@ public class ElectionsAdapter extends RecyclerView.Adapter<ElectionsAdapter.Elec
         return electionsList.size();
     }
 
-    /**
-     * ViewHolder class to hold references to the views for each item.
-     */
     static class ElectionViewHolder extends RecyclerView.ViewHolder {
         final TextView nameTextView;
         final TextView dateTextView;
@@ -66,7 +63,6 @@ public class ElectionsAdapter extends RecyclerView.Adapter<ElectionsAdapter.Elec
             idTextView = itemView.findViewById(R.id.tv_election_id);
         }
     }
-
 
     public void updateElections(List<ElectionModel> newElections) {
         electionsList.clear();
