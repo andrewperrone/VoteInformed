@@ -203,8 +203,13 @@ public class VoteInformed_Repository {
         executor.execute(() -> userDao.delete(user));
     }
 
+
     public void linkPoliticianToIssue(int politicianId, int issueId, String opinion) {
         executor.execute(() -> politicianDao.linkPoliticianToIssue(new Politician_Issue(politicianId, issueId, opinion)));
+    }
+
+    public void linkAllPoliticianToIssue(List<Politician_Issue> politicianIssueList) {
+        executor.execute(() -> politicianDao.linkAllPoliticianToIssue(politicianIssueList));
     }
 
     public void unlinkPoliticianFromIssue(int politicianId, int issueId) {
