@@ -2,6 +2,7 @@ package com.example.voteinformed.ui.elections;
 
 import android.os.Bundle;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -36,6 +37,13 @@ import com.example.voteinformed.ui.search.SearchActivity;
 import com.google.android.material.navigation.NavigationView;
 import com.example.voteinformed.ui.user.ProfileActivity;
 import com.google.android.material.textfield.TextInputEditText;
+
+import android.content.SharedPreferences;
+import android.widget.TextView;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import com.example.voteinformed.data.repository.VoteInformed_Repository;
 
 public class ElectionsActivity extends AppCompatActivity {
 
@@ -88,6 +96,7 @@ public class ElectionsActivity extends AppCompatActivity {
 
 
         fetchUpcomingElections();
+        setupDashboardHeader();
 
 
         TextInputEditText inputSearch = findViewById(R.id.inputSearch);
@@ -105,6 +114,36 @@ public class ElectionsActivity extends AppCompatActivity {
 
         viewModel.getRandomPoliticians().observe(this,
                 politicians -> featuredPoliticianAdapter.setPoliticians(politicians));
+
+    }
+
+    private void setupDashboardHeader() {
+        TextView tvWelcome = findViewById(R.id.tvWelcomeUser);
+        TextView tvDate = findViewById(R.id.tvDateDisplay);
+
+        // 1. Set Today's Date
+        SimpleDateFormat sdf = new SimpleDateFormat("EEEE, MMMM d", Locale.getDefault());
+        String currentDate = sdf.format(new Date());
+        tvDate.setText(currentDate.toUpperCase());
+
+        // 2. Fetch User Name from Session
+        SharedPreferences prefs = getSharedPreferences("UserSession", MODE_PRIVATE);
+        int userId = prefs.getInt("user_id", -1);
+
+        if (userId != -1) {
+            VoteInformed_Repository repo = new VoteInformed_Repository(getApplicationContext());
+            repo.getUserById(userId).observe(this, user -> {
+                if (user != null && user.getName() != null) {
+                    // Use just the first name for a friendlier dashboard feel
+                    String firstName = user.getName().split(" ")[0];
+                    tvWelcome.setText("Hello, " + firstName + "!");
+                } else {
+                    tvWelcome.setText("Welcome, Voter!");
+                }
+            });
+        } else {
+            tvWelcome.setText("Welcome!");
+        }
     }
 
     private void fetchUpcomingElections() {
